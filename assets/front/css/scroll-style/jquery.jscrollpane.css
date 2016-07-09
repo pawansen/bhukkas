@@ -1,0 +1,57 @@
+
+
+.jspContainer
+{
+	overflow: hidden;
+	position: relative;
+}
+
+.jspPane
+{
+	position: absolute;
+}
+
+.jspVerticalBar
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 8px;
+	height:auto;
+    border-radius: 10px;
+	
+}
+
+
+.jspCap
+{
+	display: none;
+}
+
+
+.jspTrack
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.jspDrag
+{
+	background: #999;
+	position: relative;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+	border-radius: 10px;
+}
+
+
+.jspVerticalBar .jspArrow:focus
+{
+	outline: none;
+}
+
+
+
+
