@@ -124,7 +124,7 @@ echo CHtml::hiddenField('admin_currency_position', Yii::app()->functions->getOpt
 
             <div class="col-md-6">
                 <div class="box_style_2" id="order_process">
-                    <h2 class="inner">Your order details</h2>
+                    <h2 class="inner">Your Order Details</h2>
         <?php //if (isset($s['kr_merchant_id']) && Yii::app()->functions->isClientLogin() && is_array($merchant_info) ):?>
         <?php if ( $continue==TRUE):?>
         <?php $merchant_id=$s['kr_merchant_id'];?>

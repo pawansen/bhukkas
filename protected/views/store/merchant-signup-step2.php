@@ -92,7 +92,8 @@
   isset($data['restaurant_name'])?$data['abn']:""
   ,array(
   'class'=>'uk-form-width-large',
-  'data-validation'=>"required"
+  'data-validation'=>"required",
+  'onkeypress' => "return onlyAlphabets(event,this);"
   ))?>
   </div>  
   <?php endif;?>
@@ -102,7 +103,9 @@
   <?php echo CHtml::textField('restaurant_phone',
   isset($data['restaurant_phone'])?$data['restaurant_phone']:""
   ,array(
-  'class'=>'uk-form-width-large'  
+  'class'=>'uk-form-width-large',
+  'maxlength' => '10',
+  'onkeypress' => "return event.charCode >= 48 && event.charCode <= 57" 
   ))?>
   </div>  
   
@@ -112,7 +115,8 @@
   isset($data['contact_name'])?$data['contact_name']:""
   ,array(
   'class'=>'uk-form-width-large',
-  'data-validation'=>"required"
+  'data-validation'=>"required",
+  'onkeypress' => "return onlyAlphabets(event,this);"
   ))?>
   </div>    
   
@@ -122,7 +126,9 @@
   isset($data['contact_phone'])?$data['contact_phone']:""
   ,array(
   'class'=>'uk-form-width-large',
-  'data-validation'=>"required"
+  'data-validation'=>"required",
+  'maxlength' => '10',
+  'onkeypress' => "return event.charCode >= 48 && event.charCode <= 57"
   ))?>
   </div>      
   
@@ -154,7 +160,8 @@
   isset($data['city'])?$data['city']:""
   ,array(
   'class'=>'uk-form-width-large',
-  'data-validation'=>"required"
+  'data-validation'=>"required",
+  'onkeypress' => "return onlyAlphabets(event,this);"
   ))?>
   </div>            
   
@@ -208,7 +215,8 @@
   (array)Yii::app()->functions->Services(),          
   array(
   'class'=>'uk-form-width-large',
-  'data-validation'=>"required"
+  'data-validation'=>"required",
+  'onkeypress' => "return onlyAlphabets(event,this);"
   ))?>
 </div>
 
@@ -287,3 +295,25 @@
 	</div><!-- End row -->
 </div><!-- End container -->
 <!-- End Content =============================================== -->
+<script language="Javascript" type="text/javascript">
+ 
+        function onlyAlphabets(e, t) {
+            try {
+                if (window.event) {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e) {
+                    var charCode = e.which;
+                }
+                else { return true; }
+                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+                    return true;
+                else
+                    return false;
+            }
+            catch (err) {
+                alert(err.Description);
+            }
+        }
+ 
+    </script>

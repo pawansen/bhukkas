@@ -57,7 +57,12 @@ if (isset($_GET['id'])){
   'data-validation'=>"required",
   'data-validation-error-msg' => "you did not enter email address."    
   ))?>
+ 
+  <div class="help-block form-error" id="email_valid_msg" style="display: none;">Invalid email address</div>
+   
+   
 </div>
+
 
 <div class="uk-form-row">
   <label class="uk-form-label"><?php echo Yii::t("default","Username")?></label>
@@ -138,7 +143,24 @@ if (isset($_GET['id'])){
 
 <div class="uk-form-row">
 <label class="uk-form-label"></label>
-<input type="submit" value="<?php echo Yii::t("default","Save")?>" class="uk-button uk-form-width-medium uk-button-success">
+<input type="submit" onclick="return check_valid();" value="<?php echo Yii::t("default","Save")?>" class="uk-button uk-form-width-medium uk-button-success">
 </div>
 
 </form>
+<script type="text/javascript">
+ function check_valid(){
+
+ var contact_email = document.getElementById('contact_email').value;
+ var atpos = contact_email.indexOf("@");
+ var dotpos = contact_email.lastIndexOf(".");
+
+if (atpos<1 || dotpos<atpos+2 || dotpos+2>=contact_email.length) {
+        document.getElementById('email_valid_msg').style.display = 'block';
+        return false;
+    }else{
+       document.getElementById('email_valid_msg').style.display = 'none';
+       return true;
+    }
+
+ }
+</script>

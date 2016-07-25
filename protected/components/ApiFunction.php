@@ -169,8 +169,12 @@ class ApiFunction extends DbExt {
     public function authLogin($data = array()) {
         $response = array();
 
-        if (!empty($data['username']) && !empty($data['password'])) {
-            $rs = Yii::app()->functions->clientAutoLoginApi($data['username'], $data['password'], $data['devicetoken']);
+        if (!empty($data['username']) && !empty($data['password']) && !empty($data['devicetype'])) {
+
+            $rs = Yii::app()->functions->clientAutoLoginApi($data['username'], $data['password'], $data['devicetoken'],$data['devicetype']);
+            
+             
+
             if (!empty($rs)) {
                 $response['code'] = 1;
                 $response['msg'] = "Successfully logged In";
@@ -318,6 +322,10 @@ class ApiFunction extends DbExt {
     }
 
     public function getMerchantList($data = array()) {
+
+
+
+
         $response = array();
         $cuisine_list = Yii::app()->functions->Cuisine(true);
         $city = $data['cityName'];
@@ -364,8 +372,8 @@ class ApiFunction extends DbExt {
         $lat = round($latlang['lat'], 6);
         $long = round($latlang['long'], 6);
 
-        $radius = 5;
-        if (isset($data['radius']) && is_numeric($data['radius']) && $data['radius'] > 5) {
+        $radius = 10;
+        if (isset($data['radius']) && is_numeric($data['radius']) && $data['radius'] > 10) {
             $radius = $data['radius'];
         }
 
@@ -425,6 +433,10 @@ class ApiFunction extends DbExt {
                     ";
         $stmt2 = "SELECT FOUND_ROWS()";
         $count_query = true;
+
+        
+
+
 
 
         $result = array();
@@ -586,25 +598,44 @@ class ApiFunction extends DbExt {
     public function getFavouriteList($data = array()) {
         $response = array();
         $client_id = $data['client_id'];
-
-        $stmt = "SELECT c.restaurant_slug,c.merchant_id,c.restaurant_name,a.fav_id
+        if (isset($data['offset']) && !empty($data['offset'])) {
+            $Start_page = $data['offset'];
+        } else {
+            $Start_page = 0;
+        }
+        if (isset($data['limit']) && !empty($data['limit'])) {
+            $per_page = $data['limit'];
+        } else {
+            $per_page = 10;
+        }
+        $cuisine_list = Yii::app()->functions->Cuisine(true);
+        $stmt = "SELECT c.*,a.fav_id
 	    	       FROM
 	    	       {{favourite}} a
 	    	       left join {{client}} b
 	    	       ON
 	    	       a.client_id=b.client_id
-                       left join {{merchant}} c
+                       left join {{view_merchant}} c
 	    	       ON
 	    	       a.merchant_id=c.merchant_id
 	    	       WHERE
-	    	       a.client_id = $client_id";
+	    	       a.client_id = $client_id LIMIT $Start_page,$per_page";
 
         $result = array();
         if ($res = $this->rst($stmt)) {
             foreach ($res as $rows):
                 $temp = array();
 
-                $photo_url = 0;
+                $resto_cuisine = "";
+                $cuisine = !empty($rows['cuisine']) ? (array) json_decode($rows['cuisine']) : false;
+                if ($cuisine != false) {
+                    foreach ($cuisine as $valc) {
+                        if (array_key_exists($valc, (array) $cuisine_list)) {
+                            $resto_cuisine.=$cuisine_list[$valc] . " / ";
+                        }
+                    }
+                    $resto_cuisine = !empty($resto_cuisine) ? substr($resto_cuisine, 0, -2) : 0;
+                }
                 $merchant_photo = Yii::app()->functions->getOption("merchant_photo", $rows['merchant_id']);
                 if (!empty($merchant_photo)) {
                     $photo_url = $this->siteUrls . Yii::app()->getBaseUrl() . "/upload/" . $merchant_photo;
@@ -612,11 +643,52 @@ class ApiFunction extends DbExt {
                     $photo_url = $this->siteUrls . Yii::app()->getBaseUrl() . "/assets/images/100X100.png";
                 }
 
-                $temp['restaurant_slug'] = $rows['restaurant_slug'];
+
+                $delivery_fee = $rows['delivery_charges'];
+                if (is_numeric($delivery_fee) && $delivery_fee >= 1) {
+                    $fee = $delivery_fee;
+                } else {
+                    $fee = "Free Delivery";
+                }
+                $delivery_est = Yii::app()->functions->getOption("merchant_delivery_estimation", $rows['merchant_id']);
+                $mt_delivery_miles = Yii::app()->functions->getOption("merchant_delivery_miles", $rows['merchant_id']);
+                if (is_numeric($mt_delivery_miles)) {
+                    $mt_delivery_miles = $mt_delivery_miles;
+                } else {
+                    $mt_delivery_miles = 0;
+                }
+
+                $validOffer = 0;
+                if ($offer = Yii::app()->functions->getMerchantOffersActive($rows['merchant_id'])) {
+                    $validOffer = number_format($offer['offer_percentage'], 0) . '%';
+                }
+                
+                $open = "Closed";
+                $is_merchant_open = Yii::app()->functions->isMerchantOpen($rows['merchant_id']);
+                if ($is_merchant_open == TRUE) {
+                    $open = "Open";
+                }
+
                 $temp['merchant_id'] = $rows['merchant_id'];
+                $temp['restaurant_slug'] = $rows['restaurant_slug'];
                 $temp['restaurant_name'] = $rows['restaurant_name'];
+                $temp['restaurant_phone'] = isset($rows['restaurant_phone']) ? $rows['restaurant_phone'] : 0;
+                $temp['free_delivery'] = (isset($rows['free_delivery'])) ? $rows['free_delivery'] : 0;
+                $temp['merchant_category'] = (isset($rows['merchant_category'])) ? $rows['merchant_category'] : 0;
+                $temp['latitude'] = (isset($rows['latitude'])) ? $rows['latitude'] : 0;
+                $temp['lontitude'] = (isset($rows['lontitude'])) ? $rows['lontitude'] : 0;
+                $temp['delivery_charges'] = $fee;
+                $temp['minimum_order'] = (isset($rows['minimum_order'])) ? $rows['minimum_order'] : 0;
+                $temp['ratings'] = (isset($rows['ratings'])) ? $rows['ratings'] : 0;
+                $temp['cuisine'] = $resto_cuisine;
+                $temp['merchant_photo'] = $photo_url;
+                $temp['delivery_estimation_time'] = ($delivery_est) ? $delivery_est : 0;
+                $temp['delivery_in'] = $mt_delivery_miles;
+                $temp['offer'] = $validOffer;
+                //$temp['distance'] = number_format((float) $rows['distance'], 1, '.', '');
+                $temp['isfavourite'] = ($client_id) ? ($this->isMerchantFavourite($client_id, $rows['merchant_id'])) ? 1 : 0 : 0;
+                $temp['is_open'] = $open;
                 $temp['fav_id'] = $rows['fav_id'];
-                $temp['restaurant_photo'] = $photo_url;
 
                 $result [] = $temp;
             endforeach;
@@ -961,11 +1033,16 @@ class ApiFunction extends DbExt {
             $response['msg'] = "name is required";
             $response['code'] = 0;
             return $response;
-        } else if (empty($data['email'])) {
+        } 
+
+        /*else if (empty($data['email'])) {
             $response['msg'] = "email is required";
             $response['code'] = 0;
             return $response;
-        } else if (empty($data['phone'])) {
+
+        } */
+
+        else if (empty($data['phone'])) {
             $response['msg'] = "phone is required";
             $response['code'] = 0;
             return $response;
@@ -1199,7 +1276,7 @@ class ApiFunction extends DbExt {
         $limit = (isset($data['limit'])) ? $data['limit'] : 10;
         $client_id = $data['client_id'];
         $stmt = "
-                SELECT a.order_id,a.merchant_id,a.payment_type,a.status,a.date_created,
+                SELECT a.order_id,a.merchant_id,a.payment_type,a.status,a.date_created,a.total_w_tax,
                 (
                 select restaurant_name
                 from
@@ -1211,15 +1288,37 @@ class ApiFunction extends DbExt {
                 {{order}} a
                 WHERE 
                 client_id='$client_id'
-                AND status NOT IN ('initial_order')
+                
                 ORDER BY order_id DESC
                 LIMIT $offset,$limit
                 ";
-
+        $result = array();
         if ($res = $this->rst($stmt)):
+            
+           
+            foreach($res as $rows){
+                $temp = array();
+                
+                $merchant_photo = Yii::app()->functions->getOption("merchant_photo", $rows['merchant_id']);
+                if (!empty($merchant_photo)) {
+                    $photo_url = $this->siteUrls . Yii::app()->getBaseUrl() . "/upload/" . $merchant_photo;
+                } else {
+                    $photo_url = $this->siteUrls . Yii::app()->getBaseUrl() . "/assets/images/100X100.png";
+                }
+                
+                 $temp['order_id'] = isset($rows['order_id']) ? $rows['order_id'] : 0;
+                 $temp['merchant_id'] = isset($rows['merchant_id']) ? $rows['merchant_id'] : 0;
+                 $temp['payment_type'] = isset($rows['payment_type']) ? $rows['payment_type'] : 0;
+                 $temp['status'] = isset($rows['status']) ? $rows['status'] : 0;
+                 $temp['date_created'] = isset($rows['date_created']) ? $rows['date_created'] : 0;
+                 $temp['merchant_name'] = isset($rows['merchant_name']) ? $rows['merchant_name'] : 0;
+                 $temp['merchant_photo'] = isset($photo_url) ? $photo_url : 0;
+                 $temp['totel_cost'] = isset($rows['total_w_tax']) ?  number_format((float) $rows['total_w_tax'], 1, '.', '') : 0;
+                 $result[] = $temp;
+            }
             $response['code'] = 1;
             $response['msg'] = "records found";
-            $response['list'] = $res;
+            $response['list'] = $result;
             return $response;
         else:
 
@@ -2039,7 +2138,7 @@ class ApiFunction extends DbExt {
          return true;
     }
     
-    public function getMerchantOffer($data = array()) {
+    public function getMerchantDeals($data = array()) {
         $response = array();
         $cuisine_list = Yii::app()->functions->Cuisine(true);
         $city = $data['cityName'];
@@ -2057,8 +2156,10 @@ class ApiFunction extends DbExt {
             $per_page = 10;
         }
 
-        $and = "AND status='active' ";
-        $and.="AND is_ready='2' ";
+        $and = "AND a.status='active' ";
+        $and.="AND a.is_ready='2' ";
+        $and.="AND b.status='publish' ";
+        $and.="AND now() >= b.valid_from and now() <= b.valid_to";
         // filter
         $sort_by = "distance ASC";
         $sort_by0 = " ORDER BY is_sponsored DESC";
@@ -2079,17 +2180,15 @@ class ApiFunction extends DbExt {
                    a.service,a.free_delivery,a.merchant_category,a.latitude,a.lontitude,a.cuisine,
                    a.delivery_charges,a.minimum_order,a.ratings ,(
                    6371 * acos( cos( radians(  $lat ) ) * cos( radians( a.latitude ) ) * cos( radians( a.lontitude ) - radians( $long  ) ) + sin( radians(  $lat  ) ) * sin( radians( a.latitude ) ) )
-                   ) AS distance 
-                    FROM {{view_merchant}} a 
-                    WHERE city LIKE '" . $city . "%'
+                   ) AS distance,b.offers_id,b.offer_percentage,b.offer_price,b.valid_from,b.valid_to
+                    FROM {{view_merchant}} a INNER JOIN {{offers}} as b ON b.merchant_id = a.merchant_id 
+                    WHERE a.city LIKE '" . $city . "%'
                     $and  HAVING distance <= $radius 
                     $sort_combine
                     LIMIT $Start_page,$per_page
                     ";
         $stmt2 = "SELECT FOUND_ROWS()";
         $count_query = true;
-
-
         $result = array();
         if ($res = $this->rst($stmt)) {
 
@@ -2126,24 +2225,25 @@ class ApiFunction extends DbExt {
                 }
 
 
-                $delivery_fee = $rows['delivery_charges'];
+                /*$delivery_fee = $rows['delivery_charges'];
                 if (is_numeric($delivery_fee) && $delivery_fee >= 1) {
                     $fee = $delivery_fee;
                 } else {
                     $fee = "Free Delivery";
-                }
-                $delivery_est = Yii::app()->functions->getOption("merchant_delivery_estimation", $rows['merchant_id']);
+                }*/
+                
+                /*$delivery_est = Yii::app()->functions->getOption("merchant_delivery_estimation", $rows['merchant_id']);
                 $mt_delivery_miles = Yii::app()->functions->getOption("merchant_delivery_miles", $rows['merchant_id']);
                 if (is_numeric($mt_delivery_miles)) {
                     $mt_delivery_miles = $mt_delivery_miles;
                 } else {
                     $mt_delivery_miles = 0;
-                }
+                }*/
 
-                $validOffer = 0;
+                /*$validOffer = 0;
                 if ($offer = Yii::app()->functions->getMerchantOffersActive($rows['merchant_id'])) {
                     $validOffer = number_format($offer['offer_percentage'], 0) . '%';
-                }
+                }*/
                 
                 $open = "Closed";
                 $is_merchant_open = Yii::app()->functions->isMerchantOpen($rows['merchant_id']);
@@ -2159,22 +2259,25 @@ class ApiFunction extends DbExt {
                 $temp['merchant_category'] = (isset($rows['merchant_category'])) ? $rows['merchant_category'] : 0;
                 $temp['latitude'] = (isset($rows['latitude'])) ? $rows['latitude'] : 0;
                 $temp['lontitude'] = (isset($rows['lontitude'])) ? $rows['lontitude'] : 0;
-                $temp['delivery_charges'] = $fee;
+                /*$temp['delivery_charges'] = $fee;*/
                 $temp['minimum_order'] = (isset($rows['minimum_order'])) ? $rows['minimum_order'] : 0;
-                $temp['ratings'] = (isset($rows['ratings'])) ? $rows['ratings'] : 0;
+                /*$temp['ratings'] = (isset($rows['ratings'])) ? $rows['ratings'] : 0;*/
                 $temp['cuisine'] = $resto_cuisine;
                 $temp['merchant_photo'] = $photo_url;
-                $temp['delivery_estimation_time'] = ($delivery_est) ? $delivery_est : 0;
-                $temp['delivery_in'] = $mt_delivery_miles;
-                $temp['offer'] = $validOffer;
+                /*$temp['delivery_estimation_time'] = ($delivery_est) ? $delivery_est : 0;*/
+                /*$temp['delivery_in'] = $mt_delivery_miles;*/
+                $temp['offers_id'] = (isset($rows['offers_id'])) ? $rows['offers_id'] : 0;
+                $temp['offer_percentage'] = (isset($rows['offer_percentage'])) ? number_format((float)$rows['offer_percentage'],1,'.','') : 0;
+                $temp['offer_price'] = (isset($rows['offer_price'])) ? number_format((float)$rows['offer_price'],1,'.','') : 0;
+                $temp['valid_from'] = (isset($rows['valid_from'])) ? $rows['valid_from'] : 0;
+                $temp['valid_to'] = (isset($rows['valid_to'])) ? $rows['valid_to'] : 0;
                 $temp['distance'] = number_format((float) $rows['distance'], 1, '.', '');
-                $temp['isfavourite'] = ($client_id) ? ($this->isMerchantFavourite($client_id, $rows['merchant_id'])) ? 1 : 0 : 0;
                 $temp['is_open'] = $open;
 
                 $result [] = $temp;
             endforeach;
 
-            $response['msg'] = $this->search_result_total . " results in your zone";
+            $response['msg'] = $this->search_result_total . " offer in your zone";
             $response['code'] = 1;
             $response['total_rows'] = $this->search_result_total;
             $response['list'] = $result;
@@ -2184,6 +2287,50 @@ class ApiFunction extends DbExt {
             $response['code'] = 0;
             return $response;
         }
+    }
+    
+    public function getOrderTracker($data = array()){
+       $response = array();
+       $order_id = $data['order_id'];
+       $stmt="SELECT id,order_id,status,remarks,date_created FROM
+                {{order_history}}
+                WHERE
+                order_id=".$order_id."
+                ORDER BY id ASC
+                ";
+    	if ( $res=$this->rst($stmt)){
+    	    $response['msg'] = "your order status has been found";
+            $response['code'] = 1;
+            $response['list'] = $res;
+            return $response;
+        }else{
+            $response['msg'] = "Sorry but we cannot find what you are looking for";
+            $response['code'] = 0;
+            return $response;  
+        }
+    }
+
+
+    public function setOrderHistory($data = array()){
+             
+
+            $params = array(
+                    'order_id'      => $data['order_id'],
+                    'status'        => $data['status'],
+                    'remarks'       => $data['remarks'],
+                    'date_created'  => date('c'),
+                );
+
+                if ($this->insertData("{{order_history}}", $params)) {
+                    $response['msg']    = "Order History Updated";
+                    $response['code']   = 1;
+                } else {
+                    $response['msg']    = "cannot insert records";
+                    $response['code']   = 0;
+                } 
+
+                return $response; 
+
     }
 
 }

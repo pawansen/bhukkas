@@ -29,7 +29,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
 <section class="parallax-window"  id="short"  data-parallax="scroll" data-image-src="<?php echo Yii::app()->request->baseUrl; ?>/assets/front/img/sub_header_cart.jpg" data-natural-width="1400" data-natural-height="350">
     <div id="subheader">
     	<div id="sub_content">
-    	 <h1>Place your order</h1>
+    	 <h1>Place your Order</h1>
             <div class="bs-wizard">
                 <div class="col-xs-4 bs-wizard-step complete">
                   <div class="text-center bs-wizard-stepnum"><strong>1.</strong> Your details</div>

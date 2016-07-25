@@ -19,9 +19,14 @@ if (isset($_GET['id'])){
 <form class="uk-form uk-form-horizontal forms" id="forms">
 <?php echo CHtml::hiddenField('action','addCuisine')?>
 <?php echo CHtml::hiddenField('id',isset($_GET['id'])?$_GET['id']:"");?>
-<?php if (!isset($_GET['id'])):?>
-<?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/admin/Cuisine/Do/Add")?>
-<?php endif;?>
+
+
+<!-- <?php //if (!isset($_GET['id'])):?>
+<?php //echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/admin/Cuisine/Do/Add")?>
+<?php //endif;?>
+-->
+
+<?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/admin/Cuisine/")?>
 
 
 <div class="uk-form-row">

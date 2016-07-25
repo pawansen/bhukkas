@@ -34,13 +34,13 @@ return array(
 		),
 				
 		'db'=>array(	        
-		    'class'            => 'CDbConnection' ,
-			'connectionString' => 'mysql:host=localhost;dbname=vsure_bhukkas',
+    'class'            => 'CDbConnection' ,
+			'connectionString' => 'mysql:host=bhukkasdb.clt9ctjhwqtc.ap-south-1.rds.amazonaws.com;dbname=vsure_restbhukkas',
 			'emulatePrepare'   => true,
-			'username'         => 'root',
-			'password'         => 'root',
+			'username'         => 'bhukkas_app',
+			'password'         => '12bhukkas12',
 			'charset'          => 'utf8',
-			'tablePrefix'      => 'mt_',
+			'tablePrefix'      => 'bk',
 	    ),
 	    
 	    'functions'=> array(

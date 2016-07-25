@@ -2003,6 +2003,19 @@ class Functions extends CApplicationComponent {
         }
         return false;
     }
+    
+    public function getMerchantByLocation($cid = '') {
+        $cityName = $_SESSION['myCity'];
+        $DbExt = new DbExt;
+        $stmt = " SELECT restaurant_name  
+                    FROM {{view_merchant}}
+                    WHERE city LIKE '" . $cityName . "%' LIMIT 2000
+                    ";
+        if ($res = $DbExt->rst($stmt)) {
+            return $res;
+        }
+        return false;
+    }
 
     public function getCuisineByRest($id = 'c') {
         $lists = '';
@@ -5241,10 +5254,11 @@ class Functions extends CApplicationComponent {
         return false;
     }
     
-    public function clientAutoLoginApi($user = '', $pass = '', $devicetoken = '') {
-        $DbExt = new DbExt;
-        
-        $stmt = "SELECT a.client_id,a.first_name,a.last_name,a.email_address,a.contact_phone,a.date_created,a.last_login,a.status FROM
+    public function clientAutoLoginApi($user = '', $pass = '', $devicetoken = '',$devicetype='') {
+          
+
+          $DbExt = new DbExt;
+          $stmt = "SELECT a.client_id,a.first_name,a.last_name,a.email_address,a.contact_phone,a.date_created,a.last_login,a.status FROM
 	    	{{client}} as a
 	    	WHERE
 	    	a.email_address=" . Yii::app()->db->quoteValue($user) . "
@@ -5255,18 +5269,89 @@ class Functions extends CApplicationComponent {
 	    	LIMIT 0,1
 	    	";
 
+
+
+
+
+             
+
+
+
         if ($res = $DbExt->rst($stmt)) {
-            unset($res[0]['password']);
+ 
+           
+           unset($res[0]['password']);
             $client_id = $res[0]['client_id'];
-            $update = array('last_login' => date('c'), 'ip_address' => $_SERVER['REMOTE_ADDR'],'devicetoken'=>$devicetoken);
+
+            $update = array('last_login' => date('c'), 'ip_address' => $_SERVER['REMOTE_ADDR'],'devicetoken'=>$devicetoken,'devicetype'=>$devicetype);
+            
             $DbExt->updateData("{{client}}", $update, 'client_id', $client_id);
             /*$_SESSION['kr_client'] = $res[0];*/
-            $st ="SELECT id,CONCAT(street,' ',city,' ',state) as address FROM {{address_book}} WHERE as_default = 2 AND client_id=$client_id LIMIT 0,1";
             
+            $st ="SELECT id,CONCAT(street,' ',city,' ',state) as address,as_default FROM {{address_book}} WHERE client_id=$client_id";
+
+           
             $rs = $DbExt->rst($st);
+
+
+
+            $str_count = count($rs);  
+
+
+            
+            if($str_count==1){             
             $res[0]['address_id'] = isset($rs[0]['id']) ? $rs[0]['id'] : 0;
             $res[0]['address'] = isset($rs[0]['address']) ? $rs[0]['address'] : 0;
             return $res[0];
+            }else{
+
+                $flag = '';  
+                $j= '';
+
+                for($i=0;$i<=$str_count-1;$i++){
+
+                   if($rs[$i]['as_default']==2){
+
+                     $flag = 'default';
+                     $j = $i;   
+                     //return $res[$i];  
+                       
+
+                    }else{
+                        $res[0]['address_id'] = isset($rs[0]['id']) ? $rs[0]['id'] : 0;
+                        $res[0]['address'] = isset($rs[0]['address']) ? $rs[0]['address'] : 0;
+                         
+                    }    
+
+                } 
+
+             
+
+                if($flag=='default'){
+                $res[$j]['address_id'] = isset($rs[$j]['id']) ? $rs[$j]['id'] : 0;
+                $res[$j]['address'] = isset($rs[$j]['address']) ? $rs[$j]['address'] : 0;
+
+                $res[$j]['client_id'] = isset($res[0]['client_id']) ? $res[0]['client_id'] : 0; 
+                $res[$j]['first_name'] = isset($res[0]['first_name']) ? $res[0]['first_name'] : 0; 
+                $res[$j]['last_name'] = isset($res[0]['last_name']) ? $res[0]['last_name'] : 0; 
+                $res[$j]['email_address'] = isset($res[0]['email_address']) ? $res[0]['email_address'] : 0; 
+                $res[$j]['contact_phone'] = isset($res[0]['contact_phone']) ? $res[0]['contact_phone'] : 0; 
+                $res[$j]['date_created'] = isset($res[0]['date_created']) ? $res[0]['date_created'] : 0; 
+                $res[$j]['last_login'] = isset($res[0]['last_login']) ? $res[0]['last_login'] : 0; 
+                $res[$j]['status'] = isset($res[0]['status']) ? $res[0]['status'] : 0;  
+                
+                return $res[$j];
+                }else{
+                return $res[0];
+                }
+
+
+
+                 
+
+            }
+
+            
         }
         return false;
     }
@@ -6706,12 +6791,20 @@ class Functions extends CApplicationComponent {
 
         $mail->initialize($config);
 
-        $mail->to($to);
+       /* $mail->to($to);
         $mail->from($from, $title);
         $mail->subject($subject);
         $mail->message($body);
-        $mail = $mail->send();
-        if ($mail) {
+
+        $mail = $mail->send();*/
+      
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= 'From: '.$from."\r\n";    
+
+        $mail = mail($to,$subject,$body,$headers);
+        
+        if($mail) {
             return true;
         } else {
             return false;
@@ -8481,6 +8574,10 @@ class Functions extends CApplicationComponent {
         }
         
         public function getMerchantBusinnesHours($merchant_id = '') {
+
+
+
+
             $stores_open_day = Yii::app()->functions->getOption("stores_open_day", $merchant_id);
             //$stores_open_day = Yii::app()->functions->getOption("stores_open_day", $merchant_id);
             $stores_open_starts = Yii::app()->functions->getOption("stores_open_starts", $merchant_id);
@@ -8529,6 +8626,7 @@ class Functions extends CApplicationComponent {
                     $arr[$i] = array('days'=>(isset($business_hours[$days_ar[$i]]) && $business_hours[$days_ar[$i]]!='')?$business_hours[$days_ar[$i]]:'closed');  
                 }
             }
+           
             if (is_array($arr) && count($arr) >= 1) {
                 return $arr;
             } else

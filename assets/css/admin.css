@@ -36,10 +36,13 @@ margin:auto;
 }
 
 .login_logo{
-height:80px;
-width:308px;
+/*height:80px;
+width:308px;*/
+height:100px;
+width:112px;
 margin:auto;
 background:url("../front/img/ad/logo.png") no-repeat;
+background-size: 95px;
 }
 
 /*.help-block.form-error{
@@ -829,3 +832,5 @@ display: block;
 font-size: 12px;
 padding: 0 5px;
 }
+.balance{margin-top: 0px;}
+.margin-top-10 {margin-top: 10px;}

@@ -119,7 +119,7 @@
   
   <?php if ( $merchant_info[0]->is_commission==2):?>
   <div class="right">
-  <h3 class="uk-button uk-button-success"><?php echo t("Your balance")?>: 
+  <h3 class="uk-button uk-button-success balance"><?php echo t("Your balance")?>: 
   <span class="merchant_total_balance commission_loader"></span>
   </h3>
   </div>

@@ -206,5 +206,10 @@ if ( Yii::app()->controller->action->id =="index"){
   </div>
 </div> <!--END footer-sub-->
 <?php ScriptManager::registerGlobalVariables();?>
+
+
+
+
+
 </body>
 </html>

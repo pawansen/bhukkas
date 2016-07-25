@@ -19,7 +19,10 @@
 			 <!--<th><?php echo Yii::t('default',"Access Role")?></th>				 -->
 			 <th width="5%"><?php echo Yii::t('default',"Status")?></th>
 			 <th width="5%"><?php echo Yii::t('default',"Last Login")?></th>			 
-			 <th width="5%"><?php echo Yii::t('default',"Date Created")?></th>
+			 <th width="5%"><?php //echo Yii::t('default',"Date Created")?>
+      
+      <?php echo Yii::t('default',"IP")?>   
+       </th>
         </tr>
     </thead>
     <tbody>   

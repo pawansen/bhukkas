@@ -1,3 +1,4 @@
+<!--1111||||| <?php echo $_SESSION['currentLatLong']; ?>  -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -23,6 +24,9 @@
 <link rel="shortcut icon" href="<?php echo  Yii::app()->request->baseUrl; ?>/favicon12.ico?ver=1.0" />
 <?php Widgets::analyticsCode();?>
 </head>
+
+
+
 <body>
 <!-- Header -->
 <header>
@@ -32,6 +36,10 @@
 
                 <?php Widgets::websiteLogo();?>
             </div>
+
+           
+  
+   
             <nav class="col--md-8 col-sm-8 col-xs-6">
             <a class="cmn-toggle-switch cmn-toggle-switch__htx open_close" href="javascript:void(0);"><span>Menu mobile</span></a>
             <div class="main-menu">
@@ -184,19 +192,21 @@
         echo CHtml::hiddenField('verification',$verification);
     }
     ?>  
-     <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png" width="250" height="" alt="" data-retina="true" class=""></div>
+     <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png" alt="" data-retina="true" class="popbox-logo"></div>
     <div id="has_error_message_signup"></div>
-    </br>
+ 
     <div class="has_error_msg"></div>
      <?php echo CHtml::textField('first_name','',array(
        'class'=>'form-control form-white',
        'placeholder'=>Yii::t("default","First Name"),
-       'data-validation'=>"required"
+       'data-validation'=>"required",
+       'onkeypress' => "return onlyAlphabets(event,this);"
       ))?>
         <?php echo CHtml::textField('last_name','',array(
        'class'=>'form-control form-white',
        'placeholder'=>Yii::t("default","Last Name"),
-       'data-validation'=>"required"
+       'data-validation'=>"required",
+       'onkeypress' => "return onlyAlphabets(event,this);"
       ))?>
      <?php echo CHtml::textField('contact_phone','',array(
        'class'=>'form-control form-white',
@@ -205,6 +215,8 @@
        'data-validation'=>"length number", 
        'data-validation-length'=>"min10",
        'data-validation-length'=>"max12",
+       'onkeypress ' => "return event.charCode >= 48 && event.charCode <= 57"
+
       
       ))?>
      <?php echo CHtml::textField('email_address','',array(
@@ -249,11 +261,13 @@
     <div id="pass-info" class="clearfix"></div>
 				<div class="checkbox-holder text-left">
 					<div class="checkbox">
+
 						<input type="checkbox" value="1" id="check_2" name="check_2"  data-validation="required"/>
 						<label for="check_2"><span>I Agree to the <strong><a href="<?php echo Yii::app()->createUrl('store/tac'); ?>">Terms &amp; Conditions</a></strong></span></label>
 					</div>
 				</div>
-				<input type="submit" class="btn btn-submit" value="<?php echo Yii::t("default","Create Account") ?>"/>
+				<!-- <input type="submit" class="btn btn-submit" value="<?php //echo Yii::t("default","Create Account") ?>"/> -->
+        <button class="btn btn-submit"><?php echo Yii::t("default","Create Account"); ?></button>
 			</form>
    
 		</div>
@@ -273,7 +287,7 @@
     <?php echo CHtml::hiddenField('do-action', isset($_GET['do-action'])?$_GET['do-action']:'' )?>
     <?php echo CHtml::hiddenField('rating', isset($_GET['rating'])?$_GET['rating']:'' )?>
 
-     <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png" width="250" height="" alt="" data-retina="true" class=""></div>
+     <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png"  alt="" data-retina="true" class="popbox-logo"></div>
 
          <?php echo CHtml::textField('username','',
              array('class'=>'form-control form-white','placeholder'=>Yii::t("default","Email"),
@@ -287,7 +301,8 @@
      <div class="text-left">
          <a onclick="hiddenForms();" href="javascript:void(0);">Forgot Password?</a>
      </div>
-     <input type="submit" class="btn btn-submit" value="<?php echo Yii::t("default","Login")?>"/>
+ <!--     <input type="submit" class="btn btn-submit" value="<?php //echo Yii::t("default","Login")?>"/> -->
+      <button class="btn btn-submit"><?php echo Yii::t("default","Login")?></button>
      </br></br>
        <div class="text-left">If You don't have account ?
          <a onclick="showRegisterModel();" href="javascript:void(0);">Sign up</a>
@@ -298,14 +313,11 @@
   <div id="forgot_hidden" style="display:none">  
        <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
        <form id="frm-modal-forgotpass" class="popup-form" method="POST" onsubmit="return false;">
-       </br>
-    
-        
-             <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png" width="250" height="" alt="" data-retina="true" class=""></div>
+        <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png"   alt="" data-retina="true" class="popbox-logo"></div>
     <?php echo CHtml::hiddenField('action','forgotPassword')?>
      <?php echo CHtml::hiddenField('do-action',$_GET['do-action'])?>     
      <h3 style="color:#fff;"><?php echo Yii::t("default","Forgot Password")?></h3>
-            <div class="has_error_msg"></div>    
+    <div class="has_error_msg"></div>    
     <div class="uk-form-row">
        <?php echo CHtml::textField('username-email','',
         array('class'=>'form-control form-white','placeholder'=>Yii::t("default","Email address"),
@@ -314,7 +326,9 @@
      </div>
          
     <div class="uk-form-row">
-      <input type="submit" value="<?php echo Yii::t("default","Retrieve Password")?>" class="btn btn-submit">
+     <!--  <input type="submit" value="<?php //echo Yii::t("default","Retrieve Password")?>" class="btn btn-submit"> -->
+
+      <button class="btn btn-submit"><?php echo Yii::t("default","Retrieve Password"); ?></button>
     </div>     
      
     </form>
@@ -328,7 +342,6 @@
 	</div>
 </div><!-- End modal -->    
 
-
 <!-- Partner with us modal -->   
 <div class="modal fade" id="partnerUs" tabindex="-1" role="dialog" aria-labelledby="myPartner" aria-hidden="true">
 	<div class="modal-dialog">
@@ -338,15 +351,16 @@
         
     <form id="form-partner" class="popup-form form-signup" onsubmit="return false;" method="POST">
       <?php echo CHtml::hiddenField('action','partnerRegistration')?>
-  <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png" width="250" height="" alt="" data-retina="true" class=""></div>
+  <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png"  alt="" data-retina="true" class="popbox-logo"></div>
         <h3 style="color:#FFFFFF;">Add your restaurant on bhukkas.com </br> Get Listed Today</h3>
-    </br>
+     
     <div id="partner-error"></div>
      <?php echo CHtml::textField('full_name','',array(
        'class'=>'form-control form-white',
        'placeholder'=>Yii::t("default","Your Name"),
        'data-validation'=>"required",
-      'data-validation-error-msg'=>"You did not enter your name"
+      'data-validation-error-msg'=>"You did not enter your name",
+      'onkeypress' => "return onlyAlphabets(event,this);"
       ))?>
   
      <?php echo CHtml::textField('contact_phone','',array(
@@ -356,7 +370,7 @@
        'data-validation'=>"length number", 
        'data-validation-length'=>"min10",
        'data-validation-length'=>"max12",
-      
+       'onkeypress ' => "return event.charCode >= 48 && event.charCode <= 57"
       ))?>
      <?php echo CHtml::textField('email_address','',array(
        'class'=>'form-control form-white',
@@ -385,10 +399,15 @@
       <?php echo CHtml::textArea("comment",'',array(
        'class'=>'form-control form-white',
        'placeholder'=>Yii::t("default","Comments"),
+       'style' => "height: 79px;width: 380px;",
       ))?>
 
     <div id="pass-info" class="clearfix"></div>
-<input type="submit" class="btn btn-submit" value="<?php echo Yii::t("default","Submit") ?>"/>
+<!-- <input type="submit" class="btn btn-submit" value="<?php //echo Yii::t("default","Submit") ?>"/> -->
+
+
+      <button class="btn btn-submit"><?php echo Yii::t("default","Submit"); ?></button>
+
    </form>
    
 		</div>
@@ -404,7 +423,7 @@
         
     <form id="form-email" class="popup-form form-signup" onsubmit="return false;" method="POST">
       <?php echo CHtml::hiddenField('action','emailsubscription')?>
-  <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png" width="250" height="" alt="" data-retina="true" class=""></div>
+  <div class=""> <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png"  alt="" data-retina="true" class="popbox-logo"></div>
         <h3 style="color:#FFFFFF;">Add your email for subscription </br> Get Listed Today</h3>
     </br>
     <div id="email-error"></div>
@@ -424,7 +443,10 @@
       ))?>
       
     <div id="pass-info" class="clearfix"></div>
-<input type="submit" class="btn btn-submit" value="<?php echo Yii::t("default","Submit") ?>"/>
+<!-- <input type="submit" class="btn btn-submit" value="<?php //echo Yii::t("default","Submit") ?>"/> -->
+
+ <button class="btn btn-submit"><?php echo Yii::t("default","Submit"); ?></button>
+
    </form>
    
 		</div>
@@ -432,6 +454,48 @@
 </div>
     <!--email modal-->
 <!-- review modal -->   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+   
+ </script>
+  <script language="Javascript" type="text/javascript">
+
+ 
+ 
+  
+ $(window).scroll(function() {    
+
+    var scroll = $(window).scrollTop();
+ 
+    if (scroll >= 40) {
+        $(".cust-logo").addClass("cust-logo-1");
+        
+    }else{
+         $(".cust-logo").removeClass("cust-logo-1");
+    }
+    });
+ 
+        function onlyAlphabets(e, t) {
+            try {
+                if (window.event) {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e) {
+                    var charCode = e.which;
+                }
+                else { return true; }
+                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+                    return true;
+                else
+                    return false;
+            }
+            catch (err) {
+                alert(err.Description);
+            }
+        }
+ 
+    </script>
+
+
 
 </body>
 </html>

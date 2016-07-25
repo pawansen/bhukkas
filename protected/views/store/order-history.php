@@ -2,7 +2,7 @@
 <section class="parallax-window" id="short" data-parallax="scroll" data-image-src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/sub_header_short.jpg" data-natural-width="1400" data-natural-height="350">
     <div id="subheader">
         <div id="sub_content">
-         <h1>Order</h1>
+         <h1>Order History</h1>
         </div><!-- End sub_content -->
     </div><!-- End subheader -->
 </section><!-- End section -->
@@ -11,7 +11,7 @@
     <div class="container">
         <ul>
             <li><a href="<?php echo Yii::app()->createUrl('store'); ?>">Home</a></li>
-            <li><a href="<?php echo Yii::app()->createUrl('store/orderHistory'); ?>">Order History</a></li>
+            <li><a href="javascript:void(0)<?php //echo Yii::app()->createUrl('store/orderHistory'); ?>">Order History</a></li>
         </ul>
     </div>
 </div><!-- Position -->
@@ -111,3 +111,6 @@
     </div><!-- End row -->
 </div><!-- End container -->
 <!-- End Content =============================================== -->
+<style type="text/css">
+.fancybox-wrap {z-index: 99999999;}  
+</style>

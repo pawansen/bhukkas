@@ -10,30 +10,34 @@ $google_page=Yii::app()->functions->getOption("google_page",$merchant_id);
 
 <div class="uk-form-row">
   <label class="uk-form-label"><?php echo Yii::t("default","Facebook Page")?></label>
-  <?php   
-  echo CHtml::textField('facebook_page',$facebook_page,array(
-       'class'=>'uk-form-width-large',
-  ))
-  ?>
+  <?php echo CHtml::textField('facebook_page',
+  isset($facebook_page)?stripslashes($facebook_page):""
+  ,array(
+  'class'=>'uk-form-width-large',
+  'data-validation'=>"required"
+  ))?> 
 </div>
 
 <div class="uk-form-row">
   <label class="uk-form-label"><?php echo Yii::t("default","Twitter Page")?></label>
-  <?php   
-  echo CHtml::textField('twitter_page',$twitter_page,array(
-       'class'=>'uk-form-width-large',
-  ))
-  ?>
+  <?php echo CHtml::textField('twitter_page',
+  isset($twitter_page)?stripslashes($twitter_page):""
+  ,array(
+  'class'=>'uk-form-width-large',
+  'data-validation'=>"required"
+  ))?> 
 </div>
 
 
 <div class="uk-form-row">
   <label class="uk-form-label"><?php echo Yii::t("default","Google Page")?></label>
-  <?php   
-  echo CHtml::textField('google_page',$google_page,array(
-       'class'=>'uk-form-width-large',
-  ))
-  ?>
+  <?php echo CHtml::textField('google_page',
+  isset($google_page)?stripslashes($google_page):""
+  ,array(
+  'class'=>'uk-form-width-large',
+  'data-validation'=>"required"
+  ))?>
+
 </div>
 
 <div class="uk-form-row">

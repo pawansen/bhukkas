@@ -6,10 +6,10 @@
 <form id="frm_table_list" method="POST" class="report uk-form uk-form-horizontal" >
 <h3><?php echo Yii::t("default","New Order List For Today")?> 
 <?php 
-/*$date= date('F d, Y');
+$date= date('F d, Y');
 $date=Yii::app()->functions->translateDate($date);
-echo $date;*/
-echo FormatDateTime(date('c'),false);
+echo $date;
+//echo FormatDateTime(date('c'),false);
 ?>
 </h3>
 

@@ -72,6 +72,9 @@ if (isset($_GET['id'])){
   'data-validation-error-msg' => "You did not enter offer validation.",     
   'data-id'=>"valid_to"
   ))?>
+
+  <span class="help-block form-error" id="date_range" style="display: none;">Invalid Date Range! Start Date cannot be after End Date!</span>
+
 </div>
 
 <div class="uk-form-row">
@@ -88,7 +91,21 @@ if (isset($_GET['id'])){
 
 <div class="uk-form-row">
 <label class="uk-form-label"></label>
-<input type="submit" value="<?php echo Yii::t("default","Save")?>" class="uk-button uk-form-width-medium uk-button-success">
+<input type="submit" id="submit" onclick="return check_valid();" value="<?php echo Yii::t("default","Save")?>" class="uk-button uk-form-width-medium uk-button-success">
 </div>
-
 </form>
+<script type="text/javascript">
+ function check_valid(){
+
+ var fromDate = document.getElementById('valid_from2').value;
+ var toDate   = document.getElementById('valid_to2').value;
+
+if(Date.parse(fromDate) > Date.parse(toDate)) {
+document.getElementById('date_range').style.display = 'block';    
+return false;      
+}else{
+document.getElementById('date_range').style.display = 'none';
+}
+
+ }
+</script>

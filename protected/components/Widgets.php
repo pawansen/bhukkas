@@ -48,7 +48,7 @@ class Widgets extends CApplicationComponent
     <div class="main" style="width:900px; margin:0px auto">
 
         <div style="">
-            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 30% 0;"/>
+            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 40% 0;"/>
         </div>
         <h1 style="margin:16px 7px 2% 39%">Contact Detail</h1>
         <table width="600" border="1|0" cellspacing="0" cellpadding="10px" style="margin:0 auto;" borderColor="WHITE">
@@ -94,7 +94,7 @@ class Widgets extends CApplicationComponent
     <div class="main" style="width:900px; margin:0px auto">
 
         <div style="">
-            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 30% 0;"/>
+            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 40% 0;"/>
         </div>
         <h1 style="margin:16px 7px 2% 39%">New User Registration</h1>
         <table width="600" border="1|0" cellspacing="0" cellpadding="10px" style="margin:0 auto;" borderColor="WHITE">
@@ -156,7 +156,7 @@ class Widgets extends CApplicationComponent
     <div class="main" style="width:900px; margin:0px auto">
 
         <div style="">
-            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 30% 0;"/>
+            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 40% 0;"/>
         </div>
         <h1 style="margin:16px 7px 2% 39%">Thanks for the Registration</h1>
         <p>Dear '.$data['first_name'].' '.$data['last_name'].',
@@ -190,7 +190,7 @@ If you have any questions please contact by phone '.$website_contact_phone.' & e
     <div class="main" style="width:900px; margin:0px auto">
 
         <div style="">
-            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 30% 0;"/>
+            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 40% 0;"/>
         </div>
         <h1 style="margin:16px 7px 2% 25%">Click on the link below to change your password.</h1>
         <p>Dear '.$data['first_name'].' '.$data['last_name'].',</p>
@@ -1100,9 +1100,28 @@ If you have any questions please contact by phone '.$website_contact_phone.' & e
     
   /*if ( Yii::app()->controller->action->id =="index"):*/
 		?>
+
+
+
+
   <form  action="<?php echo baseUrl()."/store/searchArea"?>" class="forms-search" id="forms-search" method="GET">
     <article class="clearfix m-t-120">
         <div class="col-md-3 p-lr-0 col-md-offset-1 col-sm-5">
+            
+            <?php 
+
+            
+            /*$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+
+			$query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
+			if($query && $query['status'] == 'success') {
+			$currentCity = $query['city'];
+		    }  */
+
+
+            ?>
+
+
             <div class="input-group full-width">
                 <span class="input-group-addon search-addon" id="basic-addon1"><i class="fa fa-map-marker"></i></span>
                 <select data-validation-error-msg="You did not select city" data-validation="required" class="form-control selectpicker" data-width="100%" name="city" id="citySearchSelect">
@@ -2299,10 +2318,10 @@ public function merchantPaymentList($merchant_id='')
             ?>
                 <a href="<?php echo Yii::app()->createUrl('store'); ?>" id="logo">
                       <?php if($receipt_logo):?>   
-                     <img src="<?php echo Yii::app()->request->baseUrl;?>/upload/<?php echo $receipt_logo;?>"  alt="" data-retina="true" class="hidden-xs">
+                     <img src="<?php echo Yii::app()->request->baseUrl;?>/upload/<?php echo $receipt_logo;?>"  alt="" data-retina="true" class="hidden-xs cust-logo">
                      <img src="<?php echo Yii::app()->request->baseUrl;?>/upload/<?php echo $receipt_logo;?>"  alt="" data-retina="true" class="hidden-lg hidden-md hidden-sm">
                          <?php else:?>
-                         <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png"  alt="" data-retina="true" class="hidden-xs">
+                         <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png"  alt="" data-retina="true" class="hidden-xs cust-logo">
                      <img src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/ad/logo.png"  alt="" data-retina="true" class="hidden-lg hidden-md hidden-sm">
                          <?php endif;?>
 
@@ -2614,7 +2633,7 @@ public function merchantPaymentList($merchant_id='')
     <div class="main" style="width:900px; margin:0px auto">
 
         <div style="">
-            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 30% 0;"/>
+            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 40% 0;"/>
         </div>
         <h1 style="margin:16px 7px 2% 39%">Email Subscription Detail</h1>
       <p>Hello Friend, <p> </br>
@@ -2643,7 +2662,7 @@ public function merchantPaymentList($merchant_id='')
     <div class="main" style="width:900px; margin:0px auto">
 
         <div style="">
-            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 30% 0;"/>
+            <img src="'.$_SERVER['HTTP_HOST'].Yii::app()->request->baseUrl.'/assets/images/1463638947-logo.png" style="margin:17px 40% 0;"/>
         </div>
         <h1 style="margin:16px 7px 2% 39%">Email Subscription Detail</h1>
       <p>Hello Admin, <p> </br>

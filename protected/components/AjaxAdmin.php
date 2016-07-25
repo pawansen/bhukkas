@@ -235,6 +235,9 @@ if (!class_exists('AjaxAdmin')) {
         }
 
         public function merchantListx() {
+
+            
+
             $slug = $this->data['slug'];
             $stmt = "SELECT a.*,
 			(
@@ -492,17 +495,18 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[cat_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));    	    		
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=date('M d,Y G:i:s',strtotime($val['date_created']));    	    		
+                      $date=Yii::app()->functions->translateDate($date);
+                    //$date = FormatDateTime($val['date_created']);
 
                     if (!empty($val['photo'])) {
+                        
                         $img = Yii::app()->request->baseUrl . "/upload/$val[photo]";
                         $photo = "<img class=\"uk-thumbnail uk-thumbnail-mini\" src=\"$img\" >";
                     } else
                         $photo = '';
 
-                    $feed_data['aaData'][] = array(
+                        $feed_data['aaData'][] = array(
                         $chk, stripslashes($val['category_name']) . $option,
                         stripslashes($val['category_description']),
                         $photo,
@@ -528,13 +532,18 @@ if (!class_exists('AjaxAdmin')) {
                 }
             }
 
+            
+
             $path_to_upload = Yii::getPathOfAlias('webroot') . "/upload/";
+             
             if (!file_exists($path_to_upload)) {
                 if (!@mkdir($path_to_upload, 0777)) {
                     $this->msg = Yii::t("default", "Cannot create upload folder. Please create the upload folder manually on your rood directory with 777 permission.");
                     return;
                 }
             }
+           
+            
 
             /* create htaccess file */
             $htaccess = '<Files *>';
@@ -552,6 +561,7 @@ if (!class_exists('AjaxAdmin')) {
             }
 
             if (isset($this->data['qqfile']) && !empty($this->data['qqfile'])) {
+                
                 $input = fopen("php://input", "r");
                 $temp = tmpfile();
                 $realSize = stream_copy_to_stream($input, $temp);
@@ -643,9 +653,10 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"$slug/id/$val[subcat_id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[subcat_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));  
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=date('M d,Y G:i:s',strtotime($val['date_created']));  
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $chk, $val['subcategory_name'] . $option, $val['subcategory_description'],
@@ -721,9 +732,10 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"$slug/id/$val[sub_item_id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[sub_item_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                    $date=date('M d,Y G:i:s',strtotime($val['date_created']));
+                      $date=Yii::app()->functions->translateDate($date); 
+                    
+                    //$date = FormatDateTime($val['date_created']);
                     if (!empty($val['category'])) {
                         $category = json_decode($val['category']);
                         if (is_array($category) && count($category) >= 1) {
@@ -824,9 +836,10 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[size_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));  
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=date('M d,Y G:i:s',strtotime($val['date_created']));  
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $chk, $val['size_name'] . $option,
@@ -893,9 +906,10 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[cook_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));  
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=date('M d,Y G:i:s',strtotime($val['date_created']));  
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $chk, $val['cooking_name'] . $option,
@@ -1066,9 +1080,10 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[item_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));    	    		
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=date('M d,Y G:i:s',strtotime($val['date_created']));    	    		
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     if (!empty($val['photo'])) {
                         $img = Yii::app()->request->baseUrl . "/upload/$val[photo]";
@@ -1422,6 +1437,22 @@ if (!class_exists('AjaxAdmin')) {
                 
             endif;
 
+            $this->code = 1;
+        }
+        
+        
+        public function getMerchantListByCityName() {
+
+                $this->msg = "";
+                $rs = Yii::app()->functions->getMerchantByLocation();
+                $merchant = array();
+                foreach ($rs as $rows):
+
+                    $merchant [] = $rows['restaurant_name'];
+
+                endforeach;
+                $this->details['restaurant_name'] = $merchant;
+           
             $this->code = 1;
         }
         
@@ -2171,7 +2202,7 @@ if (!class_exists('AjaxAdmin')) {
 
                         $min_orde = !empty($val['minimum_order']) ? displayPrice(getCurrencyCode(), prettyFormat($val['minimum_order'])) . "<br/>" : "";
                         if ($min_orde != '') {
-                            $resto_info.="<li><label>" . Yii::t("default", "Minium Delivery") . "</label> " . $min_orde . " </li>";
+                            $resto_info.="<li><label>" . Yii::t("default", "Minimum Delivery") . "</label> " . $min_orde . " </li>";
 
                             if (!empty($now_open)) {
 
@@ -3233,7 +3264,7 @@ if (!class_exists('AjaxAdmin')) {
         
         public function shareCurrentLocation(){
 
-            $_SESSION['currentLatLong'] = array('lat'=>$this->data['lat'],'long'=>$this->data['long']);
+        $_SESSION['currentLatLong'] = array('lat'=>$this->data['lat'],'long'=>$this->data['long']);
         }
 
         public function removeRating() {
@@ -3628,9 +3659,10 @@ if (!class_exists('AjaxAdmin')) {
 
                     $action.="<a data-id=\"" . $val['order_id'] . "\" class=\"view-order-history\" href=\"javascript:\">" . Yii::t("default", "History") . "</a>";
 
-                    /* $date=prettyDate($val['date_created'],true);
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=prettyDate($val['date_created'],true);
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $val['order_id'],
@@ -4001,9 +4033,10 @@ if (!class_exists('AjaxAdmin')) {
                         $new = " <div class=\"uk-badge\">" . Yii::t("default", "NEW") . "</div>";
                     }
 
-                    /* $date=prettyDate($val['date_created'],true);
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=prettyDate($val['date_created'],true);
+                      $date=Yii::app()->functions->translateDate($date); 
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $val['order_id'],
@@ -4633,9 +4666,10 @@ if (!class_exists('AjaxAdmin')) {
 			";
             if ($res = $this->rst($stmt)) {
                 foreach ($res as $val) {
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));  				
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=date('M d,Y G:i:s',strtotime($val['date_created']));  				
+                      $date=Yii::app()->functions->translateDate($date); 
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $action = "<div class=\"options\">
     	    		<a href=\"$slug/id/$val[package_id]\" >" . Yii::t("default", "Edit") . "</a>
@@ -5386,10 +5420,10 @@ if (!class_exists('AjaxAdmin')) {
                 foreach ($res as $val) {
 
                     $action = "<a data-id=\"" . $val['merchant_id'] . "\" class=\"edit-merchant-status\" href=\"javascript:\">" . Yii::t("default", "Edit") . "</a>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);
-                      $date=Yii::app()->functions->translateDate($date); */
+                    $date=Yii::app()->functions->prettyDate($val['date_created']);
+                      $date=Yii::app()->functions->translateDate($date); 
 
-                    $date = FormatDateTime($val['date_created'], false);
+                    //$date = FormatDateTime($val['date_created'], false);
 
                     $feed_data['aaData'][] = array(
                         $val['merchant_id'],
@@ -5470,8 +5504,9 @@ if (!class_exists('AjaxAdmin')) {
                     $action = "<a data-id=\"" . $val['id'] . "\" class=\"edit-payment\" href=\"javascript:\">" . Yii::t("default", "Edit") . "</a>";
                     //$action.="<a data-id=\"".$val['id']."\" class=\"view-payment\" href=\"javascript:\">View</a>";
 
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created'],true);
-                      $date=Yii::app()->functions->translateDate($date); */
+                    $date=Yii::app()->functions->prettyDate($val['date_created'],true);
+                    $date=Yii::app()->functions->translateDate($date);
+                    
                     $date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
@@ -5819,8 +5854,17 @@ if (!class_exists('AjaxAdmin')) {
     	    		</div>";
                     /* $date=Yii::app()->functions->prettyDate($val['sponsored_expiration']);					
                       $date=Yii::app()->functions->translateDate($date); */
+                    
                     $img = ($val['sponsored_image']) ? $val['sponsored_image'] : '100X100.png';
-                    $date = FormatDateTime($val['sponsored_expiration'], false);
+                    
+
+                    //$date = FormatDateTime($val['sponsored_expiration'], false);
+
+
+                    $date=FormatDateTime($val['sponsored_expiration']);
+                    $date=date('M d,Y',strtotime($date));
+
+
                     $feed_data['aaData'][] = array(
                         $val['merchant_id'],
                         $val['restaurant_name'] . $action,
@@ -5847,9 +5891,9 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[currency_code]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                      $date=Yii::app()->functions->translateDate($date); 
+                  //  $date = FormatDateTime($val['date_created']);
                     $feed_data['aaData'][] = array(
                         $val['currency_code'] . $action,
                         $val['currency_symbol'],
@@ -5877,7 +5921,8 @@ if (!class_exists('AjaxAdmin')) {
                 if (empty($this->data['id'])) {
                     if ($this->insertData("{{currency}}", $params)) {
                         //$this->details = Yii::app()->db->getLastInsertID();
-                        $this->details = Yii::app()->createUrl('admin/ManageCurrency');
+                        $controller = $this->data['currentController'];
+                        $this->details = Yii::app()->createUrl($controller.'/ManageCurrency');
                         $this->code = 1;
                         $this->msg = Yii::t("default", "Successfully addedd currency");
                     }
@@ -5887,7 +5932,7 @@ if (!class_exists('AjaxAdmin')) {
                     $res = $this->updateData('{{currency}}', $params, 'currency_code', $this->data['id']);
                     if ($res) {
                         $this->code = 1;
-                        $this->details = Yii::app()->createUrl('admin/ManageCurrency');
+                        $this->details = Yii::app()->createUrl($controller.'/ManageCurrency');
                         $this->msg = Yii::t("default", 'Successfully Currency updated.');
                     } else
                         $this->msg = Yii::t("default", "ERROR: cannot update");
@@ -5909,10 +5954,14 @@ if (!class_exists('AjaxAdmin')) {
     	    	     <a href=\"$slug/Do/Add/?id=$val[cuisine_id]\" >" . Yii::t("default", "Edit") . "</a>
     	    	     <a href=\"javascript:;\" class=\"row_del\" rev=\"$val[cuisine_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);
-                      $date=Yii::app()->functions->translateDate($date); */
+                    
+                    $date=Yii::app()->functions->prettyDate($val['date_created']);
+                      $date=Yii::app()->functions->translateDate($date); 
+                    
                     //$status ='<button onclick=\"status($val[cuisine_id])\">dfgdfsh</button>';
-                    $date = FormatDateTime($val['date_created']);
+                    
+                    //$date = FormatDateTime($val['date_created']);
+                    
                     $featured = $val['featured'];
                     if ($featured == 1) {
                         $feature = "<input type=\"checkbox\" onclick=\"featuredCuisine($val[cuisine_id],$featured)\" checked >";
@@ -5961,7 +6010,8 @@ if (!class_exists('AjaxAdmin')) {
                 if (empty($this->data['id'])) {
                     if ($this->insertData("{{cuisine}}", $params)) {
                         //$this->details = Yii::app()->db->getLastInsertID();
-                        $this->details = Yii::app()->createUrl('admin/Cuisine');
+                        $controller = $this->data['currentController'];
+                        $this->details = Yii::app()->createUrl($controller.'/Cuisine');
                         $this->code = 1;
                         $this->msg = Yii::t("default", "Successfully Cuisine added");
                     }
@@ -5971,7 +6021,8 @@ if (!class_exists('AjaxAdmin')) {
                     $res = $this->updateData('{{cuisine}}', $params, 'cuisine_id', $this->data['id']);
                     if ($res) {
                         $this->code = 1;
-                        $this->details = Yii::app()->createUrl('admin/Cuisine');
+                        $controller = $this->data['currentController'];
+                        $this->details = Yii::app()->createUrl($controller.'/Cuisine');
                         $this->msg = Yii::t("default", 'Successfully Cuisine updated.');
                     } else
                         $this->msg = Yii::t("default", "ERROR: cannot update");
@@ -6158,13 +6209,20 @@ if (!class_exists('AjaxAdmin')) {
 			";
             if ($res = $this->rst($stmt)) {
                 foreach ($res as $val) {
+
+                     
+
                     $action = "<div class=\"options\">
     	    		<a href=\"$slug/Do/Add/?id=$val[stats_id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[stats_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                    
+                    $date=Yii::app()->functions->translateDate($date); 
+
+                    $date=date('M d,Y G:i:s',strtotime($val['date_created']));
+
+                    //$date = FormatDateTime($val['date_created']);
                     $feed_data['aaData'][] = array(
                         $val['stats_id'],
                         $val['description'] . $action,
@@ -6184,6 +6242,10 @@ if (!class_exists('AjaxAdmin')) {
             );
             $Validator->required($req, $this->data);
             if ($Validator->validate()) {
+
+                $date = new DateTime();
+                $params['date_modified'] = $date->format('Y-m-d H:i:sP');
+
                 $params = array(
                     'description' => $this->data['description'],
                     'date_created' => date('c'),
@@ -6196,17 +6258,23 @@ if (!class_exists('AjaxAdmin')) {
                 if (empty($this->data['id'])) {
                     if ($this->insertData("{{order_status}}", $params)) {
                         //$this->details = Yii::app()->db->getLastInsertID();
-                        $this->details = Yii::app()->createUrl('admin/OrderStatus');
+                        $controller = $this->data['currentController'];
+                        $this->details = Yii::app()->createUrl($controller.'/OrderStatus');
                         $this->code = 1;
                         $this->msg = Yii::t("default", "Successfully added status");
                     }
                 } else {
                     unset($params['date_created']);
-                    $params['date_modified'] = date('c');
+                    //$params['date_modified'] = date('c');
+                    $date = new DateTime();
+                    $params['date_modified'] = $date->format('Y-m-d H:i:sP');
+
+
                     $res = $this->updateData('{{order_status}}', $params, 'stats_id', $this->data['id']);
                     if ($res) {
                         $this->code = 1;
-                        $this->details = Yii::app()->createUrl('admin/OrderStatus');
+                        $controller = $this->data['currentController'];
+                        $this->details = Yii::app()->createUrl($controller.'/OrderStatus');
                         $this->msg = Yii::t("default", 'Successfully updated Status.');
                     } else
                         $this->msg = Yii::t("default", "ERROR: cannot update");
@@ -6394,6 +6462,7 @@ if (!class_exists('AjaxAdmin')) {
                 $subject = Yii::t("default", "New Contact Us");
                 $to = yii::app()->functions->getOptionAdmin('contact_email_receiver');
                 $from = 'info@bhukkas.com';
+                
                 if (empty($to)) {
                     $this->msg = Yii::t("default", "ERROR: no email to send.");
                     return;
@@ -6616,9 +6685,9 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"$slug/Do/Add/?id=$val[admin_id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[admin_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                      $date=Yii::app()->functions->translateDate($date);
+                    //$date = FormatDateTime($val['date_created']);
                     $feed_data['aaData'][] = array(
                         $val['admin_id'],
                         $val['username'] . $action,
@@ -6683,9 +6752,9 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"$slug/Do/Add/?id=$val[id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                      $date=Yii::app()->functions->translateDate($date);
+                    //$date = FormatDateTime($val['date_created']);
                     $feed_data['aaData'][] = array(
                         $val['id'],
                         $val['slug_name'],
@@ -6869,9 +6938,9 @@ if (!class_exists('AjaxAdmin')) {
 
                     $country = array_key_exists($val['country_code'], (array) $country_list) ? $country_list[$val['country_code']] : $val['country_code'];
 
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);  
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);  
+                      $date=Yii::app()->functions->translateDate($date);
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $country . $action,
@@ -7472,9 +7541,10 @@ if (!class_exists('AjaxAdmin')) {
                     $link = Yii::app()->request->baseUrl . "/merchant/smsBroadcast/Do/view/bid/" . $val['broadcast_id'];
                     $view = "<a href=\"$link\" >View</a>";
 
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));  
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=date('M d,Y G:i:s',strtotime($val['date_created']));  
+                      $date=Yii::app()->functions->translateDate($date);
+                   
+                   // $date = FormatDateTime($val['date_created']);
 
                     $status = '';
                     if ($val['status'] == "process") {
@@ -7582,10 +7652,11 @@ if (!class_exists('AjaxAdmin')) {
             if (is_array($rows) && count($rows) >= 1) {
                 foreach ($rows as $val) {
                     $chk = "<input type=\"checkbox\" name=\"row[]\" value=\"$val[cook_id]\" class=\"chk_child\" >";
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));      	    		
-                      $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strtotime($val['last_login'])); */
+                    
+                    $date=date('M d,Y G:i:s',strtotime($val['date_created']));      	    		
+                    $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strtotime($val['last_login'])); 
 
-                    $last_login = FormatDateTime($val['last_login']);
+                   // $last_login = FormatDateTime($val['last_login']);
 
                     $status = '';
                     if ($val['status'] == "active") {
@@ -7598,7 +7669,8 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[merchant_user_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    $last_login = Yii::app()->functions->translateDate($last_login);
+                   // $last_login = Yii::app()->functions->translateDate($last_login);
+
                     $feed_data['aaData'][] = array(
                         $chk,
                         $val['first_name'] . " " . $val['last_name'] . $action,
@@ -7716,9 +7788,10 @@ if (!class_exists('AjaxAdmin')) {
                     } else
                         $amt = $val['amount'];
 
-                    /* $date=date('D m,Y G:i:s',strtotime($val['date_created']));
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                    $date=date('D m,Y G:i:s',strtotime($val['date_created']));
+                      $date=Yii::app()->functions->translateDate($date); 
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $val['voucher_id'],
@@ -7936,9 +8009,10 @@ if (!class_exists('AjaxAdmin')) {
                         }
                     }
 
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                    $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         ucwords($val['client_name']) . $action,
@@ -8013,9 +8087,11 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                    $date=Yii::app()->functions->prettyDate($val['date_created']);
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
+                    
                     $feed_data['aaData'][] = array(
                         $val['id'],
                         $val['merchant_name'] . $action,
@@ -8329,12 +8405,13 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[booking_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    /* $date=date('M d,Y G:i:s',strtotime($val['date_created']));
+                    $date=date('M d,Y G:i:s',strtotime($val['date_created']));
                       $date=Yii::app()->functions->translateDate($date);
                       $dateb=date('M d,Y',strtotime($val['date_booking']));
-                      $dateb=Yii::app()->functions->translateDate($dateb); */
-                    $date = FormatDateTime($val['date_created']);
-                    $dateb = FormatDateTime($val['date_booking'], false);
+                      $dateb=Yii::app()->functions->translateDate($dateb); 
+                   
+                   // $date = FormatDateTime($val['date_created']);
+                    //$dateb = FormatDateTime($val['date_booking'], false);
 
                     $stats = '';
                     switch ($val['status']) {
@@ -8561,9 +8638,12 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"$slug/Do/Add/?id=$val[client_id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[client_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                    
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                      $date=Yii::app()->functions->translateDate($date); 
+                    
+                    //$date = FormatDateTime($val['date_created']);
+                    
                     $address = $val['street'] . " " . $val['city'] . " " . $val['state'] . " " . $val['zipcode'] . " " . $val['country_code'];
                     $feed_data['aaData'][] = array(
                         $val['client_id'],
@@ -8753,6 +8833,8 @@ if (!class_exists('AjaxAdmin')) {
                     $date = FormatDateTime($val['date_created']);
                     $date = Yii::app()->functions->translateDate($date);
 
+
+
                     $feed_data['aaData'][] = array(
                         $val['order_id'],
                         ucwords($val['merchant_name']),
@@ -8838,9 +8920,10 @@ if (!class_exists('AjaxAdmin')) {
                 foreach ($res as $val) {
                     $action = "<a data-id=\"" . $val['order_id'] . "\" class=\"edit-order\" href=\"javascript:\">" . Yii::t("default", "Edit") . "</a>";
                     $action.="<a data-id=\"" . $val['order_id'] . "\" class=\"view-receipt\" href=\"javascript:\">" . Yii::t("default", "View") . "</a>";
-                    /* $date=prettyDate($val['date_created'],true);
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=prettyDate($val['date_created'],true);
+                      $date=Yii::app()->functions->translateDate($date); 
+                    
+                   // $date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $val['order_id'],
@@ -8923,9 +9006,10 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"$slug/Do/Add/?id=$val[cuisine_id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[cuisine_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);
+                      $date=Yii::app()->functions->translateDate($date);
+                   
+                   // $date = FormatDateTime($val['date_created']);
 
                     if (!empty($val['scanphoto'])) {
                         $img = Yii::app()->request->baseUrl . "/upload/$val[scanphoto]";
@@ -9164,9 +9248,10 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"$slug/Do/Add/?id=$val[id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                    $date=Yii::app()->functions->prettyDate($val['date_created']);
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
                     $feed_data['aaData'][] = array(
                         $val['id'],
                         $val['payment_name'] . $action,
@@ -9208,9 +9293,10 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[offers_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
 
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $val['offers_id'],
@@ -9342,9 +9428,10 @@ if (!class_exists('AjaxAdmin')) {
                     $action = "<div class=\"options\">    	    		
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                     $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $val['id'],
@@ -9408,9 +9495,10 @@ if (!class_exists('AjaxAdmin')) {
                       <a href=\"javascript:;\" class=\"row_del\" rev=\"$val[id]\" >".Yii::t("default","Delete")."</a>
                       </div>"; */
 
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                    $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                      $date=Yii::app()->functions->translateDate($date);
+                    
+                    //$date = FormatDateTime($val['date_created']);
 
                     $feed_data['aaData'][] = array(
                         $val['id'],
@@ -9601,9 +9689,13 @@ if (!class_exists('AjaxAdmin')) {
     	    		<a href=\"$slug/Do/Add/?id=$val[cms_id]\" >" . Yii::t("default", "Edit") . "</a>
     	    		<a href=\"javascript:;\" class=\"row_del\" rev=\"$val[cms_id]\" >" . Yii::t("default", "Delete") . "</a>
     	    		</div>";
-                    /* $date=Yii::app()->functions->prettyDate($val['date_created']);	
-                      $date=Yii::app()->functions->translateDate($date); */
-                    $date = FormatDateTime($val['date_created']);
+                
+                    $date=Yii::app()->functions->prettyDate($val['date_created']);	
+                    
+                    $date=Yii::app()->functions->translateDate($date); 
+                    
+                    //$date = FormatDateTime($val['date_created']);
+                    
                     $feed_data['aaData'][] = array(
                         $val['cms_code'],
                         $val['title'] . $action,
@@ -9698,8 +9790,11 @@ if (!class_exists('AjaxAdmin')) {
              $i=1;
             if ($res = $this->rst($stmt)) {
                 foreach ($res as $val) {
+
+                    $date=Yii::app()->functions->translateDate($val['date_created']); 
                    
-                    $date = FormatDateTime($val['date_created']);
+                    //$date = FormatDateTime($val['date_created']);
+
                     $feed_data['aaData'][] = array(
                         $i,
                         ucwords($val['first_name']." ".$val['last_name']),

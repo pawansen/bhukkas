@@ -1991,7 +1991,8 @@ ul.opening_list li span {
 .form-control.form-white {
 	color: #fff;
 	font-size: 16px;
-	height: 42px;
+	height:30px;
+	/*height: 42px;*/
 	position: relative;
 	border-radius: 0;
 	border: 1px solid white;
@@ -2651,7 +2652,8 @@ footer ul li {
 }
 
 .m-t-120 {
-	margin-top: 120px;
+	/*margin-top: 120px;*/
+	 margin-top: 200px;
 }
 
 #change_search_location form .m-t-120 {
@@ -3107,8 +3109,10 @@ ul.rest-detail {
 }
 
 ul.rest-detail li {
-	padding: 3px 0px 0px;
-	width: 110px;
+	/*padding: 3px 0px 0px;
+	width: 110px;*/
+	padding: 3px 10px 0px;
+    width: 96px;
 	float: left;
 	text-align: left;
 }
@@ -4332,6 +4336,17 @@ ul.rest-detail li:last-child{
 ul.rest-detail li:last-child span{
      padding: 2px; 
 }
-
-
-
+/*for popbox logo*/
+.popbox-logo{
+	margin-top: -30px;
+    width: 100px;
+}
+.cust-logo-1{
+width:15% !important;
+}
+.cust-logo{
+	width:160px;
+}
+#form-partner #comment {
+	 resize: none;
+}

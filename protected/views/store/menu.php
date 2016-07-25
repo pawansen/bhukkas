@@ -245,7 +245,8 @@
    <div class="container">
       <ul>
          <li><a href="<?php echo Yii::app()->createUrl('store');?>">Home</a></li>
-         <li><a href="<?php if(isset($_SESSION['previous_url'])){echo $_SESSION['previous_url'];}?>">Back To Search</a></li>
+        <!--  <li><a href="<?php //if(isset($_SESSION['previous_url'])){echo $_SESSION['previous_url'];}?>">Back To Search</a></li> -->
+         <li><a href="javascript:void(0);<?php //if(isset($_SESSION['previous_url'])){echo $_SESSION['previous_url'];}?>">Store</a></li>
          
 
       </ul>
@@ -470,7 +471,7 @@
          <div class="col-md-3 my-cart">
             <div id="">
             <div class="order-list-wrap">
-               <h3>Your order <i class="icon_cart_alt pull-right"></i></h3>
+               <h3>Your Order <i class="icon_cart_alt pull-right"></i></h3>
                <a href="javascript:;" class="clear-cart"><img style="max-height: 25px;" src="<?php  echo Yii::app()->request->baseUrl; ?>/assets/images/imgpsh.png">
 <?php echo Yii::t("default","Clear Order")?></a>
                <hr class="bg-less">

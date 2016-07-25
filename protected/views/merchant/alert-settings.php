@@ -26,6 +26,7 @@ $enabled_alert_sound=Yii::app()->functions->getOption("enabled_alert_sound",$mer
     'class'=>"uk-form-width-large"
   ))
   ?>
+    <span class="help-block form-error" id="email_valid_msg" style="display: none;">Invalid email address</span>
   <p class="uk-text-muted"><?php echo Yii::t("default","Email address of the person who will receive if there is new order. Multiple email must be separated by comma.")?></p>
 </div>
   
@@ -41,7 +42,27 @@ $enabled_alert_sound=Yii::app()->functions->getOption("enabled_alert_sound",$mer
 
 <div class="uk-form-row">
 <label class="uk-form-label"></label>
-<input type="submit" value="<?php echo Yii::t("default","Save")?>" class="uk-button uk-form-width-medium uk-button-success">
+<input type="submit" onclick="return check_valid();" value="<?php echo Yii::t("default","Save")?>" class="uk-button uk-form-width-medium uk-button-success">
 </div>
 
 </form>
+
+<script type="text/javascript">
+ function check_valid(){
+
+ var merchant_notify_email = document.getElementById('merchant_notify_email').value;
+ 
+ 
+var atpos = merchant_notify_email.indexOf("@");
+var dotpos = merchant_notify_email.lastIndexOf(".");
+
+if (atpos<1 || dotpos<atpos+2 || dotpos+2>=merchant_notify_email.length) {
+        document.getElementById('email_valid_msg').style.display = 'block';
+        return false;
+    }else{
+       document.getElementById('email_valid_msg').style.display = 'none';
+       return true;
+    }
+
+ }
+</script>

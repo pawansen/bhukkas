@@ -41,9 +41,9 @@ $guest_checkout=Yii::app()->functions->getOptionAdmin('website_disabled_guest_ch
     <div id="position">
         <div class="container">
             <ul>
-                <li><a href="#0">Home</a></li>
-                <li><a href="#0">Category</a></li>
-                <li>Page active</li>
+                <li><a href="<?php echo Yii::app()->createUrl('store'); ?>">Home</a></li>
+                <li><a href="javascript:void(0)">Checkout</a></li>
+               <!--  <li>Page active</li> -->
             </ul>
         </div>
     </div><!-- Position -->
@@ -107,7 +107,7 @@ $guest_checkout=Yii::app()->functions->getOptionAdmin('website_disabled_guest_ch
 		  
 		<div style="height:10px;"></div>          
 		
-		<div class="section-forgotpass">
+		<div class="section-forgotpass" style="display:none;">
 		<form id="frm-modal-forgotpass" class="frm-modal-forgotpass uk-panel uk-panel-box uk-form" method="POST" onsubmit="return false;" style="min-height:inherit;">
 		<?php echo CHtml::hiddenField('action','forgotPassword')?>
 		<?php echo CHtml::hiddenField('do-action',$_GET['do-action'])?>     
@@ -160,14 +160,16 @@ $guest_checkout=Yii::app()->functions->getOptionAdmin('website_disabled_guest_ch
               <?php echo CHtml::textField('first_name','',array(
                'class'=>'uk-width-1-1',
                'placeholder'=>Yii::t("default","First Name"),
-               'data-validation'=>"required"
+               'data-validation'=>"required",
+               'onkeypress' => "return onlyAlphabets(event,this);"
               ))?>
              </div>
              <div class="uk-form-row">
               <?php echo CHtml::textField('last_name','',array(
                'class'=>'uk-width-1-1',
                'placeholder'=>Yii::t("default","Last Name"),
-               'data-validation'=>"required"
+               'data-validation'=>"required",
+               'onkeypress' => "return onlyAlphabets(event,this);"
               ))?>
              </div>
              
@@ -175,7 +177,9 @@ $guest_checkout=Yii::app()->functions->getOptionAdmin('website_disabled_guest_ch
 		      <?php echo CHtml::textField('contact_phone','',array(
 		       'class'=>'uk-width-1-1 mobile_inputs',
 		       'placeholder'=>yii::t("default","Mobile"),
-		       'data-validation'=>"required"
+		       'data-validation'=>"required",
+           'maxlength'=>"13",
+           'onkeypress' => "return event.charCode >= 48 && event.charCode <= 57"
 		      ))?>
 		     </div>
              
@@ -243,3 +247,25 @@ $guest_checkout=Yii::app()->functions->getOptionAdmin('website_disabled_guest_ch
 	</div><!-- End container pin -->
 </div><!-- End container -->
 <!-- End Content =============================================== -->
+ <script language="Javascript" type="text/javascript">
+ 
+        function onlyAlphabets(e, t) {
+            try {
+                if (window.event) {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e) {
+                    var charCode = e.which;
+                }
+                else { return true; }
+                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+                    return true;
+                else
+                    return false;
+            }
+            catch (err) {
+                alert(err.Description);
+            }
+        }
+ 
+    </script>

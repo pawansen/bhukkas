@@ -294,7 +294,7 @@ class ApiController extends RestController {
      */
     public function actionauthLogin() {
         $data = array();
-        if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['devicetoken'])) {
+        if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['devicetoken']) && !empty($_POST['devicetype'])) {
 
             $response = $this->connection->authLogin($_POST);
             if ($response['code'] == 1) {
@@ -310,7 +310,7 @@ class ApiController extends RestController {
         } else {
             $data['status'] = 400;
             $data['message'] = 'Login Failed. Either username or password is incorrect';
-            $this->sendResponse(200, CJSON::encode($data));
+            //$this->sendResponse(200, CJSON::encode($data));
         }
     }
 
@@ -408,6 +408,9 @@ class ApiController extends RestController {
      * @return array
      */
     public function actiongetMerchantList() {
+
+
+
         $data = array();
         if (!empty($_POST['cityName']) && !empty($_POST['location'])) {
             $response = $this->connection->getMerchantList($_POST);
@@ -973,10 +976,10 @@ class ApiController extends RestController {
      * @keywords city,location
      * @return array
      */
-    public function actiongetMerchantOffer() {
+    public function actiongetMerchantDeals() {
         $data = array();
-        if (!empty($_POST['cityName']) && !empty($_POST['location'])) {
-            $response = $this->connection->getMerchantOffer($_POST);
+        if (!empty($_POST['cityName'])) {
+            $response = $this->connection->getMerchantDeals($_POST);
             if ($response['code'] == 1) {
                 $data['status'] = 200;
                 $data['message'] = $response['msg'];
@@ -990,10 +993,59 @@ class ApiController extends RestController {
             }
         } else {
             $data['status'] = 400;
-            $data['message'] = 'please enter your city and location';
+            $data['message'] = 'please enter your city';
             $this->sendResponse(200, CJSON::encode($data));
         }
     }
+    
+    
+    /**
+     * @project Bhukkas
+     * @method OrderTracker
+     * @description order tracker status by order id
+     * @access public
+     * @keywords order_id
+     * @return array
+     */
+    
+    public function actionOrderTracker(){
+         $data = array();
+        
+        if (!empty($_POST['order_id'])) {
+            $response = $this->connection->getOrderTracker($_POST);
+            if ($response['code'] == 1) {
+                $data['status'] = 200;
+                $data['message'] = $response['msg'];
+                $data['list'] = $response['list'];
+                $this->sendResponse(200, CJSON::encode($data));
+            } else {
+                $data['status'] = 400;
+                $data['message'] = $response['msg'];
+                $this->sendResponse(200, CJSON::encode($data));
+            }
+        } else {
+            $data['status'] = 400;
+            $data['message'] = 'please enter your order id';
+            $this->sendResponse(200, CJSON::encode($data));
+        }
+    }
+
+    public function actionSaveOrderHistory(){
+    $data = array();
+
+    if (!empty($_POST['order_id'])) {
+            $response = $this->connection->setOrderHistory($_POST);
+            $this->sendResponse(200, CJSON::encode($response));
+            } else {
+            $data['status'] = 400;
+            $data['message'] = 'please enter your order id';
+            $this->sendResponse(200, CJSON::encode($data));
+        }
+       
+
+    }
+
+    
 
     public function actionCollectionDB() {
 
@@ -1231,5 +1283,7 @@ class ApiController extends RestController {
             }
         }
     }
+    
+    
 
 }

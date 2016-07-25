@@ -49,9 +49,10 @@ $oninput = "this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.v
 <?php echo CHtml::hiddenField('action','addMerchant')?>
 <?php echo CHtml::hiddenField('id',isset($_GET['id'])?$_GET['id']:"");?>
 <?php echo CHtml::hiddenField('old_status',isset($data['status'])?$data['status']:"")?>
-<?php if (!isset($_GET['id'])):?>
-<?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/admin/merchantAdd")?>
-<?php endif;?>
+<!-- <?php if (!isset($_GET['id'])):?>
+<?php //echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/admin/merchantAdd")?>
+<?php endif;?> -->
+<?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/admin/merchant")?>
 
 <ul class="uk-switcher uk-margin " id="tab-content">
 <li class="uk-active">

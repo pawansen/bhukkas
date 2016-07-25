@@ -51,7 +51,9 @@ echo Yii::t("default","Add New")?></a>
         <tr>            
             <th width="5%"><?php echo Yii::t('default',"ID")?></th>
             <th width="4%"><?php echo Yii::t('default',"Status")?></th>            
-            <th width="4%"><?php echo Yii::t('default',"Date")?></th>
+            <th width="4%">
+            <?php echo Yii::t('default',"Date")?>
+            </th>
         </tr>
     </thead>
     <tbody>    

@@ -14,7 +14,7 @@ $email_provider=Yii::app()->functions->getOptionAdmin('email_provider');
     'class'=>"icheck",
     'value'=>"phpmail"
    ));
-   echo "<span>".t("use php mail functions")."</span>";
+   echo "<span>".t("Use php mail functions")."</span>";
    ?>
    </li>
    <li><?php 
@@ -24,7 +24,7 @@ $email_provider=Yii::app()->functions->getOptionAdmin('email_provider');
     'class'=>"icheck",
     'value'=>'smtp'
    ));
-   echo "<span>".t("use SMTP")."</span>";
+   echo "<span>".t("Use SMTP")."</span>";
    ?></li>
    
    <li><?php 
@@ -34,7 +34,7 @@ $email_provider=Yii::app()->functions->getOptionAdmin('email_provider');
     'class'=>"icheck",
     'value'=>'mandrill'
    ));
-   echo "<span>".t("use Mandrill API")."</span>";
+   echo "<span>".t("Use Mandrill API")."</span>";
    ?></li>
    
   </ul>

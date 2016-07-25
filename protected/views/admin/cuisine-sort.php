@@ -11,6 +11,7 @@ $list=Yii::app()->functions->Cuisine();
 <?php echo CHtml::hiddenField('action','sortItem')?>
 <?php echo CHtml::hiddenField('table','cuisine')?>
 <?php echo CHtml::hiddenField('whereid','cuisine_id')?>
+<?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/admin/Cuisine/")?>
 
 <h3 class="uk=h3"><?php echo Yii::t("default","Sort")?></h3>
 <p class="uk-text-muted"><?php echo Yii::t("default","Drag the item below to sort")?></p>

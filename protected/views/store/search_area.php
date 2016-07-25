@@ -23,7 +23,6 @@ if (isset($_GET['city'])){
 	
 }
 
-
 $_SESSION['search_type']='';
 if (isset($_GET['s'])){
 	$_SESSION['kr_search_address']=$_GET['s'];

@@ -14,6 +14,7 @@ $list=Yii::app()->functions->getCategoryList($merchant_id);
 <?php echo CHtml::hiddenField('action','sortItem')?>
 <?php echo CHtml::hiddenField('table','category')?>
 <?php echo CHtml::hiddenField('whereid','cat_id')?>
+<?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/merchant/CategoryList/")?>
 
 <h3 class="uk=h3"><?php echo Yii::t("default","Sort")?></h3>
 <p class="uk-text-muted"><?php echo Yii::t("default","Drag the item below to sort")?></p>

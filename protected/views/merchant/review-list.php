@@ -14,7 +14,7 @@
   <!--<caption>Merchant List</caption>-->
    <thead>
         <tr>			
-			 <th width="5%"><?php echo Yii::t('default',"customer")?></th>
+			 <th width="5%"><?php echo Yii::t('default',"Customer")?></th>
 			 <th width="10%"><?php echo Yii::t('default',"Reviews")?></th>				 
 			 <!--<th width="10%"><?php echo Yii::t('default',"Order Ref")?></th>	-->			 	 
 			 <th width="5%"><?php echo Yii::t('default',"Rating")?></th>			 

@@ -54,7 +54,7 @@ if (!empty($fields)){
 	<div class="row" id="contacts">
     	<div class="col-md-6 col-sm-6">
         	<div class="box_style_2">
-            	<h2 class="inner">Customer service</h2>
+            	<h2 class="inner">Customer Service</h2>
                 <p class="add_bottom_30"></p>
                 <p><a href="tel://<?php echo $website_contact_phone;?>" class="phone"><i class="icon-phone-circled"></i>  <?php echo $website_contact_phone;?></a></p>
                 <p class="nopadding"><a href="mailto:<?php echo $website_contact_email;?>"><i class="icon-mail-3"></i> <?php echo $website_contact_email;?></a></p>
@@ -104,25 +104,32 @@ if (!empty($fields)){
   $placeholder='';
   $validate_default="required";
   $oninput="";
+  $maxlength = "";
+
+
   $data_validation_error_msg = "You have not answered all required fields";
   switch ($val) {
+
   	case "name":
   		$placeholder="Name";
-                $data_validation_error_msg="You did not enter Name";
-  		break;
+      $data_validation_error_msg="You did not enter Name";
+      $oninput = "this.value = this.value.replace(/[^a-z.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');";
+      break;
   	case "email":  
   	    $placeholder="Email address";
   	    $validate_default="email";
-            $data_validation_error_msg="You did not enter valid E-mail";
+        $data_validation_error_msg="You did not enter valid E-mail";
   		break;
   	case "phone":  
   	    $placeholder="Phone";
             $data_validation_error_msg="You did not enter phone";
             $oninput = "this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');";
+            $length = 10;
   		break;
   	case "country":  
   	    $placeholder="Country";
             $data_validation_error_msg="You did not enter country";
+             
   		break;
   	case "message":  
   	    $placeholder="Message";
@@ -164,4 +171,4 @@ if (!empty($fields)){
     </div><!-- End row -->
 </div><!-- End container -->
 <!-- End Content =============================================== -->
-  
+   

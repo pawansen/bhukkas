@@ -2,8 +2,8 @@
 <section class="parallax-window" id="short" data-parallax="scroll" data-image-src="<?php echo Yii::app()->request->baseUrl;?>/assets/front/img/sub_header_2.jpg" data-natural-width="1400" data-natural-height="350">
     <div id="subheader">
         <div id="sub_content">
-            <h1>Frequently asked questions</h1>
-            <p>Qui debitis meliore ex, tollit debitis conclusionemque te eos.</p>
+            <h1>Frequently Asked Questions</h1>
+            <p> </p>
         </div>
         <!-- End sub_content -->
     </div>
@@ -15,9 +15,9 @@
 <div id="position">
     <div class="container">
         <ul>
-            <li><a href="#0">Home</a></li>
-            <li><a href="#0">Category</a></li>
-            <li>Page active</li>
+            <li><a href="<?php  echo Yii::app()->createUrl('store'); ?>">Home</a></li>
+            <!-- <li><a href="#0">Category</a></li> -->
+            <li><a href="javascript:void(0)">FAQ</a></li>
         </ul>
     </div>
 </div>
@@ -468,7 +468,7 @@
             <div class="col-md-3">
                 <div id="cart_box" class="faq-right">
                 <div class="box_style_2">
-                    <h2 class="inner">Customer service</h2>
+                    <h2 class="inner">Customer Service</h2>
                     <p class="add_bottom_30"></p>
                     <p><a class="phone" href="tel://9300068101"><i class="icon-phone-circled"></i>  9300068101</a></p>
                     <p class="nopadding"><a href="mailto:info@bhukkas.com"><i class="icon-mail-3"></i> info@bhukkas.com</a></p>
@@ -488,4 +488,4 @@
     <!-- End container pin-->
 </div>
 <!-- End container -->
-<!-- End Content =============================================== -->
+<!-- End Content ===============================================

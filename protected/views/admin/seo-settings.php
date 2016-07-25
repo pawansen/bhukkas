@@ -5,13 +5,13 @@
 <?php echo CHtml::hiddenField('action','SeoSettings')?>
 <?php echo CHtml::hiddenField('id',isset($_GET['id'])?$_GET['id']:"");?>
 
-<p class="uk-text-muted">
+<!-- <p class="uk-text-muted">
 <ul  class="uk-text-muted">
-<?php echo t("Available Tags")?>:
-<li><?php echo t("{website_title}")?></li>
-<li><?php echo t("{merchant_name}")?></li>
+<?php //echo t("Available Tags")?>:
+<li><?php //echo t("{website_title}")?></li>
+<li><?php //echo t("{merchant_name}")?></li>
 </ul>
-</p>
+</p> -->
 
 <h3><?php echo Yii::t("default","Home Page")?></h3>
 <div class="uk-form-row">

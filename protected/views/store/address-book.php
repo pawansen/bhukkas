@@ -11,7 +11,7 @@
     <div class="container">
         <ul>
             <li><a href="<?php echo Yii::app()->createUrl('store'); ?>">Home</a></li>
-            <li><a href="<?php echo Yii::app()->createUrl('store/address'); ?>">Address</a></li>
+            <li><a href="#<?php //echo Yii::app()->createUrl('store/address'); ?>">Address</a></li>
         </ul>
     </div>
 </div><!-- Position -->

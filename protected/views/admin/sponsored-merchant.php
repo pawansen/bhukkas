@@ -4,7 +4,7 @@
 <a href="<?php echo Yii::app()->request->baseUrl; ?>/admin/sponsoredMerchantList" class="uk-button"><i class="fa fa-list"></i> <?php echo Yii::t("default","List")?></a>
 </div>
 
-<P class="uk-badge"><?php echo Yii::t("default","List of merchant that will put on top of the search.")?></P>
+<P class="uk-badge margin-top-10"><?php echo Yii::t("default","List of merchant that will put on top of the search.")?></P>
 
 <form id="frm_table_list" method="POST" >
 <input type="hidden" name="action" id="action" value="sponsoredMerchantList">

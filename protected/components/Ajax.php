@@ -1983,9 +1983,13 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			$feed_data['iTotalDisplayRecords']=$iTotalRecords;
 			
 			foreach ($res as $val) {	
-					/*$date=date('M d,Y G:i:s',strtotime($val['date_created']));
-					$date=Yii::app()->functions->translateDate($date);*/
-					$date=FormatDateTime($val['date_created']);
+					
+					//$date=date('M d,Y G:i:s',strtotime($val['date_created']));
+					$date=date('M d,Y',strtotime($val['date_created']));
+					
+					$date=Yii::app()->functions->translateDate($date);
+					
+					//$date=FormatDateTime($val['date_created']);
 					
 					$action="<div class=\"options\">
     	    		<a href=\"$slug/id/$val[merchant_id]\" >".Yii::t("default","Edit")."</a>
@@ -2001,8 +2005,11 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 					} elseif ($val['status']=="active"){
 						$class='uk-badge-success';
 					}				
-					$membershipdate=FormatDateTime($val['membership_expired'],false);
-					$membershipdate=Yii::app()->functions->translateDate($membershipdate);					
+
+					//$membershipdate=FormatDateTime($val['membership_expired'],false);
+					//$membershipdate=Yii::app()->functions->translateDate($membershipdate);	
+
+					$membershipdate=date('M d,Y',strtotime($val['membership_expired']));				
 					
 					$url_login=baseUrl()."/merchant/autologin/id/".$val['merchant_id']."/token/".$val['password'];
 					$link_login='<br/><br/>

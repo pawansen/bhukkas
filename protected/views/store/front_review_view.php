@@ -71,7 +71,7 @@ if($your_ratings=Yii::app()->functions->isClientRatingExist($merchant_id,$client
                 <a class="btn_map" data-toggle="collapse" href="#collapseMap" aria-expanded="false" aria-controls="collapseMap">View on map</a>
             </p>
             <div class="box_style_2">
-                <h4 class="nomargin_top">Opening time<i class="icon_clock_alt pull-right"></i></h4>
+                <h4 class="nomargin_top">Opening Time<i class="icon_clock_alt pull-right"></i></h4>
                 <ul class="opening_list">
                     <?php if(!empty($merchantHours)){?>
 
@@ -96,7 +96,7 @@ if($your_ratings=Yii::app()->functions->isClientRatingExist($merchant_id,$client
         <div class="col-md-8">
             <div class="box_style_2">
                 <h2 class="inner">Description</h2>
-                <h3 class="nomargin_top">About us</h3>
+                <h3 class="nomargin_top">About Us</h3>
                 <p>
                     <?php if(!empty($info)): echo $info; endif;?>
                 </p>

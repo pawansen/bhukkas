@@ -30,9 +30,10 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
 ?>  
   
   <form class="profile-forms uk-form uk-form-horizontal forms" id="contactUs" onsubmit="return false;">
+   
   <?php echo CHtml::hiddenField('action','updateClientProfile')?>
   <?php echo CHtml::hiddenField('currentController','store')?>
-
+ 
   <h2><?php echo Yii::t("default","Profile")?></h2>
   
   <?php $client_id=Yii::app()->functions->getClientId();?>
@@ -45,7 +46,8 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
   array(
     'class'=>'uk-form-width-large',
     'data-validation'=>"required",
-    'data-validation-error-msg'=>"You did not enter first name"
+    'data-validation-error-msg'=>"You did not enter first name",
+    'onkeypress' => "return onlyAlphabets(event,this);"
   ));
   ?>
   </div>
@@ -57,7 +59,8 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
   array(
     'class'=>'uk-form-width-large',
     'data-validation'=>"required",
-    'data-validation-error-msg'=>"You did not enter last name"
+    'data-validation-error-msg'=>"You did not enter last name",
+    'onkeypress' => "return onlyAlphabets(event,this);"
   ));
   ?>
   </div>
@@ -165,3 +168,25 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
     </div><!-- End row -->
 </div><!-- End container -->
 <!-- End Content =============================================== -->
+  <script language="Javascript" type="text/javascript">
+ 
+        function onlyAlphabets(e, t) {
+            try {
+                if (window.event) {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e) {
+                    var charCode = e.which;
+                }
+                else { return true; }
+                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+                    return true;
+                else
+                    return false;
+            }
+            catch (err) {
+                alert(err.Description);
+            }
+        }
+ 
+    </script>

@@ -505,6 +505,17 @@ function form_submit(formid)
         		setTimeout(function () {
                    $(".uk-alert-success").fadeOut();
                 }, 4000);  */
+                if ( action=="contacUsSubmit"){
+                              
+                                uk_msg_sucess_partner(data.msg);
+
+                                $('#name').val('');
+                                $('#email').val('');
+                                $('#phone').val('');
+                                $('#country').val('');
+                                $('#message').val('');
+                                return;
+                }
         		if ( action=="partnerRegistration"){
                                 $("#partnerUs").modal('hide'); 
                                 uk_msg_sucess_partner(data.msg);
@@ -1394,10 +1405,10 @@ jQuery(document).ready(function() {
    	   research_merchant(sort_filter);
    });
    
-   $( document ).on( "change", ".search_by_name", function() {
+  $( document ).on( "change", ".search_by_name", function() {
    	   research_merchant();
-   });
-    
+  });
+   
    
    $( document ).on( "click", ".change_location", function() {    	     	  
    	  $("#change_search_location").slideToggle('slow');
@@ -1920,6 +1931,9 @@ function table()
 function maponZoom(){
      
     var currentLocation = $("#cityName").val();
+
+
+
     var geocoder =  new google.maps.Geocoder();
     geocoder.geocode( { 'address': currentLocation}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
@@ -1934,6 +1948,7 @@ maponZoom();
 function getCurrentShareLocation(){
     
     if (navigator.geolocation) {
+
         navigator.geolocation.getCurrentPosition(showPosition);
     } else {
         console.log("Geolocation is not supported by this browser.");
@@ -1941,22 +1956,26 @@ function getCurrentShareLocation(){
 }
 
 function showPosition(position) {
+    
     $("#cureentLocationlang").val(position.coords.longitude);
     $("#cureentLocationlat").val(position.coords.latitude);
-    
-    busy(true);
+
+    //google MAP API
+
+   /* busy(true);
     $.ajax({    
     type: "POST",
     url: ajax_url,
     data: "action=shareCurrentLocation&currentController=store&long="+position.coords.longitude+"&lat="+position.coords.latitude,
     dataType: 'json',       
     success: function(data){ 
-        busy(false); 
+    busy(false); 
+    console.log(data);
     }, 
     error: function(){	        	    	
         busy(false); 
     }		
-    });	
+    });	*/
       
 }
 
@@ -4123,6 +4142,28 @@ jQuery(document).ready(function() {
 	
 }); /*end ready*/
 
+function getMerchantNameList(){
+    var params="action=getMerchantListByCityName&currentController=store";	
+    $.ajax({    
+                type: "POST",
+                url: ajax_url,
+                data: params,
+                dataType: 'json',       
+                success: function(data){ 
+                    busy(false);	    	
+                    if (data.code==1){
+                        //console.log(data.details['restaurant_name']);
+                        $( "#search_by_name" ).autocomplete({
+                          source: data.details['restaurant_name']
+                        }); 
+                    }
+                }, 
+                error: function(){	        	    	
+                    busy(false); 
+                }		
+        }); 
+}
+getMerchantNameList();
 function getLocationByCity(){
     
 	      var selected=$("#citySearchSelect option:selected").text();

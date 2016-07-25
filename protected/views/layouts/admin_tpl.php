@@ -60,7 +60,7 @@
 
 <div class="header_wrap">
   <div class="left">
-   <h1><?php echo Yii::t("default","ADMIN")?></h1>
+    <a href="<?php echo Yii::app()->createUrl('admin'); ?>"><h1><?php echo Yii::t("default","ADMIN")?></h1></a>
   </div>
       
   <div class="right">  
@@ -83,20 +83,20 @@
   
    
   <div class="right">
-  <h3 class="uk-button uk-button-danger"><?php echo t("Commission last 30 days")?>: 
+  <h3 class="uk-button uk-button-danger balance"><?php echo t("Commission last 30 days")?>: 
   <span class="commission_total_1 commission_loader"></span>
   </h3>
   </div> <!--end right-->  
   
   <div class="right">
-  <h3 class="uk-button uk-button-success"><?php echo t("Commission today")?>: 
+  <h3 class="uk-button uk-button-success balance"><?php echo t("Commission today")?>: 
   <span class="commission_total_2 commission_loader"></span>
   </h3>
   </div> <!--end right-->
   
   
   <div class="right">
-  <h3 class="uk-button uk-button-primary"><?php echo t("Total Commission")?>: 
+  <h3 class="uk-button uk-button-primary balance"><?php echo t("Total Commission")?>: 
   <span class="commission_total_3 commission_loader"></span>
   </h3>
   </div> <!--end right-->

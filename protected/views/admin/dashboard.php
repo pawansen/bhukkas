@@ -71,7 +71,7 @@
 
 
 
-<h3><?php echo Yii::t("default","Incoming orders from merchant for today")?> <span class="uk-text-success">
+<h3><?php echo Yii::t("default","Incoming Orders From Merchant For Today")?> <span class="uk-text-success">
 <?php echo FormatDateTime(date('c'),false); //echo date('F d, Y')?></span></h3>
 
 <form id="frm_table_list3" method="POST" class="report uk-form uk-form-horizontal" >

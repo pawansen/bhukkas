@@ -4,7 +4,7 @@
     <div id="subheader">
         <div id="sub_content">
             <h1>About us</h1>
-            <p>Qui debitis meliore ex, tollit debitis conclusionemque te eos.</p>
+            <p></p>
             <p></p>
         </div>
         <!-- End sub_content -->
@@ -30,7 +30,7 @@
         <div class="col-md-12">
         
             <h2 class="nomargin_top"><?php if(isset($cmsData['title']) && !empty($cmsData['title'])){
-              echo "Some words about us";  
+              echo "Some Words About Us";  
             } ?></h2>
          
             <div class="content full" id="content">
@@ -98,7 +98,7 @@
         <div class="col-md-6 wow fadeIn" data-wow-delay="0.4s">
             <div class="feature">
                 <i class="icon_mobile"></i>
-                <h3><span>Mobile</span> support</h3>
+                <h3><span>Mobile</span> Support</h3>
                 <p>
                     Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.
                 </p>
@@ -110,7 +110,7 @@
         <div class="col-md-6 wow fadeIn" data-wow-delay="0.5s">
             <div class="feature">
                 <i class="icon_wallet"></i>
-                <h3><span>Cash</span> payment</h3>
+                <h3><span>Cash</span> Payment</h3>
                 <p>
                     Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.
                 </p>
@@ -119,7 +119,7 @@
         <div class="col-md-6 wow fadeIn" data-wow-delay="0.6s">
             <div class="feature">
                 <i class="icon_creditcard"></i>
-                <h3><span>Secure card</span> payment</h3>
+                <h3><span>Secure card</span> Payment</h3>
                 <p>
                     Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.
                 </p>

@@ -11,9 +11,14 @@
 <form class="uk-form uk-form-horizontal forms" id="forms">
 <?php echo CHtml::hiddenField('action','addCategory')?>
 <?php echo CHtml::hiddenField('id',isset($_GET['id'])?$_GET['id']:"");?>
-<?php if (!isset($_GET['id'])):?>
-<?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/merchant/CategoryList/Do/Add")?>
-<?php endif;?>
+
+<!-- <?php //if (isset($_GET['id'])):?> -->
+<?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/merchant/CategoryList/")?>
+<!-- <?php //endif;?>
+ -->
+ 
+
+
 
 <?php 
 if (isset($_GET['id'])){
