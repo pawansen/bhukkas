@@ -142,9 +142,9 @@ class Functions extends CApplicationComponent {
         $lists = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		      {{cuisine}} where status = 1
-		      ORDER BY sequence ASC
-		";
+              {{cuisine}} where status = 1
+              ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             if ($list) {
                 foreach ($res as $val) {
@@ -160,8 +160,8 @@ class Functions extends CApplicationComponent {
     public function frontFeaturedMerchantList($list = true) {
         $DbExt = new DbExt;
         $stmt = "SELECT merchant_id,restaurant_slug,restaurant_name,sponsored_image FROM
-		      {{view_merchant}} where is_sponsored = 2 LIMIT 4 OFFSET 0
-		";
+              {{view_merchant}} where is_sponsored = 2 LIMIT 4 OFFSET 0
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -173,9 +173,9 @@ class Functions extends CApplicationComponent {
         $lists = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		      {{cuisine}} where status = 1 AND featured = 1
-		      ORDER BY sequence ASC
-		";
+              {{cuisine}} where status = 1 AND featured = 1
+              ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             if ($list) {
                 foreach ($res as $val) {
@@ -191,11 +191,11 @@ class Functions extends CApplicationComponent {
     public function GetCuisine($id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{cuisine}}
-		WHERE
-		cuisine_id='$id'
-		LIMIT 0,1
-		";
+        {{cuisine}}
+        WHERE
+        cuisine_id='$id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -205,11 +205,11 @@ class Functions extends CApplicationComponent {
     public function GetAddressClient($id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{address_book}}
-		WHERE
-		client_id='$id' AND as_default = 2
-		LIMIT 0,1
-		";
+        {{address_book}}
+        WHERE
+        client_id='$id' AND as_default = 2
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -219,11 +219,11 @@ class Functions extends CApplicationComponent {
     public function GetCuisineByName($name = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{cuisine}}
-		WHERE
-		cuisine_name LIKE '%$name%'
-		LIMIT 0,1
-		";
+        {{cuisine}}
+        WHERE
+        cuisine_name LIKE '%$name%'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -274,11 +274,11 @@ class Functions extends CApplicationComponent {
     public function isMerchantExist($contact_email = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{merchant}}
-		WHERE
-		contact_email='" . $contact_email . "'
-		LIMIT 0,1
-		";
+        {{merchant}}
+        WHERE
+        contact_email='" . $contact_email . "'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -288,19 +288,19 @@ class Functions extends CApplicationComponent {
     public function getMerchant($merchant_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT a.*,
-		(
-		select title
-		from
-		{{packages}}
-		where
-		package_id=a.package_id
-		) as package_name
-		 FROM
-		{{merchant}} a
-		WHERE
-		merchant_id='" . $merchant_id . "'
-		LIMIT 0,1
-		";
+        (
+        select title
+        from
+        {{packages}}
+        where
+        package_id=a.package_id
+        ) as package_name
+         FROM
+        {{merchant}} a
+        WHERE
+        merchant_id='" . $merchant_id . "'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -310,11 +310,11 @@ class Functions extends CApplicationComponent {
     public function getMerchantBySlug($slug_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{merchant}}
-		WHERE
-		restaurant_slug='" . $slug_id . "'
-		LIMIT 0,1
-		";
+        {{merchant}}
+        WHERE
+        restaurant_slug='" . $slug_id . "'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -328,19 +328,19 @@ class Functions extends CApplicationComponent {
         }
         $DbExt = new DbExt;
         $stmt = "SELECT a.*,
-		(
-		select title from
-		{{packages}}
-		where
-		package_id = a.package_id
-		) as package_name
-		
-		FROM
-		{{merchant}} a
-		WHERE
-		activation_token='" . $token . "'
-		LIMIT 0,1
-		";
+        (
+        select title from
+        {{packages}}
+        where
+        package_id = a.package_id
+        ) as package_name
+        
+        FROM
+        {{merchant}} a
+        WHERE
+        activation_token='" . $token . "'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -348,16 +348,16 @@ class Functions extends CApplicationComponent {
     }
 
     public function createSlug($merchant_name = '') {
-        //$slug_id=str_replace(" ","-",$merchant_name);	
+        //$slug_id=str_replace(" ","-",$merchant_name); 
         //$slug_id=$this->seo_friendly_url($merchant_name);
 
         $DbExt = new DbExt;
         $stmt = "SELECT count(*) as total FROM
-		{{merchant}}
-		WHERE
-		restaurant_name LIKE '%" .  addslashes($merchant_name) . "%'
-		LIMIT 0,1
-		";
+        {{merchant}}
+        WHERE
+        restaurant_name LIKE '%" .  addslashes($merchant_name) . "%'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             if ($res[0]['total'] == 0) {
                 return $this->seo_friendly_url($merchant_name);
@@ -512,11 +512,11 @@ class Functions extends CApplicationComponent {
     public function getCategory($cat_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{category}}
-			WHERE
-			cat_id='" . $cat_id . "'
-			ORDER BY cat_id DESC			
-		";
+            {{category}}
+            WHERE
+            cat_id='" . $cat_id . "'
+            ORDER BY cat_id DESC            
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -527,13 +527,13 @@ class Functions extends CApplicationComponent {
         $mid = $this->getMerchantID();
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{category}}
-			WHERE
-			cat_id='" . $cat_id . "'
-			AND
-			merchant_id='$mid'
-			ORDER BY cat_id DESC			
-		";
+            {{category}}
+            WHERE
+            cat_id='" . $cat_id . "'
+            AND
+            merchant_id='$mid'
+            ORDER BY cat_id DESC            
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -543,12 +543,12 @@ class Functions extends CApplicationComponent {
     public function getCategoryList($merchant_id = '') {
         $data_feed = '';
         $stmt = "
-		SELECT * FROM
-		{{category}}
-		WHERE 
-		merchant_id='" . $merchant_id . "'
-		ORDER BY sequence ASC
-		";
+        SELECT * FROM
+        {{category}}
+        WHERE 
+        merchant_id='" . $merchant_id . "'
+        ORDER BY sequence ASC
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -566,11 +566,11 @@ class Functions extends CApplicationComponent {
     public function getSize($id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{size}}
-			WHERE
-			size_id='" . $id . "'
-			LIMIT 0,1			
-		";
+            {{size}}
+            WHERE
+            size_id='" . $id . "'
+            LIMIT 0,1           
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -581,11 +581,11 @@ class Functions extends CApplicationComponent {
         $data_feed[] = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{size}}
-			WHERE
-			merchant_id='" . $merchant_id . "'
-			ORDER BY sequence ASC			
-		";
+            {{size}}
+            WHERE
+            merchant_id='" . $merchant_id . "'
+            ORDER BY sequence ASC           
+        ";
         if ($res = $DbExt->rst($stmt)) {
             if ($this->data == "list") {
                 foreach ($res as $val) {
@@ -602,9 +602,9 @@ class Functions extends CApplicationComponent {
         $data_feed[] = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{size}}		
-			ORDER BY sequence ASC			
-		";
+            {{size}}        
+            ORDER BY sequence ASC           
+        ";
         if ($res = $DbExt->rst($stmt)) {
             if ($this->data == "list") {
                 foreach ($res as $val) {
@@ -620,11 +620,11 @@ class Functions extends CApplicationComponent {
     public function getCookingRef($id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{cooking_ref}}
-			WHERE
-			cook_id='" . $id . "'
-			LIMIT 0,1
-		";
+            {{cooking_ref}}
+            WHERE
+            cook_id='" . $id . "'
+            LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -635,11 +635,11 @@ class Functions extends CApplicationComponent {
         $data_feed = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{cooking_ref}}
-			WHERE
-			merchant_id='" . $merchant_id . "'
-			ORDER BY sequence ASC			
-		";
+            {{cooking_ref}}
+            WHERE
+            merchant_id='" . $merchant_id . "'
+            ORDER BY sequence ASC           
+        ";
         if ($res = $DbExt->rst($stmt)) {
             if ($this->data == "list") {
                 foreach ($res as $val) {
@@ -656,9 +656,9 @@ class Functions extends CApplicationComponent {
         $data_feed = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{cooking_ref}}			
-			ORDER BY sequence ASC			
-		";
+            {{cooking_ref}}         
+            ORDER BY sequence ASC           
+        ";
         if ($res = $DbExt->rst($stmt)) {
             if ($this->data == "list") {
                 foreach ($res as $val) {
@@ -674,11 +674,11 @@ class Functions extends CApplicationComponent {
     public function getAddonCategory($subcat_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{subcategory}}
-			WHERE
-			subcat_id='" . $subcat_id . "'
-			ORDER BY subcat_id DESC			
-		";
+            {{subcategory}}
+            WHERE
+            subcat_id='" . $subcat_id . "'
+            ORDER BY subcat_id DESC         
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -689,13 +689,13 @@ class Functions extends CApplicationComponent {
         $mid = $this->getMerchantID();
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{subcategory}}
-			WHERE
-			subcat_id='" . $subcat_id . "'
-			AND
-			merchant_id='$mid'
-			ORDER BY subcat_id DESC			
-		";
+            {{subcategory}}
+            WHERE
+            subcat_id='" . $subcat_id . "'
+            AND
+            merchant_id='$mid'
+            ORDER BY subcat_id DESC         
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -705,12 +705,12 @@ class Functions extends CApplicationComponent {
     public function getSubcategory() {
         $data_feed = '';
         $stmt = "
-		SELECT * FROM
-		{{subcategory}}
-		WHERE
-		merchant_id='" . Yii::app()->functions->getMerchantID() . "'		
-		ORDER BY sequence ASC
-		";
+        SELECT * FROM
+        {{subcategory}}
+        WHERE
+        merchant_id='" . Yii::app()->functions->getMerchantID() . "'        
+        ORDER BY sequence ASC
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -731,13 +731,13 @@ class Functions extends CApplicationComponent {
         }
         $data_feed = '';
         $stmt = "
-		SELECT * FROM
-		{{subcategory}}
-		WHERE
-		merchant_id='" . $merchant_id . "'		
-		AND status in ('publish','published')
-		ORDER BY sequence ASC
-		";
+        SELECT * FROM
+        {{subcategory}}
+        WHERE
+        merchant_id='" . $merchant_id . "'      
+        AND status in ('publish','published')
+        ORDER BY sequence ASC
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -755,12 +755,12 @@ class Functions extends CApplicationComponent {
     public function getAddonItem($sub_item_id = '', $sortby = 'sub_item_id') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{subcategory_item}}
-			WHERE
-			sub_item_id='" . $sub_item_id . "'
-			AND status in ('publish','published')
-			ORDER BY $sortby DESC			
-		";
+            {{subcategory_item}}
+            WHERE
+            sub_item_id='" . $sub_item_id . "'
+            AND status in ('publish','published')
+            ORDER BY $sortby DESC           
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -771,13 +771,13 @@ class Functions extends CApplicationComponent {
         $mid = $this->getMerchantID();
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{subcategory_item}}
-			WHERE
-			sub_item_id='" . $sub_item_id . "'
-			AND
-			merchant_id='$mid'
-			ORDER BY $sortby DESC			
-		";
+            {{subcategory_item}}
+            WHERE
+            sub_item_id='" . $sub_item_id . "'
+            AND
+            merchant_id='$mid'
+            ORDER BY $sortby DESC           
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -787,11 +787,11 @@ class Functions extends CApplicationComponent {
     public function getAddonItemListByMerchant($merchant_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{subcategory_item}}
-			WHERE
-			merchant_id='" . $merchant_id . "'
-			ORDER BY sequence ASC
-		";
+            {{subcategory_item}}
+            WHERE
+            merchant_id='" . $merchant_id . "'
+            ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -803,11 +803,11 @@ class Functions extends CApplicationComponent {
         $category = '%"' . $category . '"%';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{subcategory_item}}
-			WHERE
-			category like '$category'
-			ORDER BY sequence ASC
-		";
+            {{subcategory_item}}
+            WHERE
+            category like '$category'
+            ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             foreach ($res as $val) {
                 $data_feed[$val['sub_item_id']] = $val['sub_item_name'];
@@ -821,11 +821,11 @@ class Functions extends CApplicationComponent {
         $datafeed = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{subcategory}}
-    	WHERE
-    	merchant_id='" . $merchant_id . "'
-    	ORDER BY sequence ASC
-    	";
+        {{subcategory}}
+        WHERE
+        merchant_id='" . $merchant_id . "'
+        ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             foreach ($res as $val) {
                 $datafeed[] = array(
@@ -842,12 +842,12 @@ class Functions extends CApplicationComponent {
     public function getAddOnLists($merchant_id = '') {
         $data_feed = '';
         $stmt = "
-		SELECT * FROM
-		{{subcategory}}
-		WHERE 
-		merchant_id='" . $merchant_id . "'
-		ORDER BY sequence ASC
-		";
+        SELECT * FROM
+        {{subcategory}}
+        WHERE 
+        merchant_id='" . $merchant_id . "'
+        ORDER BY sequence ASC
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -1106,7 +1106,7 @@ class Functions extends CApplicationComponent {
                 $tag = "pys";
                 break;
             case "payondelivery":
-                //$tag="ccr";	
+                //$tag="ccr";   
                 $tag = "pyr";
                 break;
             default:
@@ -1681,11 +1681,11 @@ class Functions extends CApplicationComponent {
     public function getCurrencyDetails($currency_code = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{currency}}
-		WHERE
-		currency_code='$currency_code'
-		LIMIT 0,1
-		";
+        {{currency}}
+        WHERE
+        currency_code='$currency_code'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -1710,11 +1710,11 @@ class Functions extends CApplicationComponent {
     public function getFoodItem($item_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{item}}
-			WHERE
-			item_id='" . $item_id . "'
-			LIMIT 0,1
-		";
+            {{item}}
+            WHERE
+            item_id='" . $item_id . "'
+            LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -1725,13 +1725,13 @@ class Functions extends CApplicationComponent {
         $merchant_id = $this->getMerchantID();
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-			{{item}}
-			WHERE
-			item_id='" . $item_id . "'
-			AND
-			merchant_id ='$merchant_id'
-			LIMIT 0,1
-		";
+            {{item}}
+            WHERE
+            item_id='" . $item_id . "'
+            AND
+            merchant_id ='$merchant_id'
+            LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -1741,12 +1741,12 @@ class Functions extends CApplicationComponent {
     public function getFoodItemList($merchant_id = '') {
         $data_feed = '';
         $stmt = "
-		SELECT * FROM
-		{{item}}
-		WHERE 
-		merchant_id='" . $merchant_id . "'
-		ORDER BY sequence ASC
-		";
+        SELECT * FROM
+        {{item}}
+        WHERE 
+        merchant_id='" . $merchant_id . "'
+        ORDER BY sequence ASC
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -1769,11 +1769,11 @@ class Functions extends CApplicationComponent {
 
         $data_feed = '';
         $stmt = "
-		SELECT * FROM
-		{{item}}	
-		$where	
-		ORDER BY sequence ASC
-		";
+        SELECT * FROM
+        {{item}}    
+        $where  
+        ORDER BY sequence ASC
+        ";
 
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
@@ -1795,11 +1795,11 @@ class Functions extends CApplicationComponent {
             $and = " AND merchant_id='" . $merchant_id . "' ";
         }
         $stmt = "SELECT * FROM
-		{{option}}
-		WHERE
-		option_name='" . addslashes($option_name) . "'		
-		$and
-		";
+        {{option}}
+        WHERE
+        option_name='" . addslashes($option_name) . "'      
+        $and
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
 
@@ -1837,12 +1837,12 @@ class Functions extends CApplicationComponent {
             $and = " AND merchant_id='" . $merchant_id . "' ";
         }
         $stmt = "SELECT * FROM
-		{{option}}
-		WHERE
-		option_name='" . addslashes($option_name) . "'
-		$and
-		LIMIT 0,1
-		";
+        {{option}}
+        WHERE
+        option_name='" . addslashes($option_name) . "'
+        $and
+        LIMIT 0,1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -1853,10 +1853,10 @@ class Functions extends CApplicationComponent {
 
     public function updateOptionAdmin($option_name = '', $option_value = '') {
         $stmt = "SELECT * FROM
-		{{option}}
-		WHERE
-		option_name='" . addslashes($option_name) . "'
-		";
+        {{option}}
+        WHERE
+        option_name='" . addslashes($option_name) . "'
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
 
@@ -1881,11 +1881,11 @@ class Functions extends CApplicationComponent {
 
     public function getOptionAdmin($option_name = '') {
         $stmt = "SELECT * FROM
-		{{option}}
-		WHERE
-		option_name='" . addslashes($option_name) . "'
-		LIMIT 0,1
-		";
+        {{option}}
+        WHERE
+        option_name='" . addslashes($option_name) . "'
+        LIMIT 0,1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -1923,10 +1923,10 @@ class Functions extends CApplicationComponent {
     public function currencyList() {
         $data_feed = '';
         $stmt = "
-		SELECT * FROM
-		{{currency}}					
-		ORDER BY currency_code ASC
-		";
+        SELECT * FROM
+        {{currency}}                    
+        ORDER BY currency_code ASC
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -1942,8 +1942,8 @@ class Functions extends CApplicationComponent {
     public function getUserTableInfo(){
         $DbExt = new DbExt;
         $stmt = "
-		ALTER TABLE {{merchant}} CHANGE `cuisine` `cuisines` VARCHAR(100) NOT NULL;
-		";
+        ALTER TABLE {{merchant}} CHANGE `cuisine` `cuisines` VARCHAR(100) NOT NULL;
+        ";
         $rs= $DbExt->rst($stmt);
         return $rs;
     }
@@ -1956,9 +1956,9 @@ class Functions extends CApplicationComponent {
         $lists = '';
         $DbExt = new DbExt;
         $stmt = "SELECT city,country_code,state FROM
-		      {{merchant}}
-		      GROUP BY city ASC
-		";
+              {{merchant}}
+              GROUP BY city ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -1969,9 +1969,9 @@ class Functions extends CApplicationComponent {
         $lists = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		      {{city}}
-		      WHERE cid = " . $id . "
-		";
+              {{city}}
+              WHERE cid = " . $id . "
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -1982,9 +1982,9 @@ class Functions extends CApplicationComponent {
         $lists = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		      {{city}}
-		      ORDER BY city ASC
-		";
+              {{city}}
+              ORDER BY city ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -1995,9 +1995,9 @@ class Functions extends CApplicationComponent {
 
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		      {{location}}
-		      WHERE cityid = " . $cid . "
-		";
+              {{location}}
+              WHERE cityid = " . $cid . "
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -2021,9 +2021,9 @@ class Functions extends CApplicationComponent {
         $lists = '';
         $DbExt = new DbExt;
         $stmt = "SELECT city,country_code,state FROM
-		      {{merchant}}
-		      GROUP BY city ASC
-		";
+              {{merchant}}
+              GROUP BY city ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -2120,9 +2120,9 @@ class Functions extends CApplicationComponent {
             if ($_POST['cuid'] != 'all') {
                 $ids = ucwords($_POST['cuid']);
                 $stmtqr = "SELECT cuisine_id FROM
-		      {{cuisine}}
-		      WHERE cuisine_name = '" . $ids . "' GROUP BY cuisine_name LIMIT 1
-		";
+              {{cuisine}}
+              WHERE cuisine_name = '" . $ids . "' GROUP BY cuisine_name LIMIT 1
+        ";
 
                 if ($result = $DbExt->rst($stmtqr)) {
                     $cusineId = $result[0]['cuisine_id'];
@@ -2135,10 +2135,10 @@ class Functions extends CApplicationComponent {
         }
         if ($query) {
             $stmt2 = "SELECT count(*) as total_records, a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			         $and
-			";
+                   {{view_merchant}} a
+                   WHERE
+                     $and
+            ";
         }
         /* echo $stmt2;
           exit(); */
@@ -2237,9 +2237,9 @@ class Functions extends CApplicationComponent {
             if ($_POST['cuid'] != 'all') {
                 $ids = ucwords($_POST['cuid']);
                 $stmtqr = "SELECT cuisine_id FROM
-		      {{cuisine}}
-		      WHERE cuisine_name = '" . $ids . "' GROUP BY cuisine_name LIMIT 1
-		";
+              {{cuisine}}
+              WHERE cuisine_name = '" . $ids . "' GROUP BY cuisine_name LIMIT 1
+        ";
 
                 if ($result = $DbExt->rst($stmtqr)) {
                     $cusineId = $result[0]['cuisine_id'];
@@ -2351,9 +2351,9 @@ class Functions extends CApplicationComponent {
             if ($_GET['cuid'] != 'all') {
                 $ids = ucwords($_GET['cuid']);
                 $stmtqr = "SELECT cuisine_id FROM
-		      {{cuisine}}
-		      WHERE cuisine_name = '" . $ids . "' GROUP BY cuisine_name LIMIT 1
-		";
+              {{cuisine}}
+              WHERE cuisine_name = '" . $ids . "' GROUP BY cuisine_name LIMIT 1
+        ";
 
                 if ($result = $DbExt->rst($stmtqr)) {
                     $cusineId = $result[0]['cuisine_id'];
@@ -2485,42 +2485,42 @@ class Functions extends CApplicationComponent {
 
         if (isset($_GET['restaurant-name'])) {
             $stmt = "SELECT * FROM
-			       {{view_merchant}}
-			       WHERE
-			       restaurant_name LIKE '%" . $_GET['restaurant-name'] . "%'
-			       $and0
-				   $and
-				   $sort_combine
-				   LIMIT $Start_page,$per_page
-			";
+                   {{view_merchant}}
+                   WHERE
+                   restaurant_name LIKE '%" . $_GET['restaurant-name'] . "%'
+                   $and0
+                   $and
+                   $sort_combine
+                   LIMIT $Start_page,$per_page
+            ";
 
             $stmt2 = "SELECT a.*,count(*) as total_records FROM
-			       {{view_merchant}} a
-			       WHERE
-			       restaurant_name LIKE '%" . $_GET['restaurant-name'] . "%'
-			       $and0
-				   $and				   
-				   LIMIT 0,1
-			";
+                   {{view_merchant}} a
+                   WHERE
+                   restaurant_name LIKE '%" . $_GET['restaurant-name'] . "%'
+                   $and0
+                   $and                
+                   LIMIT 0,1
+            ";
         } elseif (isset($_GET['street-name'])) {
             $stmt = "SELECT * FROM
-			       {{view_merchant}}
-			       WHERE
-			       street LIKE '%" . $_GET['street-name'] . "%'
-			       $and0
-				   $and
-				   $sort_combine
-				   LIMIT $Start_page,$per_page
-			";
+                   {{view_merchant}}
+                   WHERE
+                   street LIKE '%" . $_GET['street-name'] . "%'
+                   $and0
+                   $and
+                   $sort_combine
+                   LIMIT $Start_page,$per_page
+            ";
 
             $stmt2 = "SELECT count(*) as total_records, a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			       street LIKE '%" . $_GET['street-name'] . "%'
-			       $and0
-				   $and				   
-				   LIMIT 0,1
-			";
+                   {{view_merchant}} a
+                   WHERE
+                   street LIKE '%" . $_GET['street-name'] . "%'
+                   $and0
+                   $and                
+                   LIMIT 0,1
+            ";
         } elseif (isset($_GET['category'])) {
             $cuisine_id = '';
             if ($cat_res = $this->GetCuisineByName($_GET['category'])) {
@@ -2529,24 +2529,24 @@ class Functions extends CApplicationComponent {
                 $cuisine_id = "-1";
 
             $stmt = "SELECT * FROM
-			       {{view_merchant}}
-			       WHERE
-			       cuisine LIKE '%" . $cuisine_id . "%'
-			       $and0
-				   $and
-				   $sort_combine
-				   LIMIT $Start_page,$per_page
-			";
+                   {{view_merchant}}
+                   WHERE
+                   cuisine LIKE '%" . $cuisine_id . "%'
+                   $and0
+                   $and
+                   $sort_combine
+                   LIMIT $Start_page,$per_page
+            ";
             $stmt2 = "SELECT 
-			       count(*) as total_records,
-			       a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			       cuisine LIKE '%" . $cuisine_id . "%'
-			       $and0
-				   $and				   
-				   LIMIT 0,1
-			";
+                   count(*) as total_records,
+                   a.* FROM
+                   {{view_merchant}} a
+                   WHERE
+                   cuisine LIKE '%" . $cuisine_id . "%'
+                   $and0
+                   $and                
+                   LIMIT 0,1
+            ";
         } elseif (isset($_GET['foodname'])) {
 
             $foodname_str = '';
@@ -2559,43 +2559,43 @@ class Functions extends CApplicationComponent {
                 $foodname_str = '-1';
 
             $stmt = "SELECT a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			       merchant_id = (
-			         select merchant_id
-			         from
-			         {{item}}
-			         where
-			         item_name like " . $this->q($foodname_str) . "
-			         and
-			         merchant_id=a.merchant_id
-			         limit 0,1
-			       )
-			       $and0
-				   $and
-				   $sort_combine
-				   LIMIT $Start_page,$per_page
-			       ";
+                   {{view_merchant}} a
+                   WHERE
+                   merchant_id = (
+                     select merchant_id
+                     from
+                     {{item}}
+                     where
+                     item_name like " . $this->q($foodname_str) . "
+                     and
+                     merchant_id=a.merchant_id
+                     limit 0,1
+                   )
+                   $and0
+                   $and
+                   $sort_combine
+                   LIMIT $Start_page,$per_page
+                   ";
 
             $stmt2 = "SELECT 
-			       count(*) as total_records,
-			       a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			       merchant_id = (
-			         select merchant_id
-			         from
-			         {{item}}
-			         where
-			         item_name like " . $this->q($foodname_str) . "
-			         and
-			         merchant_id=a.merchant_id
-			         limit 0,1
-			       )
-			       $and0
-				   $and				   
-				   LIMIT 0,1
-			       ";
+                   count(*) as total_records,
+                   a.* FROM
+                   {{view_merchant}} a
+                   WHERE
+                   merchant_id = (
+                     select merchant_id
+                     from
+                     {{item}}
+                     where
+                     item_name like " . $this->q($foodname_str) . "
+                     and
+                     merchant_id=a.merchant_id
+                     limit 0,1
+                   )
+                   $and0
+                   $and                
+                   LIMIT 0,1
+                   ";
         } elseif (isset($_GET['stype'])) {
 
             /* this is the search if admin set the search to postcode */
@@ -2606,32 +2606,32 @@ class Functions extends CApplicationComponent {
                         $zipcode[0] = '-1';
                     }
                     $stmt = "SELECT SQL_CALC_FOUND_ROWS a.*
-				     FROM
-				     {{view_merchant}} a 
-				     WHERE 
-				     post_code LIKE " . q($zipcode[0]) . "
-				     $and0
-					 $and
-					 $sort_combine
-					 LIMIT $Start_page,$per_page
-				    ";
+                     FROM
+                     {{view_merchant}} a 
+                     WHERE 
+                     post_code LIKE " . q($zipcode[0]) . "
+                     $and0
+                     $and
+                     $sort_combine
+                     LIMIT $Start_page,$per_page
+                    ";
                     break;
 
                 case "2":
                     $city = isset($_GET['city']) ? $_GET['city'] : '';
                     $area = isset($_GET['area']) ? $_GET['area'] : '';
                     $stmt = "SELECT SQL_CALC_FOUND_ROWS a.*
-				     FROM
-				     {{view_merchant}} a 
-				     WHERE 
-				     city LIKE " . q($city . "%") . "
-				     AND 
-				     state LIKE " . q($area . "%") . "
-				     $and0
-					 $and
-					 $sort_combine
-					 LIMIT $Start_page,$per_page
-				    ";
+                     FROM
+                     {{view_merchant}} a 
+                     WHERE 
+                     city LIKE " . q($city . "%") . "
+                     AND 
+                     state LIKE " . q($area . "%") . "
+                     $and0
+                     $and
+                     $sort_combine
+                     LIMIT $Start_page,$per_page
+                    ";
                     break;
 
                 case "3":
@@ -2643,18 +2643,18 @@ class Functions extends CApplicationComponent {
                         $address[3] = '-1';
                     }
                     $stmt = "SELECT SQL_CALC_FOUND_ROWS *
-				     FROM
-				     {{view_merchant}} 
-				     WHERE
-				     street LIKE " . q($address[0] . "%") . "
-				     AND state LIKE " . q($address[1] . "%") . "
-				     AND city LIKE " . q($address[2] . "%") . "
-				     AND post_code  LIKE " . q($address[3] . "%") . "
-				     $and0
-					 $and
-					 $sort_combine
-					 LIMIT $Start_page,$per_page
-				    ";
+                     FROM
+                     {{view_merchant}} 
+                     WHERE
+                     street LIKE " . q($address[0] . "%") . "
+                     AND state LIKE " . q($address[1] . "%") . "
+                     AND city LIKE " . q($address[2] . "%") . "
+                     AND post_code  LIKE " . q($address[3] . "%") . "
+                     $and0
+                     $and
+                     $sort_combine
+                     LIMIT $Start_page,$per_page
+                    ";
                     break;
             }
             $stmt2 = "SELECT FOUND_ROWS()";
@@ -2664,7 +2664,7 @@ class Functions extends CApplicationComponent {
             if ($lat_res = $this->geodecodeAddress($_GET['s'])) {
                 $lat = $lat_res['lat'];
                 $long = $lat_res['long'];
-                //HAVING distance < 25 		
+                //HAVING distance < 25      
                 $distance_exp = 3959;
                 if ($home_search_unit_type == "km") {
                     $distance_exp = 6371;
@@ -2677,69 +2677,69 @@ class Functions extends CApplicationComponent {
                     $long = 0;
                 }
                 $stmt = "
-				SELECT SQL_CALC_FOUND_ROWS a.*, ( $distance_exp * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
-				* cos( radians( lontitude ) - radians($long) ) 
-				+ sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
-				AS distance								
-				
-				FROM {{view_merchant}} a 
-				HAVING distance < $home_search_radius
-				$and0
-				$and
-				$sort_combine
-				LIMIT $Start_page,$per_page
-				";
+                SELECT SQL_CALC_FOUND_ROWS a.*, ( $distance_exp * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
+                * cos( radians( lontitude ) - radians($long) ) 
+                + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
+                AS distance                             
+                
+                FROM {{view_merchant}} a 
+                HAVING distance < $home_search_radius
+                $and0
+                $and
+                $sort_combine
+                LIMIT $Start_page,$per_page
+                ";
 
                 $stmt2 = "SELECT FOUND_ROWS()";
                 $count_query = true;
             } else {
                 $stmt = "SELECT SQL_CALC_FOUND_ROWS a.*
-				     FROM
-				     {{view_merchant}} a 
-				     WHERE 
-				     city LIKE " . q($city . "%") . "
-				     $and0
-					 $and
-					 $sort_combine
-					 LIMIT $Start_page,$per_page
-				    ";
+                     FROM
+                     {{view_merchant}} a 
+                     WHERE 
+                     city LIKE " . q($city . "%") . "
+                     $and0
+                     $and
+                     $sort_combine
+                     LIMIT $Start_page,$per_page
+                    ";
 
                 $stmt2 = "SELECT 
-				count(*) as total_records,
-				a.*				
-				 FROM
-				{{view_merchant}} a
-				WHERE
-				city like '%$city%'						
-				$and0
-				$and
-				$sort_combine
-				LIMIT 0,1
-				";
+                count(*) as total_records,
+                a.*             
+                 FROM
+                {{view_merchant}} a
+                WHERE
+                city like '%$city%'                     
+                $and0
+                $and
+                $sort_combine
+                LIMIT 0,1
+                ";
             }
         } else {
 
-            $stmt = "SELECT a.*				
-				 FROM
-				{{view_merchant}} a
-				WHERE					
-				$and0
-				$and
-				$sort_combine
-				LIMIT $Start_page,$per_page
-				";
+            $stmt = "SELECT a.*             
+                 FROM
+                {{view_merchant}} a
+                WHERE                   
+                $and0
+                $and
+                $sort_combine
+                LIMIT $Start_page,$per_page
+                ";
 
             $stmt2 = "SELECT 
-				count(*) as total_records,
-				a.*				
-				 FROM
-				{{view_merchant}} a
-				WHERE						
-				$and0
-				$and
-				$sort_combine
-				LIMIT 0,1
-				";
+                count(*) as total_records,
+                a.*             
+                 FROM
+                {{view_merchant}} a
+                WHERE                       
+                $and0
+                $and
+                $sort_combine
+                LIMIT 0,1
+                ";
         }
 
         /* $home_search_mode=Yii::app()->functions->getOptionAdmin('home_search_mode');
@@ -2793,7 +2793,7 @@ class Functions extends CApplicationComponent {
         /* dump($stmt);
           dump($stmt2);
           exit(); */
-        /* $this->search_result_total=0;	
+        /* $this->search_result_total=0;    
           if ( $res_total=$DbExt->rst($stmt2)){
           if (isset($_GET['debug'])){
           dump("RESP TOTAL");
@@ -2947,7 +2947,7 @@ class Functions extends CApplicationComponent {
                 $and.=" AND merchant_category = '" . $categorys . "'   ";
             }
         }
-        //echo $and;			
+        //echo $and;            
         //exit;
         $sort_by = "distance ASC";
         if (isset($_GET['sort_filter'])) {
@@ -3022,42 +3022,42 @@ class Functions extends CApplicationComponent {
 
         if (isset($_GET['restaurant-name'])) {
             $stmt = "SELECT * FROM
-			       {{view_merchant}}
-			       WHERE
-			       restaurant_name LIKE '%" . $_GET['restaurant-name'] . "%'
-			       $and0
-				   $and
-				   $sort_combine
-				   LIMIT $Start_page,$per_page
-			";
+                   {{view_merchant}}
+                   WHERE
+                   restaurant_name LIKE '%" . $_GET['restaurant-name'] . "%'
+                   $and0
+                   $and
+                   $sort_combine
+                   LIMIT $Start_page,$per_page
+            ";
 
             $stmt2 = "SELECT a.*,count(*) as total_records FROM
-			       {{view_merchant}} a
-			       WHERE
-			       restaurant_name LIKE '%" . $_GET['restaurant-name'] . "%'
-			       $and0
-				   $and				   
-				   LIMIT 0,1
-			";
+                   {{view_merchant}} a
+                   WHERE
+                   restaurant_name LIKE '%" . $_GET['restaurant-name'] . "%'
+                   $and0
+                   $and                
+                   LIMIT 0,1
+            ";
         } elseif (isset($_GET['street-name'])) {
             $stmt = "SELECT * FROM
-			       {{view_merchant}}
-			       WHERE
-			       street LIKE '%" . $_GET['street-name'] . "%'
-			       $and0
-				   $and
-				   $sort_combine
-				   LIMIT $Start_page,$per_page
-			";
+                   {{view_merchant}}
+                   WHERE
+                   street LIKE '%" . $_GET['street-name'] . "%'
+                   $and0
+                   $and
+                   $sort_combine
+                   LIMIT $Start_page,$per_page
+            ";
 
             $stmt2 = "SELECT count(*) as total_records, a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			       street LIKE '%" . $_GET['street-name'] . "%'
-			       $and0
-				   $and				   
-				   LIMIT 0,1
-			";
+                   {{view_merchant}} a
+                   WHERE
+                   street LIKE '%" . $_GET['street-name'] . "%'
+                   $and0
+                   $and                
+                   LIMIT 0,1
+            ";
         } elseif (isset($_GET['category'])) {
             $cuisine_id = '';
             if ($cat_res = $this->GetCuisineByName($_GET['category'])) {
@@ -3066,24 +3066,24 @@ class Functions extends CApplicationComponent {
                 $cuisine_id = "-1";
 
             $stmt = "SELECT * FROM
-			       {{view_merchant}}
-			       WHERE
-			       cuisine LIKE '%" . $cuisine_id . "%'
-			       $and0
-				   $and
-				   $sort_combine
-				   LIMIT $Start_page,$per_page
-			";
+                   {{view_merchant}}
+                   WHERE
+                   cuisine LIKE '%" . $cuisine_id . "%'
+                   $and0
+                   $and
+                   $sort_combine
+                   LIMIT $Start_page,$per_page
+            ";
             $stmt2 = "SELECT 
-			       count(*) as total_records,
-			       a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			       cuisine LIKE '%" . $cuisine_id . "%'
-			       $and0
-				   $and				   
-				   LIMIT 0,1
-			";
+                   count(*) as total_records,
+                   a.* FROM
+                   {{view_merchant}} a
+                   WHERE
+                   cuisine LIKE '%" . $cuisine_id . "%'
+                   $and0
+                   $and                
+                   LIMIT 0,1
+            ";
         } elseif (isset($_GET['foodname'])) {
 
             $foodname_str = '';
@@ -3096,43 +3096,43 @@ class Functions extends CApplicationComponent {
                 $foodname_str = '-1';
 
             $stmt = "SELECT a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			       merchant_id = (
-			         select merchant_id
-			         from
-			         {{item}}
-			         where
-			         item_name like " . $this->q($foodname_str) . "
-			         and
-			         merchant_id=a.merchant_id
-			         limit 0,1
-			       )
-			       $and0
-				   $and
-				   $sort_combine
-				   LIMIT $Start_page,$per_page
-			       ";
+                   {{view_merchant}} a
+                   WHERE
+                   merchant_id = (
+                     select merchant_id
+                     from
+                     {{item}}
+                     where
+                     item_name like " . $this->q($foodname_str) . "
+                     and
+                     merchant_id=a.merchant_id
+                     limit 0,1
+                   )
+                   $and0
+                   $and
+                   $sort_combine
+                   LIMIT $Start_page,$per_page
+                   ";
 
             $stmt2 = "SELECT 
-			       count(*) as total_records,
-			       a.* FROM
-			       {{view_merchant}} a
-			       WHERE
-			       merchant_id = (
-			         select merchant_id
-			         from
-			         {{item}}
-			         where
-			         item_name like " . $this->q($foodname_str) . "
-			         and
-			         merchant_id=a.merchant_id
-			         limit 0,1
-			       )
-			       $and0
-				   $and				   
-				   LIMIT 0,1
-			       ";
+                   count(*) as total_records,
+                   a.* FROM
+                   {{view_merchant}} a
+                   WHERE
+                   merchant_id = (
+                     select merchant_id
+                     from
+                     {{item}}
+                     where
+                     item_name like " . $this->q($foodname_str) . "
+                     and
+                     merchant_id=a.merchant_id
+                     limit 0,1
+                   )
+                   $and0
+                   $and                
+                   LIMIT 0,1
+                   ";
         } elseif (isset($_GET['stype'])) {
 
             /* this is the search if admin set the search to postcode */
@@ -3143,32 +3143,32 @@ class Functions extends CApplicationComponent {
                         $zipcode[0] = '-1';
                     }
                     $stmt = "SELECT SQL_CALC_FOUND_ROWS a.*
-				     FROM
-				     {{view_merchant}} a 
-				     WHERE 
-				     post_code LIKE " . q($zipcode[0]) . "
-				     $and0
-					 $and
-					 $sort_combine
-					 LIMIT $Start_page,$per_page
-				    ";
+                     FROM
+                     {{view_merchant}} a 
+                     WHERE 
+                     post_code LIKE " . q($zipcode[0]) . "
+                     $and0
+                     $and
+                     $sort_combine
+                     LIMIT $Start_page,$per_page
+                    ";
                     break;
 
                 case "2":
                     $city = isset($_GET['city']) ? $_GET['city'] : '';
                     $area = isset($_GET['area']) ? $_GET['area'] : '';
                     $stmt = "SELECT SQL_CALC_FOUND_ROWS a.*
-				     FROM
-				     {{view_merchant}} a 
-				     WHERE 
-				     city LIKE " . q($city . "%") . "
-				     AND 
-				     state LIKE " . q($area . "%") . "
-				     $and0
-					 $and
-					 $sort_combine
-					 LIMIT $Start_page,$per_page
-				    ";
+                     FROM
+                     {{view_merchant}} a 
+                     WHERE 
+                     city LIKE " . q($city . "%") . "
+                     AND 
+                     state LIKE " . q($area . "%") . "
+                     $and0
+                     $and
+                     $sort_combine
+                     LIMIT $Start_page,$per_page
+                    ";
                     break;
 
                 case "3":
@@ -3180,18 +3180,18 @@ class Functions extends CApplicationComponent {
                         $address[3] = '-1';
                     }
                     $stmt = "SELECT SQL_CALC_FOUND_ROWS *
-				     FROM
-				     {{view_merchant}} 
-				     WHERE
-				     street LIKE " . q($address[0] . "%") . "
-				     AND state LIKE " . q($address[1] . "%") . "
-				     AND city LIKE " . q($address[2] . "%") . "
-				     AND post_code  LIKE " . q($address[3] . "%") . "
-				     $and0
-					 $and
-					 $sort_combine
-					 LIMIT $Start_page,$per_page
-				    ";
+                     FROM
+                     {{view_merchant}} 
+                     WHERE
+                     street LIKE " . q($address[0] . "%") . "
+                     AND state LIKE " . q($address[1] . "%") . "
+                     AND city LIKE " . q($address[2] . "%") . "
+                     AND post_code  LIKE " . q($address[3] . "%") . "
+                     $and0
+                     $and
+                     $sort_combine
+                     LIMIT $Start_page,$per_page
+                    ";
                     break;
             }
             $stmt2 = "SELECT FOUND_ROWS()";
@@ -3218,36 +3218,36 @@ class Functions extends CApplicationComponent {
              }
              
             $stmt = "SELECT SQL_CALC_FOUND_ROWS a.*, ( 6371 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
-				* cos( radians( lontitude ) - radians($long) ) 
-				+ sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
-				AS distance
+                * cos( radians( lontitude ) - radians($long) ) 
+                + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
+                AS distance
                                 
-				     FROM
-				     {{view_merchant}} a 
-				     WHERE 
-				     city LIKE " . q($currentCity . "%") . "
+                     FROM
+                     {{view_merchant}} a 
+                     WHERE 
+                     city LIKE " . q($currentCity . "%") . "
                                      HAVING distance <= 5
-				     $and0
-					 $and
-					 $sort_combine
-					 LIMIT $Start_page,$per_page
-				    ";
+                     $and0
+                     $and
+                     $sort_combine
+                     LIMIT $Start_page,$per_page
+                    ";
             $stmt2 = "SELECT 
-				count(*) as total_records,
-				a.*, ( 6371 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
-				* cos( radians( lontitude ) - radians($long) ) 
-				+ sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
-				AS distance				
-				 FROM
-				{{view_merchant}} a
-				WHERE
-				 city LIKE " . q($currentCity . "%") . "
+                count(*) as total_records,
+                a.*, ( 6371 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
+                * cos( radians( lontitude ) - radians($long) ) 
+                + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
+                AS distance             
+                 FROM
+                {{view_merchant}} a
+                WHERE
+                 city LIKE " . q($currentCity . "%") . "
                                      HAVING distance <= 5
-				$and0
-				$and
-				$sort_combine
-				LIMIT 0,1
-				";
+                $and0
+                $and
+                $sort_combine
+                LIMIT 0,1
+                ";
             // $count_query=true;
                        // dump($stmt);die;
            
@@ -3256,7 +3256,7 @@ class Functions extends CApplicationComponent {
             if ($lat_res = $this->geodecodeAddress($location)) {
                 $lat = $lat_res['lat'];
                 $long = $lat_res['long'];
-                //HAVING distance < 25 		
+                //HAVING distance < 25      
 
                 $distance_exp = 3959;
                 if ($home_search_unit_type == "km") {
@@ -3272,34 +3272,34 @@ class Functions extends CApplicationComponent {
 
                 if (!empty($area)) {
                     $stmt = "
-				SELECT SQL_CALC_FOUND_ROWS a.*, ( 6371 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
-				* cos( radians( lontitude ) - radians($long) ) 
-				+ sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
-				AS distance								
-				
-				FROM {{view_merchant}} a 
-				WHERE city LIKE " . q($currentCity . "%") . " AND street LIKE '%" . $area . "%'
+                SELECT SQL_CALC_FOUND_ROWS a.*, ( 6371 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
+                * cos( radians( lontitude ) - radians($long) ) 
+                + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
+                AS distance                             
+                
+                FROM {{view_merchant}} a 
+                WHERE city LIKE " . q($currentCity . "%") . " AND street LIKE '%" . $area . "%'
                                     HAVING distance <= 5
-				$and0
-				$and 
-				$sort_combine
-				LIMIT $Start_page,$per_page
-				";
+                $and0
+                $and 
+                $sort_combine
+                LIMIT $Start_page,$per_page
+                ";
                     
                 } else {
                     $stmt = "
-				SELECT SQL_CALC_FOUND_ROWS a.*, ( $distance_exp * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
-				* cos( radians( lontitude ) - radians($long) ) 
-				+ sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
-				AS distance								
-				
-				FROM {{view_merchant}} a 
-				HAVING distance >= $home_search_radius
-				$and0
-				$and
-				$sort_combine
-				LIMIT $Start_page,$per_page
-				";
+                SELECT SQL_CALC_FOUND_ROWS a.*, ( $distance_exp * acos( cos( radians($lat) ) * cos( radians( latitude ) ) 
+                * cos( radians( lontitude ) - radians($long) ) 
+                + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) 
+                AS distance                             
+                
+                FROM {{view_merchant}} a 
+                HAVING distance >= $home_search_radius
+                $and0
+                $and
+                $sort_combine
+                LIMIT $Start_page,$per_page
+                ";
                 }
 
                 /* $stmt2="
@@ -3315,33 +3315,33 @@ class Functions extends CApplicationComponent {
                   $sort_combine
                   "; */
                 $stmt2 = "
-				SELECT FOUND_ROWS()
-				";
+                SELECT FOUND_ROWS()
+                ";
                 $count_query = true;
             } else {
-                $stmt = "SELECT a.*				
-				 FROM
-				{{view_merchant}} a
-				WHERE
-				city like '%$currentCity%'						
-				$and0
-				$and
-				$sort_combine
-				LIMIT $Start_page,$per_page
-				";
+                $stmt = "SELECT a.*             
+                 FROM
+                {{view_merchant}} a
+                WHERE
+                city like '%$currentCity%'                      
+                $and0
+                $and
+                $sort_combine
+                LIMIT $Start_page,$per_page
+                ";
 
                 $stmt2 = "SELECT 
-				count(*) as total_records,
-				a.*				
-				 FROM
-				{{view_merchant}} a
-				WHERE
-				city like '%$currentCity%'						
-				$and0
-				$and
-				$sort_combine
-				LIMIT 0,1
-				";
+                count(*) as total_records,
+                a.*             
+                 FROM
+                {{view_merchant}} a
+                WHERE
+                city like '%$currentCity%'                      
+                $and0
+                $and
+                $sort_combine
+                LIMIT 0,1
+                ";
                
             }
         }
@@ -3356,9 +3356,9 @@ class Functions extends CApplicationComponent {
             dump($stmt);
             dump($stmt2);
         }
-        /* dump($stmt);		
+        /* dump($stmt);     
           exit(); */
-        /* $this->search_result_total=0;	
+        /* $this->search_result_total=0;    
           if ( $res_total=$DbExt->rst($stmt2)){
           if (isset($_GET['debug'])){
           dump("RESP TOTAL");
@@ -3430,13 +3430,13 @@ class Functions extends CApplicationComponent {
         $DbExt = new DbExt;
         $today = date('Y-m-d');
         $stmt = "UPDATE
-		{{merchant}}
-		SET is_sponsored='1'
-		WHERE
-		is_sponsored='2'
-		AND
-		sponsored_expiration <'$today'
-		";
+        {{merchant}}
+        SET is_sponsored='1'
+        WHERE
+        is_sponsored='2'
+        AND
+        sponsored_expiration <'$today'
+        ";
         $DbExt->qry($stmt);
     }
 
@@ -3444,26 +3444,26 @@ class Functions extends CApplicationComponent {
         $DbExt = new DbExt;
         $today = date('Y-m-d');
         $stmt = "UPDATE
-		{{merchant}}
-		SET status='expired'
-		WHERE
-		status='active'
-		AND
-		membership_expired <'$today'
-		AND
-		is_commission='1'
-		";
+        {{merchant}}
+        SET status='expired'
+        WHERE
+        status='active'
+        AND
+        membership_expired <'$today'
+        AND
+        is_commission='1'
+        ";
         $DbExt->qry($stmt);
     }
 
     public function getRatings($merchant_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT SUM(rating) as ratings ,COUNT(*) AS count
-		FROM
-		{{review}}
-		WHERE
-		merchant_id='" . $merchant_id . "'
-		 ";
+        FROM
+        {{review}}
+        WHERE
+        merchant_id='" . $merchant_id . "'
+         ";
         if ($res = $DbExt->rst($stmt)) {
             if ($res[0]['ratings'] >= 1) {
                 $ret = array(
@@ -3488,11 +3488,11 @@ class Functions extends CApplicationComponent {
     public function getRatingsMeaning($rating = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{rating_meaning}}
-		WHERE
-		rating_start<='" . $rating . "' AND rating_end>='" . $rating . "'
-		ORDER BY rating_start ASC		
-		";
+        {{rating_meaning}}
+        WHERE
+        rating_start<='" . $rating . "' AND rating_end>='" . $rating . "'
+        ORDER BY rating_start ASC       
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -3502,11 +3502,11 @@ class Functions extends CApplicationComponent {
     public function getRatingInfo($id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{rating_meaning}}
-		WHERE
-		id='$id'
-		LIMIT 0,1
-		";
+        {{rating_meaning}}
+        WHERE
+        id='$id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -3516,13 +3516,13 @@ class Functions extends CApplicationComponent {
     public function isClientRatingExist($merchant_id = '', $client_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{rating}}
-		WHERE		
-		merchant_id='$merchant_id'		
-		AND
-		client_id='$client_id'
-		LIMIT 0,1
-		";
+        {{rating}}
+        WHERE       
+        merchant_id='$merchant_id'      
+        AND
+        client_id='$client_id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -3532,12 +3532,12 @@ class Functions extends CApplicationComponent {
     public function removeRatings($merchant_id = '', $client_id = '') {
         $DbExt = new DbExt;
         $stmt = "DELETE FROM
-		{{rating}}
-		WHERE
-		merchant_id='$merchant_id'
-		AND
-		client_id='$client_id'
-		";
+        {{rating}}
+        WHERE
+        merchant_id='$merchant_id'
+        AND
+        client_id='$client_id'
+        ";
         if ($DbExt->qry($stmt)) {
             return true;
         }
@@ -3547,12 +3547,12 @@ class Functions extends CApplicationComponent {
     public function getReviewRatings($merchant_id = '', $client_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{review}}
-		WHERE
-		merchant_id='$merchant_id'
-		AND
-		client_id='$client_id'
-		";
+        {{review}}
+        WHERE
+        merchant_id='$merchant_id'
+        AND
+        client_id='$client_id'
+        ";
         if ($rs = $DbExt->rst($stmt)) {
             return $rs[0];
         }
@@ -3697,14 +3697,14 @@ class Functions extends CApplicationComponent {
         }
 
         $stmt = "SELECT * FROM
-		{{item}}
-		WHERE
-		category like '$category'
-		AND
-		status IN ('publish','published')
-		$and
-		ORDER BY sequence ASC
-		";
+        {{item}}
+        WHERE
+        category like '$category'
+        AND
+        status IN ('publish','published')
+        $and
+        ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             foreach ($res as $val) {
 
@@ -3747,7 +3747,7 @@ class Functions extends CApplicationComponent {
                         'single_item' => $single_item,
                         'single_details' => $single_details,
                         'not_available' => $val['not_available']
-                            /* 'cooking_ref'=>$cooking_ref,				  
+                            /* 'cooking_ref'=>$cooking_ref,               
                               'addon_item'=>$addon_item */
                     );
                 } else {
@@ -3792,14 +3792,14 @@ class Functions extends CApplicationComponent {
         }
 
         $stmt = "SELECT * FROM
-		{{item}}
-		WHERE
-		category like '$category'
-		AND
-		status IN ('publish','published')
-		$and
-		ORDER BY sequence ASC
-		";
+        {{item}}
+        WHERE
+        category like '$category'
+        AND
+        status IN ('publish','published')
+        $and
+        ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             foreach ($res as $val) {
 
@@ -3843,7 +3843,7 @@ class Functions extends CApplicationComponent {
                         'single_item' => $single_item,
                         'single_details' => $single_details,*/
                         'not_available' => $val['not_available']
-                            /* 'cooking_ref'=>$cooking_ref,				  
+                            /* 'cooking_ref'=>$cooking_ref,               
                               'addon_item'=>$addon_item */
                     );
                 } else {
@@ -3875,11 +3875,11 @@ class Functions extends CApplicationComponent {
         $DbExt = new DbExt;
         $data = '';
         $stmt = "SELECT * FROM
-		{{item}}
-		WHERE
-		item_id ='" . $item_id . "'
-		LIMIT 0,1		
-		";
+        {{item}}
+        WHERE
+        item_id ='" . $item_id . "'
+        LIMIT 0,1       
+        ";
         if ($res = $DbExt->rst($stmt)) {
             foreach ($res as $val) {
 
@@ -4005,7 +4005,7 @@ class Functions extends CApplicationComponent {
         if ($decimal == "") {
             $decimal = 2;
         }
-        //return number_format(0,$decimal,".",$thou_separator);	
+        //return number_format(0,$decimal,".",$thou_separator); 
         $thou_separator = $thousand_separator;
         return number_format(0, $decimal, $decimal_separator, $thou_separator);
     }
@@ -4037,7 +4037,7 @@ class Functions extends CApplicationComponent {
         $food_item = Yii::app()->functions->getFoodItemLists($mid);
         $subcat_list = Yii::app()->functions->getAddOnLists($mid);
 
-        //dump($cart_item);    	
+        //dump($cart_item);     
         //dump($food_item);
 
         if (isset($cart_item)) {
@@ -4176,13 +4176,13 @@ class Functions extends CApplicationComponent {
                                  </a><input type="hidden" id="cart_'.$ijs.'" value="'.$siz.'"/>';
 
                         $htm.='<a href="javascript:;" onclick="addQtyItem(' . $val['item_id'] . ',' . $key . ',' . $mid . ',' . $val['qty'] . ',' . $val['price'] . ','.$ijs.')" class="plus_item" data-row="' . $key . '" rel="' . $val['item_id'] . '" >
-			                        <i class="fa fa-plus"></i>
-			                     </a>';
+                                    <i class="fa fa-plus"></i>
+                                 </a>';
 
 
                         $htm.='<a href="javascript:;" class="delete_item" data-row="' . $key . '" rel="' . $val['item_id'] . '" >
-			                       <i class="fa fa-times-circle"></i>
-			                    </a>';
+                                   <i class="fa fa-times-circle"></i>
+                                </a>';
                     endif;
                     $htm.='</div>';
                     $htm.='<div class="d">' . displayPrice(baseCurrency(), prettyFormat($total_price, $mid)) . '</div>';
@@ -4190,7 +4190,7 @@ class Functions extends CApplicationComponent {
                     $htm.='<div class="clear"></div>';
 
                     /* SUB ITEM */
-                    //dump($val);			          
+                    //dump($val);                     
                     //$item_array[$key]['sub_item']=$val['sub_item'];
                     $val['sub_item'] = isset($val['sub_item']) ? $val['sub_item'] : '';
 
@@ -4335,7 +4335,7 @@ class Functions extends CApplicationComponent {
                 if (isset($_SESSION['voucher_code'])) {
                     if (is_array($_SESSION['voucher_code'])) {
                         $has_voucher = true;
-                        //dump($_SESSION['voucher_code']);		
+                        //dump($_SESSION['voucher_code']);      
                         $_SESSION['voucher_code']['amount'] = unPrettyPrice($_SESSION['voucher_code']['amount']);
                         if ($_SESSION['voucher_code']['voucher_type'] == "fixed amount") {
                             $less_voucher = $_SESSION['voucher_code']['amount'];
@@ -4628,7 +4628,7 @@ class Functions extends CApplicationComponent {
         $food_item = Yii::app()->functions->getFoodItemLists($mid);
         $subcat_list = Yii::app()->functions->getAddOnLists($mid);
 
-        //dump($cart_item);    	
+        //dump($cart_item);     
         //dump($food_item);
 
         if (isset($cart_item)) {
@@ -4767,13 +4767,13 @@ class Functions extends CApplicationComponent {
                                  </a><input type="hidden" id="cart_'.$ijs.'" value="'.$siz.'"/>';
 
                         $htm.='<a href="javascript:;" onclick="addQtyItem(' . $val['item_id'] . ',' . $key . ',' . $mid . ',' . $val['qty'] . ',' . $val['price'] . ','.$ijs.')" class="plus_item" data-row="' . $key . '" rel="' . $val['item_id'] . '" >
-			                        <i class="fa fa-plus"></i>
-			                     </a>';
+                                    <i class="fa fa-plus"></i>
+                                 </a>';
 
 
                         $htm.='<a href="javascript:;" class="delete_item" data-row="' . $key . '" rel="' . $val['item_id'] . '" >
-			                       <i class="fa fa-times-circle"></i>
-			                    </a>';
+                                   <i class="fa fa-times-circle"></i>
+                                </a>';
                     endif;
                     $htm.='</div>';
                     $htm.='<div class="d">' . displayPrice(baseCurrency(), prettyFormat($total_price, $mid)) . '</div>';
@@ -4781,7 +4781,7 @@ class Functions extends CApplicationComponent {
                     $htm.='<div class="clear"></div>';
 
                     /* SUB ITEM */
-                    //dump($val);			          
+                    //dump($val);                     
                     //$item_array[$key]['sub_item']=$val['sub_item'];
                     $val['sub_item'] = isset($val['sub_item']) ? $val['sub_item'] : '';
 
@@ -4926,7 +4926,7 @@ class Functions extends CApplicationComponent {
                 if (isset($data['voucher_code'])) {
                     if (is_array($data['voucher_code'])) {
                         $has_voucher = true;
-                        //dump($_SESSION['voucher_code']);		
+                        //dump($_SESSION['voucher_code']);      
                         $data['voucher_code']['amount'] = unPrettyPrice($data['voucher_code']['amount']);
                         if ($data['voucher_code']['voucher_type'] == "fixed amount") {
                             $less_voucher = $data['voucher_code']['amount'];
@@ -5205,11 +5205,11 @@ class Functions extends CApplicationComponent {
     public function isClientExist($email_address = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{client}}
-		WHERE
-		email_address='" . $email_address . "'
-		LIMIT 0,1
-		";
+        {{client}}
+        WHERE
+        email_address='" . $email_address . "'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -5220,26 +5220,26 @@ class Functions extends CApplicationComponent {
         $DbExt = new DbExt;
         if (!empty($md5_pass)) {
             $stmt = "SELECT * FROM
-	    	{{client}}
-	    	WHERE
-	    	email_address=" . Yii::app()->db->quoteValue($user) . "
-	    	AND
-	    	password=" . Yii::app()->db->quoteValue($md5_pass) . "
-	    	AND
-	    	status IN ('active')
-	    	LIMIT 0,1
-	    	";
+            {{client}}
+            WHERE
+            email_address=" . Yii::app()->db->quoteValue($user) . "
+            AND
+            password=" . Yii::app()->db->quoteValue($md5_pass) . "
+            AND
+            status IN ('active')
+            LIMIT 0,1
+            ";
         } else {
             $stmt = "SELECT * FROM
-	    	{{client}}
-	    	WHERE
-	    	email_address=" . Yii::app()->db->quoteValue($user) . "
-	    	AND
-	    	password=" . Yii::app()->db->quoteValue(md5($pass)) . "
-	    	AND
-	    	status IN ('active')
-	    	LIMIT 0,1
-	    	";
+            {{client}}
+            WHERE
+            email_address=" . Yii::app()->db->quoteValue($user) . "
+            AND
+            password=" . Yii::app()->db->quoteValue(md5($pass)) . "
+            AND
+            status IN ('active')
+            LIMIT 0,1
+            ";
         }
         //dump($stmt);
         if ($res = $DbExt->rst($stmt)) {
@@ -5259,15 +5259,15 @@ class Functions extends CApplicationComponent {
 
           $DbExt = new DbExt;
           $stmt = "SELECT a.client_id,a.first_name,a.last_name,a.email_address,a.contact_phone,a.date_created,a.last_login,a.status FROM
-	    	{{client}} as a
-	    	WHERE
-	    	a.email_address=" . Yii::app()->db->quoteValue($user) . "
-	    	AND
-	    	a.password=" . Yii::app()->db->quoteValue(md5($pass)) . "
-	    	AND
-	    	a.status IN ('active')
-	    	LIMIT 0,1
-	    	";
+            {{client}} as a
+            WHERE
+            a.email_address=" . Yii::app()->db->quoteValue($user) . "
+            AND
+            a.password=" . Yii::app()->db->quoteValue(md5($pass)) . "
+            AND
+            a.status IN ('active')
+            LIMIT 0,1
+            ";
 
 
 
@@ -5420,12 +5420,12 @@ class Functions extends CApplicationComponent {
 
     public function getCreditCardInfo($cc_id) {
         $stmt = "
-		SELECT * FROM
-		{{client_cc}}
-		WHERE
-		cc_id='" . $cc_id . "'
-		LIMIT 0,1
-		";
+        SELECT * FROM
+        {{client_cc}}
+        WHERE
+        cc_id='" . $cc_id . "'
+        LIMIT 0,1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -5436,77 +5436,77 @@ class Functions extends CApplicationComponent {
 
     public function getOrder($order_id = '') {
         $stmt = "
-		SELECT a.*,
-		(
-		select concat(first_name,' ',last_name) as full_name
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		) as full_name,
-		
-		(
-		select email_address
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		) as email_address,
-		
-		(
-		select restaurant_name 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 	
-		) as merchant_name,
-		
-		(
-		select restaurant_slug 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 	
-		) as restaurant_slug,
-		
-		(
-		select concat(street,' ',city,' ',state,' ',zipcode )
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		) as full_address,
-		
-		(
-		select location_name
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		) as location_name,
-		
-		(
-		select contact_phone
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		) as contact_phone,
-		
-		(
-		select credit_card_number
-		from
-		{{client_cc}}
-		where
-		cc_id=a.cc_id 
-		) as credit_card_number		
-		
-		 FROM
-		{{order}} a
-		WHERE
-		order_id='" . $order_id . "'
-		LIMIT 0,1
-		";
+        SELECT a.*,
+        (
+        select concat(first_name,' ',last_name) as full_name
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        ) as full_name,
+        
+        (
+        select email_address
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        ) as email_address,
+        
+        (
+        select restaurant_name  
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id   
+        ) as merchant_name,
+        
+        (
+        select restaurant_slug  
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id   
+        ) as restaurant_slug,
+        
+        (
+        select concat(street,' ',city,' ',state,' ',zipcode )
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        ) as full_address,
+        
+        (
+        select location_name
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        ) as location_name,
+        
+        (
+        select contact_phone
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        ) as contact_phone,
+        
+        (
+        select credit_card_number
+        from
+        {{client_cc}}
+        where
+        cc_id=a.cc_id 
+        ) as credit_card_number     
+        
+         FROM
+        {{order}} a
+        WHERE
+        order_id='" . $order_id . "'
+        LIMIT 0,1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -5522,150 +5522,150 @@ class Functions extends CApplicationComponent {
             $and = "AND client_id='" . $this->getClientId() . "'";
         }
         $stmt = "
-		SELECT a.*,
-		(
-		select concat(first_name,' ',last_name) as full_name
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as full_name,
-		
-		(
-		select email_address
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as email_address,
-		
-		(
-		select restaurant_name 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 	
-		limit 0,1
-		) as merchant_name,
-				
-		(
-		select restaurant_slug 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 
-		limit 0,1	
-		) as restaurant_slug,
-		
-		(
-		select concat(street,' ',city,' ',state,' ',zipcode )
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as full_address,
-		
-		(
-		select location_name
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as location_name,
-		
-		(
-		select contact_phone
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as contact_phone,
-		
-		(
-		select credit_card_number
-		from
-		{{client_cc}}
-		where
-		cc_id=a.cc_id 
-		limit 0,1
-		) as credit_card_number,
+        SELECT a.*,
+        (
+        select concat(first_name,' ',last_name) as full_name
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as full_name,
+        
+        (
+        select email_address
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as email_address,
+        
+        (
+        select restaurant_name  
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id   
+        limit 0,1
+        ) as merchant_name,
+                
+        (
+        select restaurant_slug  
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id 
+        limit 0,1   
+        ) as restaurant_slug,
+        
+        (
+        select concat(street,' ',city,' ',state,' ',zipcode )
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as full_address,
+        
+        (
+        select location_name
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as location_name,
+        
+        (
+        select contact_phone
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as contact_phone,
+        
+        (
+        select credit_card_number
+        from
+        {{client_cc}}
+        where
+        cc_id=a.cc_id 
+        limit 0,1
+        ) as credit_card_number,
 
-		(
-		select payment_reference
-		from
-		{{payment_order}}
-		where
-		order_id=a.order_id
-		order by id desc
-		limit 0,1
-		) as payment_reference,
-		
-		(
-		select restaurant_phone 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 
-		limit 0,1	
-		) as merchant_contact_phone	,
-		
-		(
-		select abn 	 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 
-		limit 0,1	
-		) as abn,
-				
-		(
-		select concat(street,' ',city,' ',state,' ',zipcode )
-		from
-		{{order_delivery_address}}
-		where
-		order_id=a.order_id
-		limit 0,1
-		) as client_full_address,
-		
-		(
-		select location_name
-		from
-		{{order_delivery_address}}
-		where
-		order_id=a.order_id
-		limit 0,1
-		) as location_name1,
-		
-		(
-		select contact_phone
-		from
-		{{order_delivery_address}}
-		where
-		order_id=a.order_id
-		limit 0,1
-		) as contact_phone1,
-		
-		(
-		select concat(street,' ',city,' ',state,' ',post_code ) 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 
-		limit 0,1	
-		) as merchant_address		
-		
-		 FROM
-		{{order}} a
-		WHERE
-		order_id='" . $order_id . "'
-		$and
-		LIMIT 0,1
-		";
+        (
+        select payment_reference
+        from
+        {{payment_order}}
+        where
+        order_id=a.order_id
+        order by id desc
+        limit 0,1
+        ) as payment_reference,
+        
+        (
+        select restaurant_phone     
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id 
+        limit 0,1   
+        ) as merchant_contact_phone ,
+        
+        (
+        select abn      
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id 
+        limit 0,1   
+        ) as abn,
+                
+        (
+        select concat(street,' ',city,' ',state,' ',zipcode )
+        from
+        {{order_delivery_address}}
+        where
+        order_id=a.order_id
+        limit 0,1
+        ) as client_full_address,
+        
+        (
+        select location_name
+        from
+        {{order_delivery_address}}
+        where
+        order_id=a.order_id
+        limit 0,1
+        ) as location_name1,
+        
+        (
+        select contact_phone
+        from
+        {{order_delivery_address}}
+        where
+        order_id=a.order_id
+        limit 0,1
+        ) as contact_phone1,
+        
+        (
+        select concat(street,' ',city,' ',state,' ',post_code )     
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id 
+        limit 0,1   
+        ) as merchant_address       
+        
+         FROM
+        {{order}} a
+        WHERE
+        order_id='" . $order_id . "'
+        $and
+        LIMIT 0,1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -5679,150 +5679,150 @@ class Functions extends CApplicationComponent {
         $and = "AND client_id='" . $client_id . "'";
 
         $stmt = "
-		SELECT a.*,
-		(
-		select concat(first_name,' ',last_name) as full_name
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as full_name,
-		
-		(
-		select email_address
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as email_address,
-		
-		(
-		select restaurant_name 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 	
-		limit 0,1
-		) as merchant_name,
-				
-		(
-		select restaurant_slug 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 
-		limit 0,1	
-		) as restaurant_slug,
-		
-		(
-		select concat(street,' ',city,' ',state,' ',zipcode )
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as full_address,
-		
-		(
-		select location_name
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as location_name,
-		
-		(
-		select contact_phone
-		from
-		{{client}}
-		where
-		client_id=a.client_id
-		limit 0,1
-		) as contact_phone,
-		
-		(
-		select credit_card_number
-		from
-		{{client_cc}}
-		where
-		cc_id=a.cc_id 
-		limit 0,1
-		) as credit_card_number,
+        SELECT a.*,
+        (
+        select concat(first_name,' ',last_name) as full_name
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as full_name,
+        
+        (
+        select email_address
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as email_address,
+        
+        (
+        select restaurant_name  
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id   
+        limit 0,1
+        ) as merchant_name,
+                
+        (
+        select restaurant_slug  
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id 
+        limit 0,1   
+        ) as restaurant_slug,
+        
+        (
+        select concat(street,' ',city,' ',state,' ',zipcode )
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as full_address,
+        
+        (
+        select location_name
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as location_name,
+        
+        (
+        select contact_phone
+        from
+        {{client}}
+        where
+        client_id=a.client_id
+        limit 0,1
+        ) as contact_phone,
+        
+        (
+        select credit_card_number
+        from
+        {{client_cc}}
+        where
+        cc_id=a.cc_id 
+        limit 0,1
+        ) as credit_card_number,
 
-		(
-		select payment_reference
-		from
-		{{payment_order}}
-		where
-		order_id=a.order_id
-		order by id desc
-		limit 0,1
-		) as payment_reference,
-		
-		(
-		select restaurant_phone 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 
-		limit 0,1	
-		) as merchant_contact_phone	,
-		
-		(
-		select abn 	 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 
-		limit 0,1	
-		) as abn,
-				
-		(
-		select concat(street,' ',city,' ',state,' ',zipcode )
-		from
-		{{order_delivery_address}}
-		where
-		order_id=a.order_id
-		limit 0,1
-		) as client_full_address,
-		
-		(
-		select location_name
-		from
-		{{order_delivery_address}}
-		where
-		order_id=a.order_id
-		limit 0,1
-		) as location_name1,
-		
-		(
-		select contact_phone
-		from
-		{{order_delivery_address}}
-		where
-		order_id=a.order_id
-		limit 0,1
-		) as contact_phone1,
-		
-		(
-		select concat(street,' ',city,' ',state,' ',post_code ) 	
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id 
-		limit 0,1	
-		) as merchant_address		
-		
-		 FROM
-		{{order}} a
-		WHERE
-		order_id='" . $order_id . "'
-		$and
-		LIMIT 0,1
-		";
+        (
+        select payment_reference
+        from
+        {{payment_order}}
+        where
+        order_id=a.order_id
+        order by id desc
+        limit 0,1
+        ) as payment_reference,
+        
+        (
+        select restaurant_phone     
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id 
+        limit 0,1   
+        ) as merchant_contact_phone ,
+        
+        (
+        select abn      
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id 
+        limit 0,1   
+        ) as abn,
+                
+        (
+        select concat(street,' ',city,' ',state,' ',zipcode )
+        from
+        {{order_delivery_address}}
+        where
+        order_id=a.order_id
+        limit 0,1
+        ) as client_full_address,
+        
+        (
+        select location_name
+        from
+        {{order_delivery_address}}
+        where
+        order_id=a.order_id
+        limit 0,1
+        ) as location_name1,
+        
+        (
+        select contact_phone
+        from
+        {{order_delivery_address}}
+        where
+        order_id=a.order_id
+        limit 0,1
+        ) as contact_phone1,
+        
+        (
+        select concat(street,' ',city,' ',state,' ',post_code )     
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id 
+        limit 0,1   
+        ) as merchant_address       
+        
+         FROM
+        {{order}} a
+        WHERE
+        order_id='" . $order_id . "'
+        $and
+        LIMIT 0,1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -5834,11 +5834,11 @@ class Functions extends CApplicationComponent {
     
     public function getOrderInfo($order_id = '') {
         $stmt = "SELECT * FROM
-		{{order}}
-		WHERE
-		order_id='$order_id'
-		LIMIT 0,1
-		";
+        {{order}}
+        WHERE
+        order_id='$order_id'
+        LIMIT 0,1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -5869,11 +5869,11 @@ class Functions extends CApplicationComponent {
     public function getClientInfo($client_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{client}}
-		WHERE
-		client_id='$client_id'
-		LIMIT 0,1
-		";
+        {{client}}
+        WHERE
+        client_id='$client_id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -5888,13 +5888,13 @@ class Functions extends CApplicationComponent {
     public function getCCbyCard($card_number = '', $client_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{client_cc}}
-		WHERE
-		client_id='$client_id'
-		AND
-		credit_card_number='$card_number'
-		LIMIT 0,1
-		";
+        {{client_cc}}
+        WHERE
+        client_id='$client_id'
+        AND
+        credit_card_number='$card_number'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -5920,7 +5920,7 @@ class Functions extends CApplicationComponent {
 
     public function getDistance($from = '', $to = '', $country_code = '', $debug = false) {
         $country_list = require "CountryCode.php";
-        //$country_code=yii::app()->functions->getOption('country_code');		
+        //$country_code=yii::app()->functions->getOption('country_code');       
         $country_name = '';
         if (array_key_exists((string) $country_code, (array) $country_list)) {
             $country_name = $country_list[$country_code];
@@ -5989,15 +5989,15 @@ class Functions extends CApplicationComponent {
     public function getReviews($client_id = '', $merchant_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{review}}
-		WHERE
-		client_id='$client_id'
-		AND
-		merchant_id='$merchant_id'
-		AND
-		status ='publish'
-		LIMIT 0,1
-		";
+        {{review}}
+        WHERE
+        client_id='$client_id'
+        AND
+        merchant_id='$merchant_id'
+        AND
+        status ='publish'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6010,12 +6010,12 @@ class Functions extends CApplicationComponent {
         $stmt = "SELECT a.*,
             (SELECT CONCAT(first_name,' ',last_name) from  {{client}} WHERE client_id = a.client_id) as name
              FROM
-		{{review}} a
-		WHERE
-		merchant_id='$merchant_id'
-		AND
-		status ='publish'
-		";
+        {{review}} a
+        WHERE
+        merchant_id='$merchant_id'
+        AND
+        status ='publish'
+        ";
 
         if ($res = $DbExt->rst($stmt)) {
             return $res;
@@ -6029,12 +6029,12 @@ class Functions extends CApplicationComponent {
         $stmt = "SELECT a.*,
             (SELECT first_name from  {{client}} WHERE client_id = a.client_id) as name
              FROM
-		{{review}} a
-		WHERE
-		client_id='$client_id'
-		AND
-		status ='publish'
-		";
+        {{review}} a
+        WHERE
+        client_id='$client_id'
+        AND
+        status ='publish'
+        ";
 
         if ($res = $DbExt->rst($stmt)) {
             return $res;
@@ -6071,10 +6071,10 @@ class Functions extends CApplicationComponent {
 
         $DbExt = new DbExt;
         $stmt = "SELECT count(*) as total_records, a.* FROM
-			       {{review}} a
-			       WHERE
-			         merchant_id='$merchant_id'
-			";
+                   {{review}} a
+                   WHERE
+                     merchant_id='$merchant_id'
+            ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0]['total_records'];
         }
@@ -6085,22 +6085,22 @@ class Functions extends CApplicationComponent {
         //select concat(first_name ,' ',last_name)
         $DbExt = new DbExt;
         $stmt = "SELECT a.*,
-		(
-		select first_name
-		from 
-		{{client}}
-		where
-		client_id=a.client_id
-		) as client_name
-		FROM
-		{{review}} a
-		WHERE		
-		merchant_id='$merchant_id'
-		AND
-		status ='publish'
-		ORDER BY id DESC
-		LIMIT 0,20
-		";
+        (
+        select first_name
+        from 
+        {{client}}
+        where
+        client_id=a.client_id
+        ) as client_name
+        FROM
+        {{review}} a
+        WHERE       
+        merchant_id='$merchant_id'
+        AND
+        status ='publish'
+        ORDER BY id DESC
+        LIMIT 0,20
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -6110,19 +6110,19 @@ class Functions extends CApplicationComponent {
     public function getReviewsById($id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT a.*,
-		(
-		select restaurant_name 
-		from
-		{{merchant}}
-		where
-		merchant_id=a.merchant_id
-		) as merchant_name
-		FROM
-		{{review}} a
-		WHERE
-		id='$id'		
-		LIMIT 0,1
-		";
+        (
+        select restaurant_name 
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id
+        ) as merchant_name
+        FROM
+        {{review}} a
+        WHERE
+        id='$id'        
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6132,13 +6132,13 @@ class Functions extends CApplicationComponent {
     public function getReviewsById2($id = '', $merchant_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-		{{review}}
-		WHERE
-		id='$id'	
-		AND
-		merchant_id='$merchant_id'	
-		LIMIT 0,1
-		";
+        {{review}}
+        WHERE
+        id='$id'    
+        AND
+        merchant_id='$merchant_id'  
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6234,20 +6234,20 @@ class Functions extends CApplicationComponent {
     public function getOrderByPayPalToken($token = '') {
         $DbExt = new DbExt;
         $stmt = "
-    	SELECT a.*,
-    	(
-    	select merchant_id
-    	from
-    	{{order}}
-    	where
-    	order_id=a.order_id
-    	) as merchant_id
-    	FROM
-    	{{paypal_checkout}} a
-    	WHERE
-    	token='$token'
-    	LIMIT 0,1
-    	";
+        SELECT a.*,
+        (
+        select merchant_id
+        from
+        {{order}}
+        where
+        order_id=a.order_id
+        ) as merchant_id
+        FROM
+        {{paypal_checkout}} a
+        WHERE
+        token='$token'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6257,12 +6257,12 @@ class Functions extends CApplicationComponent {
     public function getPaypalOrderPayment($order_id = '') {
         $DbExt = new DbExt;
         $stmt = "
-    	SELECT * FROM
-    	{{paypal_payment}}
-    	WHERE
-    	order_id='$order_id'
-    	LIMIT 0,1
-    	";
+        SELECT * FROM
+        {{paypal_payment}}
+        WHERE
+        order_id='$order_id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6288,22 +6288,22 @@ class Functions extends CApplicationComponent {
     public function clientHistyOrder($client_id = '') {
         $DbExt = new DbExt;
         $stmt = "
-    	SELECT a.*,
-    	(
-    	select restaurant_name
-    	from
-    	{{merchant}}
-    	where
-    	merchant_id=a.merchant_id
-    	) as merchant_name
-    	 FROM
-    	{{order}} a
-    	WHERE 
-    	client_id='$client_id'
-    	AND status NOT IN ('" . initialStatus() . "')
-    	ORDER BY order_id DESC
-    	LIMIT 0,10
-    	";
+        SELECT a.*,
+        (
+        select restaurant_name
+        from
+        {{merchant}}
+        where
+        merchant_id=a.merchant_id
+        ) as merchant_name
+         FROM
+        {{order}} a
+        WHERE 
+        client_id='$client_id'
+        AND status NOT IN ('" . initialStatus() . "')
+        ORDER BY order_id DESC
+        LIMIT 0,10
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -6313,12 +6313,12 @@ class Functions extends CApplicationComponent {
     public function clientHistyOrderDetails($order_id = '') {
         $DbExt = new DbExt;
         $stmt = "
-    	SELECT * FROM
-    	{{order_details}}
-    	WHERE
-    	order_id='$order_id'
-    	ORDER BY id ASC    	
-    	";
+        SELECT * FROM
+        {{order_details}}
+        WHERE
+        order_id='$order_id'
+        ORDER BY id ASC     
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -6333,10 +6333,10 @@ class Functions extends CApplicationComponent {
         }
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM 
-    	  {{order_status}} 
-    	  WHERE
-    	  merchant_id IN ('0','$mid')
-    	  ORDER BY stats_id";
+          {{order_status}} 
+          WHERE
+          merchant_id IN ('0','$mid')
+          ORDER BY stats_id";
         if ($res = $db_ext->rst($stmt)) {
             foreach ($res as $val) {
                 //$list[$val['stats_id']]=ucwords($val['description']);
@@ -6350,9 +6350,9 @@ class Functions extends CApplicationComponent {
     public function getOrderStatus($stats_id = '') {
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM 
-    	  {{order_status}} 
-    	  WHERE
-    	  stats_id='$stats_id'";
+          {{order_status}} 
+          WHERE
+          stats_id='$stats_id'";
         if ($res = $db_ext->rst($stmt)) {
             return $res[0];
         }
@@ -6362,12 +6362,12 @@ class Functions extends CApplicationComponent {
     public function verifyOrderIdByOwner($order_id = '', $merchant_id = '') {
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM
-    	{{order}}
-    	WHERE
-    	order_id='$order_id'
-    	AND
-    	merchant_id='$merchant_id'
-    	";
+        {{order}}
+        WHERE
+        order_id='$order_id'
+        AND
+        merchant_id='$merchant_id'
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res[0];
         }
@@ -6395,17 +6395,17 @@ class Functions extends CApplicationComponent {
           } */
         $db_ext = new DbExt;
         $stmt = "
-    	      SELECT * FROM
-    	      {{order}}
-    	      WHERE    	          	      
-    	      date_created like '" . date('Y-m-d') . "%'
-    	      AND
-    	      merchant_id ='$merchant_id'
-    	      AND
-    	      viewed='1'
-    	      AND status NOT IN ('" . initialStatus() . "')
-    	      ORDER BY date_created DESC
-    	";
+              SELECT * FROM
+              {{order}}
+              WHERE                       
+              date_created like '" . date('Y-m-d') . "%'
+              AND
+              merchant_id ='$merchant_id'
+              AND
+              viewed='1'
+              AND status NOT IN ('" . initialStatus() . "')
+              ORDER BY date_created DESC
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res;
         }
@@ -6415,11 +6415,11 @@ class Functions extends CApplicationComponent {
     public function getPackagesById($package_id = '') {
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM
-    	{{packages}}
-    	WHERE
-    	package_id='$package_id'
-    	LIMIT 0,1
-    	";
+        {{packages}}
+        WHERE
+        package_id='$package_id'
+        LIMIT 0,1
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res[0];
         }
@@ -6473,13 +6473,13 @@ class Functions extends CApplicationComponent {
         }
         $data_feed = '';
         $stmt = "
-		SELECT * FROM
-		{{packages}}		
-		WHERE
-		status='publish'
-		$and
-		ORDER BY sequence ASC LIMIT 1
-		";
+        SELECT * FROM
+        {{packages}}        
+        WHERE
+        status='publish'
+        $and
+        ORDER BY sequence ASC LIMIT 1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -6519,11 +6519,11 @@ class Functions extends CApplicationComponent {
         }
         $db_ext = new DbExt;
         $stmt = "SELECT  * FROM
-    	{{currency}}
-    	WHERE
-    	currency_code='$curr_code'
-    	LIMIT 0,1
-    	";
+        {{currency}}
+        WHERE
+        currency_code='$curr_code'
+        LIMIT 0,1
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res[0]['currency_symbol'];
         }
@@ -6556,20 +6556,20 @@ class Functions extends CApplicationComponent {
         $db_ext = new DbExt;
         if (is_numeric($merchant_id)) {
             $stmt = "SELECT * FROM
-	    	{{merchant}}
-	    	WHERE 
-	    	username='$username'
-	    	AND
-	    	merchant_id <>'$merchant_id' 	
-	    	LIMIT 0,1
-	    	";
+            {{merchant}}
+            WHERE 
+            username='$username'
+            AND
+            merchant_id <>'$merchant_id'    
+            LIMIT 0,1
+            ";
         } else {
             $stmt = "SELECT * FROM
-	    	{{merchant}}
-	    	WHERE 
-	    	username='$username'
-	    	LIMIT 0,1
-	    	";
+            {{merchant}}
+            WHERE 
+            username='$username'
+            LIMIT 0,1
+            ";
         }
         //dump($stmt);
         if ($res = $db_ext->rst($stmt)) {
@@ -6589,11 +6589,11 @@ class Functions extends CApplicationComponent {
     public function getMerchantPaymentByID($id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{package_trans}}
-    	WHERE
-    	id='$id'
-    	LIMIT 0,1
-    	";
+        {{package_trans}}
+        WHERE
+        id='$id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6603,19 +6603,19 @@ class Functions extends CApplicationComponent {
     public function getMerchantPaymentTransaction($merchant_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT a.*,
-    	(
-    	select title
-    	from
-    	{{packages}}
-    	where
-    	package_id=a.package_id
-    	) as package_name
-    	FROM
-    	{{package_trans}} a
-    	WHERE
-    	merchant_id='$merchant_id'    
-    	ORDER BY id DESC 	
-    	";
+        (
+        select title
+        from
+        {{packages}}
+        where
+        package_id=a.package_id
+        ) as package_name
+        FROM
+        {{package_trans}} a
+        WHERE
+        merchant_id='$merchant_id'    
+        ORDER BY id DESC    
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -6626,10 +6626,10 @@ class Functions extends CApplicationComponent {
         $data = '';
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{merchant}}
-    	WHERE status in ('active')
-    	ORDER BY restaurant_name ASC LIMIT 0,5000
-    	";
+        {{merchant}}
+        WHERE status in ('active')
+        ORDER BY restaurant_name ASC LIMIT 0,5000
+        ";
         if ($with_select) {
             $data[] = t("Please select");
         }
@@ -6662,26 +6662,26 @@ class Functions extends CApplicationComponent {
     public function validateMerchantCanPost($merchant_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT a.merchant_id,
-    	a.package_id,
-    	a.is_commission,
-    	b.unlimited_post,
-    	b.post_limit,
-    	(
-    	select count(*)
-    	from
-    	{{item}}
-    	where
-    	merchant_id=a.merchant_id
-    	) as total_post
-    	FROM
-    	{{merchant}} a
-    	left join {{packages}} b
+        a.package_id,
+        a.is_commission,
+        b.unlimited_post,
+        b.post_limit,
+        (
+        select count(*)
+        from
+        {{item}}
+        where
+        merchant_id=a.merchant_id
+        ) as total_post
+        FROM
+        {{merchant}} a
+        left join {{packages}} b
         On
         a.package_id=b.package_id
-    	WHERE
-    	a.merchant_id='$merchant_id'
-    	LIMIT 0,1
-    	";
+        WHERE
+        a.merchant_id='$merchant_id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             $data = $res[0];
 
@@ -6834,12 +6834,12 @@ class Functions extends CApplicationComponent {
           LIMIT 0,1
           "; */
         $stmt = "
-		SELECT * FROM
-		{{client}}
-		WHERE
-		email_address='" . addslashes($email) . "'		
-		LIMIT 0,1
-		";
+        SELECT * FROM
+        {{client}}
+        WHERE
+        email_address='" . addslashes($email) . "'      
+        LIMIT 0,1
+        ";
         $connection = Yii::app()->db;
         $rows = $connection->createCommand($stmt)->queryAll();
         if (is_array($rows) && count($rows) >= 1) {
@@ -6851,23 +6851,23 @@ class Functions extends CApplicationComponent {
     public function paypalSetCancelOrder($token = '') {
         $DbExt = new DbExt;
         $stmt = "UPDATE
-    	{{order}}
-    	SET 
-    	status='cancelled'
-    	WHERE
-    	order_id=(select order_id from {{paypal_checkout}} where token='$token' )
-    	";
+        {{order}}
+        SET 
+        status='cancelled'
+        WHERE
+        order_id=(select order_id from {{paypal_checkout}} where token='$token' )
+        ";
         $DbExt->qry($stmt);
     }
 
     public function getLostPassToken($token = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{client}}
-    	WHERE
-    	lost_password_token='$token'
-    	LIMIT 0,1
-    	";
+        {{client}}
+        WHERE
+        lost_password_token='$token'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6877,11 +6877,11 @@ class Functions extends CApplicationComponent {
     public function getAdminUserInfo($admin_id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{admin_user}}
-    	WHERE
-    	admin_id='$admin_id'
-    	LIMIT 0,1
-    	";
+        {{admin_user}}
+        WHERE
+        admin_id='$admin_id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6891,11 +6891,11 @@ class Functions extends CApplicationComponent {
     public function getCustomPage($id = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{custom_page}}
-    	WHERE
-    	id='$id'
-    	LIMIT 0,1
-    	";
+        {{custom_page}}
+        WHERE
+        id='$id'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6905,11 +6905,11 @@ class Functions extends CApplicationComponent {
     public function getCustomPageBySlug($slug = '') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{custom_page}}
-    	WHERE
-    	slug_name='$slug'
-    	LIMIT 0,1
-    	";
+        {{custom_page}}
+        WHERE
+        slug_name='$slug'
+        LIMIT 0,1
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res[0];
         }
@@ -6919,11 +6919,11 @@ class Functions extends CApplicationComponent {
     public function getCustomPageList() {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{custom_page}}    	
-    	WHERE
-    	status IN ('publish')
-    	ORDER BY sequence ASC
-    	";
+        {{custom_page}}     
+        WHERE
+        status IN ('publish')
+        ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -6938,11 +6938,11 @@ class Functions extends CApplicationComponent {
 
         $DbExt = new DbExt;
         $stmt = "SELECT count(*) as total
-    	FROM
-    	{{custom_page}}
-    	WHERE
-    	slug_name='$slug_name'
-    	";
+        FROM
+        {{custom_page}}
+        WHERE
+        slug_name='$slug_name'
+        ";
         if ($res = $DbExt->rst($stmt)) {
             if ($res[0]['total'] >= 1) {
                 return $slug_name . $res[0]['total'];
@@ -6955,13 +6955,13 @@ class Functions extends CApplicationComponent {
     public function customPagePosition($position = 'top') {
         $DbExt = new DbExt;
         $stmt = "SELECT * FROM
-    	{{custom_page}}    	
-    	WHERE
-    	status IN ('publish')
-    	AND
-    	assign_to='$position'
-    	ORDER BY sequence ASC
-    	";
+        {{custom_page}}     
+        WHERE
+        status IN ('publish')
+        AND
+        assign_to='$position'
+        ORDER BY sequence ASC
+        ";
         if ($res = $DbExt->rst($stmt)) {
             return $res;
         }
@@ -7066,11 +7066,11 @@ class Functions extends CApplicationComponent {
     public function getSourceTranslation($lang_id = '') {
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM
-    	{{languages}}
-    	WHERE
-    	lang_id='" . addslashes($lang_id) . "'
-    	LIMIT 0,1
-    	";
+        {{languages}}
+        WHERE
+        lang_id='" . addslashes($lang_id) . "'
+        LIMIT 0,1
+        ";
         if ($res = $db_ext->rst($stmt)) {
             $translated_text = !empty($res[0]['source_text']) ? (array) json_decode($res[0]['source_text']) : array();
             return $translated_text;
@@ -7083,11 +7083,11 @@ class Functions extends CApplicationComponent {
 
         $path_to_upload = Yii::getPathOfAlias('webroot') . "/upload";
         $stmt = "SELECT * FROM
-    	{{languages}}
-    	WHERE
-    	lang_id='" . addslashes($lang_id) . "'
-    	LIMIT 0,1
-    	";
+        {{languages}}
+        WHERE
+        lang_id='" . addslashes($lang_id) . "'
+        LIMIT 0,1
+        ";
         if ($res = $db_ext->rst($stmt)) {
             $filename = $res[0]['source_text'];
             if (file_exists($path_to_upload . "/$filename")) {
@@ -7101,9 +7101,9 @@ class Functions extends CApplicationComponent {
     public function languageInfo($lang_id = '') {
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM {{languages}} 
-    	  WHERE lang_id='" . addslashes($lang_id) . "' 
-    	  LIMIT 0,1
-    	  ";
+          WHERE lang_id='" . addslashes($lang_id) . "' 
+          LIMIT 0,1
+          ";
         if ($res = $db_ext->rst($stmt)) {
             return $res[0];
         }
@@ -7117,10 +7117,10 @@ class Functions extends CApplicationComponent {
         }
         $db_ext = new DbExt;
         $stmt = "SELECT lang_id,country_code,language_code
-    	 FROM {{languages}} 
-    	 WHERE
-    	 status in ('publish','published')
-    	 ";
+         FROM {{languages}} 
+         WHERE
+         status in ('publish','published')
+         ";
         if ($res = $db_ext->rst($stmt)) {
             foreach ($res as $val) {
                 $lang_list[$val['lang_id']] = $val['country_code'] . " " . $val['language_code'];
@@ -7152,12 +7152,12 @@ class Functions extends CApplicationComponent {
         $lang = '';
         $db_ext = new DbExt;
         $stmt = "SELECT lang_id,country_code,language_code
-    	 FROM {{languages}} 
-    	 WHERE
-    	 status in ('publish','published')
-    	 AND
-    	 is_assign='1'
-    	 ";
+         FROM {{languages}} 
+         WHERE
+         status in ('publish','published')
+         AND
+         is_assign='1'
+         ";
         if ($res = $db_ext->rst($stmt)) {
             foreach ($res as $val) {
                 $lang[$val['lang_id']] = $val['country_code'];
@@ -7180,11 +7180,11 @@ class Functions extends CApplicationComponent {
         $id = $this->getAdminId();
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM
-    	{{admin_user}}
-    	WHERE
-    	admin_id='$id'
-    	LIMIT 0,1
-    	";
+        {{admin_user}}
+        WHERE
+        admin_id='$id'
+        LIMIT 0,1
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res[0]['user_lang'];
         }
@@ -7195,11 +7195,11 @@ class Functions extends CApplicationComponent {
         $id = $this->getMerchantID();
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM
-    	{{merchant}}
-    	WHERE
-    	merchant_id='$id'
-    	LIMIT 0,1
-    	";
+        {{merchant}}
+        WHERE
+        merchant_id='$id'
+        LIMIT 0,1
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res[0]['user_lang'];
         }
@@ -7228,11 +7228,11 @@ class Functions extends CApplicationComponent {
 
         $db_ext = new DbExt;
         $stmt = "SELECT lang_id,country_code,language_code
-    	 FROM {{languages}} 
-    	 WHERE
-    	 status in ('publish','published')
-    	 $and
-    	 ";
+         FROM {{languages}} 
+         WHERE
+         status in ('publish','published')
+         $and
+         ";
         if ($res = $db_ext->rst($stmt)) {
             return $res;
         }
@@ -7242,10 +7242,10 @@ class Functions extends CApplicationComponent {
     public function getCustomPages() {
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM
-    	{{custom_page}}
-    	WHERE
-    	status='publish'
-    	 ";
+        {{custom_page}}
+        WHERE
+        status='publish'
+         ";
         $list = '';
         if ($res = $db_ext->rst($stmt)) {
             foreach ($res as $val) {
@@ -7266,7 +7266,7 @@ class Functions extends CApplicationComponent {
     public function setSEO($title = '', $meta = '', $keywords = '') {
         if (!empty($title)) {
             Yii::app()->clientScript->registerMetaTag($title, 'title');
-            //Yii::app()->clientScript->registerMetaTag($title, 'og:title');     	   
+            //Yii::app()->clientScript->registerMetaTag($title, 'og:title');           
         }
         if ($meta) {
             Yii::app()->clientScript->registerMetaTag($meta, 'description');
@@ -7310,11 +7310,11 @@ class Functions extends CApplicationComponent {
     public function getSMSPackagesById($package_id = '') {
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM
-    	{{sms_package}}
-    	WHERE
-    	sms_package_id='$package_id'
-    	LIMIT 0,1
-    	";
+        {{sms_package}}
+        WHERE
+        sms_package_id='$package_id'
+        LIMIT 0,1
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res[0];
         }
@@ -7349,14 +7349,14 @@ class Functions extends CApplicationComponent {
 
         $db_ext = new DbExt;
         $stmt = "
-    	SELECT * FROM
-    	{{sms_package_trans}}
-    	WHERE
-    	merchant_id='$merchant_id'
-    	AND
-    	status in ('paid')
-    	LIMIT 0,1
-    	";
+        SELECT * FROM
+        {{sms_package_trans}}
+        WHERE
+        merchant_id='$merchant_id'
+        AND
+        status in ('paid')
+        LIMIT 0,1
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res;
         }
@@ -7366,12 +7366,12 @@ class Functions extends CApplicationComponent {
     public function getSMSPackage() {
         $db_ext = new DbExt;
         $stmt = "SELECT * FROM
-    	{{sms_package}}
-    	WHERE
-    	status in ('publish')
-    	ORDER BY 
-    	sequence ASC
-    	";
+        {{sms_package}}
+        WHERE
+        status in ('publish')
+        ORDER BY 
+        sequence ASC
+        ";
         if ($res = $db_ext->rst($stmt)) {
             return $res;
         }
@@ -7483,19 +7483,19 @@ class Functions extends CApplicationComponent {
         public function getPackageSMSTrans($package_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,
-    	(
-    	select title
-    	from
-    	{{sms_package}}
-    	where
-    	sms_package_id = a.sms_package_id 	
-    	) as title
-    	 FROM
-    	{{sms_package_trans}} a
-    	WHERE
-    	id='$package_id'
-    	LIMIT 0,1    	
-    	";
+        (
+        select title
+        from
+        {{sms_package}}
+        where
+        sms_package_id = a.sms_package_id   
+        ) as title
+         FROM
+        {{sms_package_trans}} a
+        WHERE
+        id='$package_id'
+        LIMIT 0,1       
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -7505,21 +7505,21 @@ class Functions extends CApplicationComponent {
         public function getPackageSMSTransByMerchant($package_id = '', $merchant_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,
-    	(
-    	select title
-    	from
-    	{{sms_package}}
-    	where
-    	sms_package_id = a.sms_package_id 	
-    	) as title
-    	 FROM
-    	{{sms_package_trans}} a
-    	WHERE
-    	id='$package_id'
-    	AND
-    	merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "
-    	LIMIT 0,1    	
-    	";
+        (
+        select title
+        from
+        {{sms_package}}
+        where
+        sms_package_id = a.sms_package_id   
+        ) as title
+         FROM
+        {{sms_package_trans}} a
+        WHERE
+        id='$package_id'
+        AND
+        merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "
+        LIMIT 0,1       
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -7529,11 +7529,11 @@ class Functions extends CApplicationComponent {
         public function getAllCustomerCount() {
             $db_ext = new DbExt;
             $stmt = "SELECT COUNT(*) as total
-    	FROM
-    	{{client}}
-    	WHERE
-    	contact_phone!=''
-    	";
+        FROM
+        {{client}}
+        WHERE
+        contact_phone!=''
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0]['total'];
             }
@@ -7543,13 +7543,13 @@ class Functions extends CApplicationComponent {
         public function getAllClientsByMerchant($merchant_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT a.client_id, COUNT(*) as total
-    	FROM
-    	{{client}} a
-    	WHERE
-    	client_id  IN ( select client_id from {{order}} where client_id=a.client_id and merchant_id='$merchant_id' )
-    	AND
-    	contact_phone!=''
-    	";
+        FROM
+        {{client}} a
+        WHERE
+        client_id  IN ( select client_id from {{order}} where client_id=a.client_id and merchant_id='$merchant_id' )
+        AND
+        contact_phone!=''
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0]['total'];
             }
@@ -7565,23 +7565,23 @@ class Functions extends CApplicationComponent {
 
             $db_ext = new DbExt;
             $stmt = "
-    	SELECT SUM(sms_limit) as total_credits,
-    	(
-    	  select count(*) as total_send
-    	   from
-    	  {{sms_broadcast_details}}
-    	   where
-    	   merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "    	
-    	   and
-    	   status in ('process')
-    	) as total_send
-    	
-    	FROM {{sms_package_trans}}
-    	WHERE
-    	merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "
-    	AND
-    	status in ('paid')
-    	";
+        SELECT SUM(sms_limit) as total_credits,
+        (
+          select count(*) as total_send
+           from
+          {{sms_broadcast_details}}
+           where
+           merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "     
+           and
+           status in ('process')
+        ) as total_send
+        
+        FROM {{sms_package_trans}}
+        WHERE
+        merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "
+        AND
+        status in ('paid')
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0]['total_credits'] - $res[0]['total_send'];
             }
@@ -7599,10 +7599,10 @@ class Functions extends CApplicationComponent {
         public function mercadoGetPayment($payment_ref = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{sms_package_trans}}
-    	WHERE
-    	payment_reference=" . Yii::app()->db->quoteValue($payment_ref) . "
-    	";
+        {{sms_package_trans}}
+        WHERE
+        payment_reference=" . Yii::app()->db->quoteValue($payment_ref) . "
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res;
             }
@@ -7632,31 +7632,31 @@ class Functions extends CApplicationComponent {
 
             $db_ext = new DbExt;
             $stmt = "
-    	SELECT a.merchant_id,a.package_id,
-    	(
-    	select sell_limit
-    	from
-    	{{packages}}
-    	where
-    	package_id=a.package_id
-    	) as sell_limit,
-    	
-    	(
-    	select count(*) as total
-    	from
-    	{{order}}
-    	where
-    	merchant_id=a.merchant_id
-    	AND
-    	date_created between '$m1' and '$m2'
-    	) as total_sell
-    	
-    	FROM
-    	{{merchant}} a
-    	WHERE
-    	merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "
-    	LIMIT 0,1
-    	";
+        SELECT a.merchant_id,a.package_id,
+        (
+        select sell_limit
+        from
+        {{packages}}
+        where
+        package_id=a.package_id
+        ) as sell_limit,
+        
+        (
+        select count(*) as total
+        from
+        {{order}}
+        where
+        merchant_id=a.merchant_id
+        AND
+        date_created between '$m1' and '$m2'
+        ) as total_sell
+        
+        FROM
+        {{merchant}} a
+        WHERE
+        merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "
+        LIMIT 0,1
+        ";
             //dump($stmt);
             if ($res = $db_ext->rst($stmt)) {
                 $res = $res[0];
@@ -7948,7 +7948,7 @@ class Functions extends CApplicationComponent {
                         $msg = "process";
                     } else {
                         $errors['1702'] = "Invalid URL Error, This means that one of the parameters was not
-			provided or left blank";
+            provided or left blank";
                         $errors['1703'] = "Invalid value in username or password field";
                         $errors['1704'] = 'Invalid value in "type" field';
                         $errors['1705'] = "Invalid Message";
@@ -8041,13 +8041,13 @@ class Functions extends CApplicationComponent {
             $mid = $this->getMerchantID();
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{merchant_user}}
-    	WHERE
-    	merchant_user_id=" . Yii::app()->db->quoteValue($merchant_user_id) . "
-    	AND
-    	merchant_id='$mid'
-    	LIMIT 0,1
-    	";
+        {{merchant_user}}
+        WHERE
+        merchant_user_id=" . Yii::app()->db->quoteValue($merchant_user_id) . "
+        AND
+        merchant_id='$mid'
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -8057,11 +8057,11 @@ class Functions extends CApplicationComponent {
         public function validateMerchantUSername($username = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{merchant_user}}
-    	WHERE
-    	username=" . Yii::app()->db->quoteValue($username) . "
-    	LIMIT 0,1
-    	";
+        {{merchant_user}}
+        WHERE
+        username=" . Yii::app()->db->quoteValue($username) . "
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -8080,26 +8080,26 @@ class Functions extends CApplicationComponent {
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,b.merchant_id,
                (
-				select concat(first_name,' ',last_name)
-				from
-				{{client}}
-				where
-				client_id=a.client_id
-			   ) as fullname			   			   
-			   
-    	       FROM
-    	       {{voucher_list}} a
-    	       
-    	       left join {{voucher}} b
+                select concat(first_name,' ',last_name)
+                from
+                {{client}}
+                where
+                client_id=a.client_id
+               ) as fullname                           
+               
+               FROM
+               {{voucher_list}} a
+               
+               left join {{voucher}} b
                ON 
                a.voucher_id=b.voucher_id
-    	       
-    	       WHERE
-    	       a.voucher_id='$voucher_id'    	
-    	       AND
-    	       b.merchant_id='$mtid'
-    	       ORDER BY voucher_code ASC
-    	";
+               
+               WHERE
+               a.voucher_id='$voucher_id'       
+               AND
+               b.merchant_id='$mtid'
+               ORDER BY voucher_code ASC
+        ";
             $_SESSION['export_stmt'] = $stmt;
             if ($res = $db_ext->rst($stmt)) {
                 return $res;
@@ -8110,11 +8110,11 @@ class Functions extends CApplicationComponent {
         public function getVoucherCodeById($voucher_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	       {{voucher}}
-    	       WHERE
-    	       voucher_id='$voucher_id'    	       
-    	       LIMIT 0,1
-    	";
+               {{voucher}}
+               WHERE
+               voucher_id='$voucher_id'            
+               LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -8124,22 +8124,22 @@ class Functions extends CApplicationComponent {
         public function getVoucherCode($voucher_code = '', $merchant_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,
-    	       b.merchant_id,
-    	       b.voucher_type, b.amount
-    	       FROM
-    	       {{voucher_list}} a
-    	       left join {{voucher}} b
+               b.merchant_id,
+               b.voucher_type, b.amount
+               FROM
+               {{voucher_list}} a
+               left join {{voucher}} b
                ON 
                a.voucher_id=b.voucher_id
                
-    	       WHERE
-    	       a.voucher_code='$voucher_code'    	       
-    	       AND
-    	       b.merchant_id='$merchant_id'
-    	       AND
-    	       b.status IN ('publish')
-    	       LIMIT 0,1
-    	";
+               WHERE
+               a.voucher_code='$voucher_code'              
+               AND
+               b.merchant_id='$merchant_id'
+               AND
+               b.status IN ('publish')
+               LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -8170,23 +8170,23 @@ class Functions extends CApplicationComponent {
         public function getFeaturedMerchant() {
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,
-    	(
-    	select option_value
-    	from 
-    	{{option}}
-    	WHERE
-    	merchant_id=a.merchant_id
-    	and
-    	option_name='merchant_photo'
-    	) as merchant_logo
-    	 FROM
-    	{{merchant}} a
-    	WHERE is_featured='2'
-    	AND is_ready ='2'
-    	AND status in ('active')
-    	ORDER BY sort_featured ASC
-    	LIMIT 0,50    	
-    	";
+        (
+        select option_value
+        from 
+        {{option}}
+        WHERE
+        merchant_id=a.merchant_id
+        and
+        option_name='merchant_photo'
+        ) as merchant_logo
+         FROM
+        {{merchant}} a
+        WHERE is_featured='2'
+        AND is_ready ='2'
+        AND status in ('active')
+        ORDER BY sort_featured ASC
+        LIMIT 0,50      
+        ";
             //WHERE is_sponsored='2'
             if ($res = $db_ext->rst($stmt)) {
                 return $res;
@@ -8202,30 +8202,30 @@ class Functions extends CApplicationComponent {
 
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,
-    	(
-    	select option_value
-    	from 
-    	{{option}}
-    	WHERE
-    	merchant_id=a.merchant_id
-    	and
-    	option_name='merchant_photo'
-    	) as merchant_logo,
-    	
-    	(
-    	 select count(*) as total
-    	 from {{merchant}}
-    	 WHERE is_ready ='2'
-    	 AND status in ('active')
-    	) as total_records
-    	
-    	 FROM
-    	{{merchant}} a    	
-    	WHERE is_ready ='2'
-    	AND status in ('active')
-    	ORDER BY membership_expired DESC
-    	LIMIT $start,$limit    	
-    	";
+        (
+        select option_value
+        from 
+        {{option}}
+        WHERE
+        merchant_id=a.merchant_id
+        and
+        option_name='merchant_photo'
+        ) as merchant_logo,
+        
+        (
+         select count(*) as total
+         from {{merchant}}
+         WHERE is_ready ='2'
+         AND status in ('active')
+        ) as total_records
+        
+         FROM
+        {{merchant}} a      
+        WHERE is_ready ='2'
+        AND status in ('active')
+        ORDER BY membership_expired DESC
+        LIMIT $start,$limit     
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res;
             }
@@ -8238,23 +8238,23 @@ class Functions extends CApplicationComponent {
 
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,
-    	(
-    	select option_value
-    	from 
-    	{{option}}
-    	WHERE
-    	merchant_id=a.merchant_id
-    	and
-    	option_name='merchant_photo'
-    	) as merchant_logo
-    	 FROM
-    	{{merchant}} a    	
-    	WHERE is_ready ='2'
-    	AND status in ('active')
-    	AND date_created BETWEEN '$start_date' AND '$date_now'
-    	ORDER BY membership_expired DESC
-    	LIMIT 0,50    	
-    	";
+        (
+        select option_value
+        from 
+        {{option}}
+        WHERE
+        merchant_id=a.merchant_id
+        and
+        option_name='merchant_photo'
+        ) as merchant_logo
+         FROM
+        {{merchant}} a      
+        WHERE is_ready ='2'
+        AND status in ('active')
+        AND date_created BETWEEN '$start_date' AND '$date_now'
+        ORDER BY membership_expired DESC
+        LIMIT 0,50      
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res;
             }
@@ -8280,28 +8280,28 @@ class Functions extends CApplicationComponent {
         public function getSMSTransaction($id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,
-		(
-		select restaurant_name
-		from
-		{{merchant}} 
-		where
-		merchant_id=a.merchant_id
-		) merchant_name,
-		
-		(
-		select title
-		from
-		{{sms_package}}
-		where
-		sms_package_id=a.sms_package_id
-		) sms_package_name
-		
-		 FROM
-		{{sms_package_trans}} a
-		WHERE
-		id='$id'
-		LIMIT 0,1
-		";
+        (
+        select restaurant_name
+        from
+        {{merchant}} 
+        where
+        merchant_id=a.merchant_id
+        ) merchant_name,
+        
+        (
+        select title
+        from
+        {{sms_package}}
+        where
+        sms_package_id=a.sms_package_id
+        ) sms_package_name
+        
+         FROM
+        {{sms_package_trans}} a
+        WHERE
+        id='$id'
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -8318,13 +8318,13 @@ class Functions extends CApplicationComponent {
         public function validateMerchantUser($username = '', $merchant_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{merchant_user}}
-    	WHERE
-    	username=" . Yii::app()->db->quoteValue($username) . "
-    	AND
-    	merchant_id <>'$merchant_id'
-    	LIMIT 0,1
-    	";
+        {{merchant_user}}
+        WHERE
+        username=" . Yii::app()->db->quoteValue($username) . "
+        AND
+        merchant_id <>'$merchant_id'
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -8334,13 +8334,13 @@ class Functions extends CApplicationComponent {
         public function validateMerchantEmail($email = '', $merchant_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{merchant}}
-    	WHERE
-    	contact_email=" . Yii::app()->db->quoteValue($email) . "
-    	AND
-    	merchant_id <>'$merchant_id'
-    	LIMIT 0,1
-    	";
+        {{merchant}}
+        WHERE
+        contact_email=" . Yii::app()->db->quoteValue($email) . "
+        AND
+        merchant_id <>'$merchant_id'
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -8363,13 +8363,13 @@ class Functions extends CApplicationComponent {
             }
             $data_feed = '';
             $stmt = "
-		SELECT * FROM
-		{{sms_package}}		
-		WHERE
-		status='publish'
-		$and
-		ORDER BY sequence ASC
-		";
+        SELECT * FROM
+        {{sms_package}}     
+        WHERE
+        status='publish'
+        $and
+        ORDER BY sequence ASC
+        ";
             $connection = Yii::app()->db;
             $rows = $connection->createCommand($stmt)->queryAll();
             if (is_array($rows) && count($rows) >= 1) {
@@ -8637,14 +8637,14 @@ class Functions extends CApplicationComponent {
         public function getBooking($booking_id = '') {
             $mtid = $this->getMerchantID();
             $stmt = "
-    	SELECT * FROM
-    	{{bookingtable}}
-    	WHERE
-    	booking_id='$booking_id'
-    	AND
-    	merchant_id =" . Yii::app()->db->quoteValue($mtid) . "
-    	LIMIT 0,1
-    	";
+        SELECT * FROM
+        {{bookingtable}}
+        WHERE
+        booking_id='$booking_id'
+        AND
+        merchant_id =" . Yii::app()->db->quoteValue($mtid) . "
+        LIMIT 0,1
+        ";
             $db_ext = new DbExt;
             //dump($stmt);
             if ($res = $db_ext->rst($stmt)) {
@@ -8716,16 +8716,16 @@ class Functions extends CApplicationComponent {
             $and = '';
             $db_ext = new DbExt;
             $stmt = "
-    	      SELECT * FROM
-    	      {{bookingtable}}
-    	      WHERE    	          	      
-    	      date_created like '" . date('Y-m-d') . "%'
-    	      AND
-    	      merchant_id ='$merchant_id'
-    	      AND
-    	      viewed='1'
-    	      ORDER BY date_created DESC
-    	";
+              SELECT * FROM
+              {{bookingtable}}
+              WHERE                       
+              date_created like '" . date('Y-m-d') . "%'
+              AND
+              merchant_id ='$merchant_id'
+              AND
+              viewed='1'
+              ORDER BY date_created DESC
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res;
             }
@@ -8740,8 +8740,8 @@ class Functions extends CApplicationComponent {
             }
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM 
-    	  {{order_status}}     	      	 
-    	  ORDER BY stats_id";
+          {{order_status}}               
+          ORDER BY stats_id";
             if ($res = $db_ext->rst($stmt)) {
                 foreach ($res as $val) {
                     $list[$val['description']] = ucwords($val['description']);
@@ -8818,10 +8818,10 @@ class Functions extends CApplicationComponent {
                 $paymentgateway = json_decode($paymentgateway, true);
             } else {
                 $stmt = "SELECT * FROM
-			{{option}}
-			WHERE
-			option_name='paymentgateway'
-			";
+            {{option}}
+            WHERE
+            option_name='paymentgateway'
+            ";
                 if ($db_ext->rst($stmt)) {
                     $paymentgateway = array();
                 } else {
@@ -8849,7 +8849,7 @@ class Functions extends CApplicationComponent {
 
         public function bookedAvailable($merchant_id = '') {
             //dump($_POST);
-            //$day_now=strtolower(date('l'));		
+            //$day_now=strtolower(date('l'));       
             if (isset($_POST['date_booking'])) {
                 $day_now = strtolower(date("l", strtotime($_POST['date_booking'])));
                 $datenow = date("Y-m-d", strtotime($_POST['date_booking']));
@@ -8872,12 +8872,12 @@ class Functions extends CApplicationComponent {
 
             $db_ext = new DbExt;
             $stmt = "
-		SELECT COUNT(*) as total
-		FROM {{bookingtable}}
-		WHERE
-		date_booking like '$datenow%'
-		AND status in ('pending','approved')
-		";
+        SELECT COUNT(*) as total
+        FROM {{bookingtable}}
+        WHERE
+        date_booking like '$datenow%'
+        AND status in ('pending','approved')
+        ";
 
             if ($res = $db_ext->rst($stmt)) {
                 $total_book_today = $res[0]['total'];
@@ -8928,11 +8928,11 @@ class Functions extends CApplicationComponent {
         public function isAdminExist($contact_email = '') {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-		{{admin_user}}
-		WHERE
-		email_address='" . $contact_email . "'
-		LIMIT 0,1
-		";
+        {{admin_user}}
+        WHERE
+        email_address='" . $contact_email . "'
+        LIMIT 0,1
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res;
             }
@@ -8953,11 +8953,11 @@ class Functions extends CApplicationComponent {
         public function getPaymentProvider($id = '') {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-		{{payment_provider}}
-		WHERE
-		id='$id'
-		LIMIT 0,1
-		";
+        {{payment_provider}}
+        WHERE
+        id='$id'
+        LIMIT 0,1
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res[0];
             }
@@ -8967,9 +8967,9 @@ class Functions extends CApplicationComponent {
         public function getPaymentProviderList() {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-		{{payment_provider}}
-		ORDER BY sequence ASC	
-		";
+        {{payment_provider}}
+        ORDER BY sequence ASC   
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res;
             }
@@ -8979,11 +8979,11 @@ class Functions extends CApplicationComponent {
         public function getPaymentProviderListActive() {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-		{{payment_provider}}
-		WHERE
-		status IN ('publish','published')
-		ORDER BY sequence ASC	
-		";
+        {{payment_provider}}
+        WHERE
+        status IN ('publish','published')
+        ORDER BY sequence ASC   
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res;
             }
@@ -9017,11 +9017,11 @@ class Functions extends CApplicationComponent {
         public function getOffers($offers_id = '') {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-			{{offers}}
-			WHERE
-			offers_id='" . $offers_id . "'
-			LIMIT 0,1			
-		";
+            {{offers}}
+            WHERE
+            offers_id='" . $offers_id . "'
+            LIMIT 0,1           
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res[0];
             }
@@ -9036,15 +9036,15 @@ class Functions extends CApplicationComponent {
 
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-			{{offers}}
-			WHERE
-			status in ('publish','published')
-			AND
-			" . $this->q($start) . " >= valid_from and " . $this->q($end) . " <= valid_to
-			AND merchant_id =" . $this->q($merchant_id) . "
-			$and
-			LIMIT 0,1
-		";
+            {{offers}}
+            WHERE
+            status in ('publish','published')
+            AND
+            " . $this->q($start) . " >= valid_from and " . $this->q($end) . " <= valid_to
+            AND merchant_id =" . $this->q($merchant_id) . "
+            $and
+            LIMIT 0,1
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res[0];
             }
@@ -9055,14 +9055,14 @@ class Functions extends CApplicationComponent {
             $date_now = date('Y-m-d');
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-			{{offers}}
-			WHERE
-			status in ('publish','published')
-			AND
-			now() >= valid_from and now() <= valid_to
-			AND merchant_id =" . $this->q($merchant_id) . "
-			LIMIT 0,1
-		";
+            {{offers}}
+            WHERE
+            status in ('publish','published')
+            AND
+            now() >= valid_from and now() <= valid_to
+            AND merchant_id =" . $this->q($merchant_id) . "
+            LIMIT 0,1
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res[0];
             }
@@ -9076,12 +9076,12 @@ class Functions extends CApplicationComponent {
         public function getOrderDiscount($order_id = '') {
             $DbExt = new DbExt;
             $stmt = "
-		SELECT discounted_amount,discount_percentage FROM
-		{{order}}
-		WHERE
-		order_id =" . $this->q($order_id) . "
-		LIMIT 0,1
-		";
+        SELECT discounted_amount,discount_percentage FROM
+        {{order}}
+        WHERE
+        order_id =" . $this->q($order_id) . "
+        LIMIT 0,1
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res[0];
             }
@@ -9099,11 +9099,11 @@ class Functions extends CApplicationComponent {
         public function getMerchantActivationToken($merchant_id = '') {
             $DbExt = new DbExt;
             $stmt = "SELECT activation_token FROM
-		{{merchant}}
-		WHERE
-		merchant_id=" . $this->q($merchant_id) . "
-		LIMIT 0,1
-		";
+        {{merchant}}
+        WHERE
+        merchant_id=" . $this->q($merchant_id) . "
+        LIMIT 0,1
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 if (empty($res[0]['activation_token'])) {
                     $token = $this->updateMerchantToken($merchant_id);
@@ -9117,12 +9117,12 @@ class Functions extends CApplicationComponent {
         public function getSubsriberEmail($email_address = '') {
             $db_ext = new DbExt;
             $stmt = "
-    	SELECT * FROM
-    	{{newsletter}}
-    	WHERE
-    	email_address=" . $this->q($email_address) . "
-    	LIMIT 0,1
-    	";
+        SELECT * FROM
+        {{newsletter}}
+        WHERE
+        email_address=" . $this->q($email_address) . "
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -9138,23 +9138,23 @@ class Functions extends CApplicationComponent {
                 $and = "AND city = '" . $currentCity . "' ";
             }
             $stmt = "SELECT a.*,  
-    	    (
-	    	select option_value
-	    	from 
-	    	{{option}}
-	    	WHERE
-	    	merchant_id=a.merchant_id
-	    	and
-	    	option_name='merchant_photo'
-	    	) as merchant_logo
-	    	    	
-    	    FROM
-			{{merchant}} a
-			WHERE
-			status in ('active') " . $and . "
+            (
+            select option_value
+            from 
+            {{option}}
+            WHERE
+            merchant_id=a.merchant_id
+            and
+            option_name='merchant_photo'
+            ) as merchant_logo
+                    
+            FROM
+            {{merchant}} a
+            WHERE
+            status in ('active') " . $and . "
 
-			ORDER BY restaurant_name DESC
-		";
+            ORDER BY restaurant_name DESC
+        ";
             //is_sponsored='2'
             if ($res = $db_ext->rst($stmt)) {
                 return $res;
@@ -9171,22 +9171,22 @@ class Functions extends CApplicationComponent {
                 $and = "AND city = '" . $currentCity . "' ";
             }
             $stmt = "SELECT a.*,  
-    	    (
-	    	select option_value
-	    	from 
-	    	{{option}}
-	    	WHERE
-	    	merchant_id=a.merchant_id
-	    	and
-	    	option_name='merchant_photo'
-	    	) as merchant_logo
-	    	    	
-    	    FROM
-			{{merchant}} a
-			WHERE
-			status in ('active') " . $and . "
-			ORDER BY restaurant_name ASC LIMIT 0,7
-		";
+            (
+            select option_value
+            from 
+            {{option}}
+            WHERE
+            merchant_id=a.merchant_id
+            and
+            option_name='merchant_photo'
+            ) as merchant_logo
+                    
+            FROM
+            {{merchant}} a
+            WHERE
+            status in ('active') " . $and . "
+            ORDER BY restaurant_name ASC LIMIT 0,7
+        ";
             //is_sponsored='2'
             if ($res = $db_ext->rst($stmt)) {
                 
@@ -9199,11 +9199,11 @@ class Functions extends CApplicationComponent {
         public function barclayGetTransaction($orderid = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{barclay_trans}}
-    	WHERE
-    	orderid=" . $this->q($orderid) . "
-    	LIMIT 0,1
-    	";
+        {{barclay_trans}}
+        WHERE
+        orderid=" . $this->q($orderid) . "
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -9213,13 +9213,13 @@ class Functions extends CApplicationComponent {
         public function barclayGetTransaction2($orderid = '', $trans_type = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{barclay_trans}}
-    	WHERE
-    	orderid=" . $this->q($orderid) . "
-    	AND
-    	transaction_type=" . $this->q($trans_type) . "
-    	LIMIT 0,1
-    	";
+        {{barclay_trans}}
+        WHERE
+        orderid=" . $this->q($orderid) . "
+        AND
+        transaction_type=" . $this->q($trans_type) . "
+        LIMIT 0,1
+        ";
             if ($db_ext->rst($stmt)) {
                 return true;
             }
@@ -9229,11 +9229,11 @@ class Functions extends CApplicationComponent {
         public function barclayGetTokenTransaction($token = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{barclay_trans}}
-    	WHERE
-    	token=" . $this->q($token) . "    	
-    	LIMIT 0,1
-    	";
+        {{barclay_trans}}
+        WHERE
+        token=" . $this->q($token) . "      
+        LIMIT 0,1
+        ";
             /* AND
               transaction_type=".$this->q($trans_type)." */
             if ($res = $db_ext->rst($stmt)) {
@@ -9262,11 +9262,11 @@ class Functions extends CApplicationComponent {
         public function barclayTransactionByOrderId($orderid = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	{{barclay_trans}}
-    	WHERE
-    	orderid=" . $this->q($orderid) . "    	    
-    	LIMIT 0,1
-    	";
+        {{barclay_trans}}
+        WHERE
+        orderid=" . $this->q($orderid) . "          
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -9278,7 +9278,7 @@ class Functions extends CApplicationComponent {
             /* dump($orderid);
               dump($status); */
             if ($info = $this->barclayTransactionByOrderId($orderid)) {
-                //dump($info);    		    		
+                //dump($info);                      
                 $res = Yii::app()->functions->getMerchantByToken($info['token']);
                 $package_id = $res['package_id'];
 
@@ -9351,13 +9351,13 @@ class Functions extends CApplicationComponent {
                     case "sms_purchase":
                         $payment_reference = $info['orderid'];
                         $stmt_update = "
-    			    UPDATE {{sms_package_trans}}
-    			    SET status=" . strtolower($this->q($status)) . "
-    			    WHERE
-    			    payment_reference=" . $this->q($payment_reference) . "
-    			    AND
-    			    sms_package_id=" . $this->q($info['param1']) . "
-    			    ";
+                    UPDATE {{sms_package_trans}}
+                    SET status=" . strtolower($this->q($status)) . "
+                    WHERE
+                    payment_reference=" . $this->q($payment_reference) . "
+                    AND
+                    sms_package_id=" . $this->q($info['param1']) . "
+                    ";
                         $db_ext->qry($stmt_update);
                         break;
 
@@ -9372,11 +9372,11 @@ class Functions extends CApplicationComponent {
             $db_ext = new DbExt;
             if ($type == "admin") {
                 $stmt = "SELECT * FROM
-	    	{{package_trans}}
-	    	WHERE
-	    	TRANSACTIONID=" . $this->q($orderid) . "
-	    	LIMIT 0,1    	
-	    	";
+            {{package_trans}}
+            WHERE
+            TRANSACTIONID=" . $this->q($orderid) . "
+            LIMIT 0,1       
+            ";
             } else {
                 
             }
@@ -9389,13 +9389,13 @@ class Functions extends CApplicationComponent {
         public function epayBgValidatePaymentOrder($orderid = '', $payment_reference = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-	    	{{payment_order}}
-	    	WHERE
-	    	order_id=" . $this->q($orderid) . "
-	    	AND
-	    	payment_reference=" . $this->q($payment_reference) . "
-	    	LIMIT 0,1    	
-	    ";
+            {{payment_order}}
+            WHERE
+            order_id=" . $this->q($orderid) . "
+            AND
+            payment_reference=" . $this->q($payment_reference) . "
+            LIMIT 0,1       
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return true;
             }
@@ -9450,12 +9450,12 @@ class Functions extends CApplicationComponent {
         public function isMerchantCommission($merchant_id = '') {
 
             $stmt = "
-		SELECT * FROM
-		{{merchant}}
-		WHERE
-		merchant_id=" . $this->q($merchant_id) . "
-		LIMIT 0,1
-		";
+        SELECT * FROM
+        {{merchant}}
+        WHERE
+        merchant_id=" . $this->q($merchant_id) . "
+        LIMIT 0,1
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 if ($res[0]['is_commission'] == 2) {
                     return true;
@@ -9466,12 +9466,12 @@ class Functions extends CApplicationComponent {
 
         public function getMerchantCommission($merchant_id = '') {
             $stmt = "
-		SELECT * FROM
-		{{merchant}}
-		WHERE
-		merchant_id=" . $this->q($merchant_id) . "
-		LIMIT 0,1
-		";
+        SELECT * FROM
+        {{merchant}}
+        WHERE
+        merchant_id=" . $this->q($merchant_id) . "
+        LIMIT 0,1
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res[0]['percent_commision'];
             }
@@ -9481,12 +9481,12 @@ class Functions extends CApplicationComponent {
         public function merchantList2($as_list = true) {
             $data = '';
             $stmt = "SELECT * FROM
-    	{{merchant}}
-    	WHERE status in ('active')
-    	AND
-    	is_commission='2'
-    	ORDER BY restaurant_name ASC LIMIT 0,5000
-    	";
+        {{merchant}}
+        WHERE status in ('active')
+        AND
+        is_commission='2'
+        ORDER BY restaurant_name ASC LIMIT 0,5000
+        ";
             $data[] = t("All Merchant");
             if ($res = $this->db_ext->rst($stmt)) {
                 if ($as_list == TRUE) {
@@ -9522,11 +9522,11 @@ class Functions extends CApplicationComponent {
             }
 
             $stmt = "SELECT sum(total_commission) as total_commission
-    	FROM
-    	{{order}}
-    	WHERE status IN ($status)
-    	$and
-    	";
+        FROM
+        {{order}}
+        WHERE status IN ($status)
+        $and
+        ";
             //dump($stmt);
             if ($res = $this->db_ext->rst($stmt)) {
                 if ($res[0]['total_commission'] == "") {
@@ -9556,8 +9556,8 @@ class Functions extends CApplicationComponent {
             $start_date = date("Y-m-d");
             $end_date = date("Y-m-d");
             $and = " AND date_created BETWEEN  '" . $start_date . " 00:00:00' AND 
-	    		        '" . $end_date . " 23:59:00'
-	    		 ";
+                        '" . $end_date . " 23:59:00'
+                 ";
 
 
 
@@ -9566,11 +9566,11 @@ class Functions extends CApplicationComponent {
             }
 
             $stmt = "SELECT sum(total_commission) as total_commission
-    	FROM
-    	{{order}}
-    	WHERE status IN ($status)    	
-    	$and
-    	";
+        FROM
+        {{order}}
+        WHERE status IN ($status)       
+        $and
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 if ($res[0]['total_commission'] == "") {
                     return 0;
@@ -9599,19 +9599,19 @@ class Functions extends CApplicationComponent {
             $end_date = date("Y-m-d");
             $start_date = date('Y-m-d', strtotime('-30 days'));
             $and = " AND date_created BETWEEN  '" . $start_date . " 00:00:00' AND 
-	    		        '" . $end_date . " 23:59:00'
-	    		 ";
+                        '" . $end_date . " 23:59:00'
+                 ";
 
             if (Yii::app()->functions->getOptionAdmin('admin_exclude_cod_balance') == 2) {
                 $and.=" AND payment_type NOT IN ('cod','pyr','ccr')";
             }
 
             $stmt = "SELECT sum(total_commission) as total_commission
-    	FROM
-    	{{order}}
-    	WHERE status IN ($status)    	
-    	$and
-    	";
+        FROM
+        {{order}}
+        WHERE status IN ($status)       
+        $and
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 if ($res[0]['total_commission'] == "") {
                     return 0;
@@ -9655,21 +9655,21 @@ class Functions extends CApplicationComponent {
             }
 
             $stmt = "SELECT
-    	sum(a.merchant_earnings) as merchant_earnings,
-    	(
-    	select sum(amount) from
-    	{{withdrawal}}
-    	where
-    	merchant_id=a.merchant_id
-    	and status IN ('pending','paid','processing','approved')
-    	) as total_payout
-    	FROM
-    	{{order}} a
-    	WHERE status IN ($status)
-    	AND merchant_id=" . Yii::app()->functions->q($merchant_id) . "
-    	$and_cash
-    	";
-            //dump($stmt);    	
+        sum(a.merchant_earnings) as merchant_earnings,
+        (
+        select sum(amount) from
+        {{withdrawal}}
+        where
+        merchant_id=a.merchant_id
+        and status IN ('pending','paid','processing','approved')
+        ) as total_payout
+        FROM
+        {{order}} a
+        WHERE status IN ($status)
+        AND merchant_id=" . Yii::app()->functions->q($merchant_id) . "
+        $and_cash
+        ";
+            //dump($stmt);      
             if ($res = $this->db_ext->rst($stmt)) {
                 if ($res[0]['merchant_earnings'] == "") {
                     return 0;
@@ -9687,18 +9687,18 @@ class Functions extends CApplicationComponent {
             $start_date = date('Y-m-01', strtotime($query_date));
             $end_date = date('Y-m-t', strtotime($query_date));
             $and = " AND date_created BETWEEN  '" . $start_date . " 00:00:00' AND 
-    		        '" . $end_date . " 23:59:00'
-    		 ";
+                    '" . $end_date . " 23:59:00'
+             ";
 
             $stmt = "SELECT sum(total_commission) as total_commission,
-    	sum(total_w_tax) as total_w_tax,
-    	count(*) as total_order
-    	FROM
-    	{{order}}
-    	WHERE status IN ($status)
-    	AND merchant_id=" . Yii::app()->functions->q($merchant_id) . "
-    	$and
-    	";
+        sum(total_w_tax) as total_w_tax,
+        count(*) as total_order
+        FROM
+        {{order}}
+        WHERE status IN ($status)
+        AND merchant_id=" . Yii::app()->functions->q($merchant_id) . "
+        $and
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -9708,13 +9708,13 @@ class Functions extends CApplicationComponent {
         public function getMerchantTotalSales($merchant_id = '') {
             $status = $this->getCommissionOrderStats();
             $stmt = "SELECT 
-    	sum(total_w_tax) as total_w_tax,
-    	count(*) as total_order
-    	FROM
-    	{{order}}
-    	WHERE status IN ($status)
-    	AND merchant_id=" . Yii::app()->functions->q($merchant_id) . "    	
-    	";
+        sum(total_w_tax) as total_w_tax,
+        count(*) as total_order
+        FROM
+        {{order}}
+        WHERE status IN ($status)
+        AND merchant_id=" . Yii::app()->functions->q($merchant_id) . "      
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -9772,11 +9772,11 @@ class Functions extends CApplicationComponent {
         public function getIngredients($id = '') {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-			{{ingredients}}
-			WHERE
-			ingredients_id='" . $id . "'
-			LIMIT 0,1
-		";
+            {{ingredients}}
+            WHERE
+            ingredients_id='" . $id . "'
+            LIMIT 0,1
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res[0];
             }
@@ -9787,12 +9787,12 @@ class Functions extends CApplicationComponent {
             $data_feed = '';
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-			{{ingredients}}
-			WHERE
-			merchant_id='" . $merchant_id . "'
-			AND status IN ('publish')
-			ORDER BY sequence ASC			
-		";
+            {{ingredients}}
+            WHERE
+            merchant_id='" . $merchant_id . "'
+            AND status IN ('publish')
+            ORDER BY sequence ASC           
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 if ($this->data == "list") {
                     foreach ($res as $val) {
@@ -9824,10 +9824,10 @@ class Functions extends CApplicationComponent {
             $data_feed = '';
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-			{{ingredients}}		
-			WHERE status IN ('publish')	
-			ORDER BY sequence ASC			
-		";
+            {{ingredients}}     
+            WHERE status IN ('publish') 
+            ORDER BY sequence ASC           
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 if ($this->data == "list") {
                     foreach ($res as $val) {
@@ -9926,11 +9926,11 @@ class Functions extends CApplicationComponent {
 
         public function getWithdrawalInformation($id = '') {
             $stmt = "SELECT * FROM
-    	{{withdrawal}}
-    	WHERE
-    	withdrawal_id=" . $this->q($id) . "
-    	LIMIT 0,1
-    	";
+        {{withdrawal}}
+        WHERE
+        withdrawal_id=" . $this->q($id) . "
+        LIMIT 0,1
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -9939,11 +9939,11 @@ class Functions extends CApplicationComponent {
 
         public function getWithdrawalInformationByToken($token = '') {
             $stmt = "SELECT * FROM
-    	{{withdrawal}}
-    	WHERE
-    	withdrawal_token=" . $this->q($token) . "
-    	LIMIT 0,1
-    	";
+        {{withdrawal}}
+        WHERE
+        withdrawal_token=" . $this->q($token) . "
+        LIMIT 0,1
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -9961,12 +9961,12 @@ class Functions extends CApplicationComponent {
                 $and = " AND status IN ($temp_status) ";
             }
             $stmt = "SELECT * FROM
-    	{{withdrawal}}
-    	WHERE
-    	merchant_id=" . $this->q($merchant_id) . "
-    	$and
-    	ORDER BY withdrawal_id DESC    	
-    	";
+        {{withdrawal}}
+        WHERE
+        merchant_id=" . $this->q($merchant_id) . "
+        $and
+        ORDER BY withdrawal_id DESC     
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res;
             }
@@ -9976,12 +9976,12 @@ class Functions extends CApplicationComponent {
         public function getMerchantFailedWithdrawal($merchant_id = '') {
             $and = "AND status NOT IN ('paid','pending','approved')";
             $stmt = "SELECT * FROM
-    	{{withdrawal}}
-    	WHERE
-    	merchant_id=" . $this->q($merchant_id) . "
-    	$and
-    	ORDER BY withdrawal_id DESC    	
-    	";
+        {{withdrawal}}
+        WHERE
+        merchant_id=" . $this->q($merchant_id) . "
+        $and
+        ORDER BY withdrawal_id DESC     
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res;
             }
@@ -10064,23 +10064,23 @@ class Functions extends CApplicationComponent {
             $msg = '';
 
             $stmt1 = "SELECT * FROM
-     	{{merchant_user}}
-     	WHERE
-     	username=" . $this->q($username) . "
-     	$and
-     	LIMIT 0,1
-     	";
+        {{merchant_user}}
+        WHERE
+        username=" . $this->q($username) . "
+        $and
+        LIMIT 0,1
+        ";
             if ($res1 = $this->db_ext->rst($stmt1)) {
                 $msg = t("Username already exist");
             }
 
             $stmt1 = "SELECT * FROM
-     	{{merchant_user}}
-     	WHERE
-     	contact_email=" . $this->q($email) . "
-     	$and
-     	LIMIT 0,1
-     	";
+        {{merchant_user}}
+        WHERE
+        contact_email=" . $this->q($email) . "
+        $and
+        LIMIT 0,1
+        ";
             if ($res1 = $this->db_ext->rst($stmt1)) {
                 $msg = t("Email address already exist");
             }
@@ -10095,9 +10095,9 @@ class Functions extends CApplicationComponent {
             $data = '';
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-    	{{merchant}}    	
-    	ORDER BY restaurant_name ASC
-    	";
+        {{merchant}}        
+        ORDER BY restaurant_name ASC
+        ";
             if ($with_select) {
                 //$data[]=t("Please select");
                 $data[] = t("All Merchant");
@@ -10133,23 +10133,23 @@ class Functions extends CApplicationComponent {
             }
 
             $stmt = "
-    	SELECT SUM(fax_limit) as total_credits,
-    	(
-    	  select count(*) as total_send
-    	   from
-    	  {{fax_broadcast}}
-    	   where
-    	   merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "    	
-    	   and    	   
-    	   status in ('success')
-    	) as total_send
-    	
-    	FROM {{fax_package_trans}}
-    	WHERE
-    	merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "
-    	AND
-    	status in ('paid')
-    	";
+        SELECT SUM(fax_limit) as total_credits,
+        (
+          select count(*) as total_send
+           from
+          {{fax_broadcast}}
+           where
+           merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "     
+           and         
+           status in ('success')
+        ) as total_send
+        
+        FROM {{fax_package_trans}}
+        WHERE
+        merchant_id=" . Yii::app()->db->quoteValue($merchant_id) . "
+        AND
+        status in ('paid')
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res[0]['total_credits'] - $res[0]['total_send'];
             }
@@ -10174,11 +10174,11 @@ class Functions extends CApplicationComponent {
 
         public function getFaxJobId($jobid = '') {
             $stmt = "SELECT * FROM
-    	{{fax_broadcast}}
-    	WHERE
-    	jobid=" . $this->q($jobid) . "
-    	LIMIT 0,1
-    	";
+        {{fax_broadcast}}
+        WHERE
+        jobid=" . $this->q($jobid) . "
+        LIMIT 0,1
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -10200,11 +10200,11 @@ class Functions extends CApplicationComponent {
                 $admin_id = $this->getAdminId();
                 $kr_user_session = $_SESSION['kr_user_session'];
                 $stmt = "SELECT session_token
-    		FROM {{admin_user}}
-    		WHERE
-    		admin_id=" . $this->q($admin_id) . "
-    		LIMIT 0,1
-    		";
+            FROM {{admin_user}}
+            WHERE
+            admin_id=" . $this->q($admin_id) . "
+            LIMIT 0,1
+            ";
                 if ($res = $this->db_ext->rst($stmt)) {
                     if ($kr_user_session == $res[0]['session_token']) {
                         return true;
@@ -10232,11 +10232,11 @@ class Functions extends CApplicationComponent {
 
                 if ($_SESSION['kr_merchant_user_type'] == "admin") {
                     $stmt = "SELECT session_token
-	    		FROM {{merchant}}
-	    		WHERE
-	    		merchant_id=" . $this->q($merchant_id) . "
-	    		LIMIT 0,1
-	    		";
+                FROM {{merchant}}
+                WHERE
+                merchant_id=" . $this->q($merchant_id) . "
+                LIMIT 0,1
+                ";
                 } else {
                     $merchant_user_id = '';
                     $user_info = json_decode($_SESSION['kr_merchant_user'], true);
@@ -10245,11 +10245,11 @@ class Functions extends CApplicationComponent {
                     }
 
                     $stmt = "SELECT session_token
-	    		FROM {{merchant_user}}
-	    		WHERE
-	    		merchant_user_id=" . $this->q($merchant_user_id) . "
-	    		LIMIT 0,1
-	    		";
+                FROM {{merchant_user}}
+                WHERE
+                merchant_user_id=" . $this->q($merchant_user_id) . "
+                LIMIT 0,1
+                ";
                 }
                 if ($res = $this->db_ext->rst($stmt)) {
                     if ($session == $res[0]['session_token']) {
@@ -10263,11 +10263,11 @@ class Functions extends CApplicationComponent {
 
         public function getShippingRates($mtid = '') {
             $stmt = "SELECT * FROM
-    	{{shipping_rate}}
-    	WHERE
-    	merchant_id=" . Yii::app()->functions->q($mtid) . "
-    	ORDER BY id ASC
-    	";
+        {{shipping_rate}}
+        WHERE
+        merchant_id=" . Yii::app()->functions->q($mtid) . "
+        ORDER BY id ASC
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return $res;
             }
@@ -10276,7 +10276,7 @@ class Functions extends CApplicationComponent {
 
         public function isMerchantOpenTimes($merchant_id = '', $full_booking_day = '', $booking_time = '') {
             $business_hours = Yii::app()->functions->getBusinnesHours($merchant_id);
-            //dump($business_hours);	   
+            //dump($business_hours);       
             if (is_array($business_hours) && count($business_hours) >= 1) {
                 if (!array_key_exists($full_booking_day, $business_hours)) {
                     return false;
@@ -10286,7 +10286,7 @@ class Functions extends CApplicationComponent {
                             $selected_date = $business_hours[$full_booking_day];
                             //dump($selected_date);
                             $temp_selected = explode(",", $selected_date);
-                            //dump($temp_selected);	
+                            //dump($temp_selected); 
 
                             if (is_array($temp_selected) && count($temp_selected) >= 1) {
                                 if (empty($temp_selected[0])) {
@@ -10346,12 +10346,12 @@ class Functions extends CApplicationComponent {
         public function getMerchantCommissionDetails($merchant_id = '') {
 
             $stmt = "
-		SELECT * FROM
-		{{merchant}}
-		WHERE
-		merchant_id=" . $this->q($merchant_id) . "
-		LIMIT 0,1
-		";
+        SELECT * FROM
+        {{merchant}}
+        WHERE
+        merchant_id=" . $this->q($merchant_id) . "
+        LIMIT 0,1
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 return array(
                     'is_commission' => $res[0]['is_commission'],
@@ -10395,7 +10395,7 @@ class Functions extends CApplicationComponent {
             }
 
             $time_format = Yii::app()->functions->getOptionAdmin("website_time_picker_format");
-            //dump($time_format);	
+            //dump($time_format);   
             switch ($time_format) {
                 case "12":
                     if ($is_display == true) {
@@ -10436,13 +10436,13 @@ class Functions extends CApplicationComponent {
         public function getCategoryList2($merchant_id = '') {
             $data_feed = '';
             $stmt = "
-		SELECT * FROM
-		{{category}}
-		WHERE 
-		merchant_id='" . $merchant_id . "'
-		AND status in ('publish','published')
-		ORDER BY sequence ASC
-		";
+        SELECT * FROM
+        {{category}}
+        WHERE 
+        merchant_id='" . $merchant_id . "'
+        AND status in ('publish','published')
+        ORDER BY sequence ASC
+        ";
             $connection = Yii::app()->db;
             $rows = $connection->createCommand($stmt)->queryAll();
             if (is_array($rows) && count($rows) >= 1) {
@@ -10505,11 +10505,11 @@ class Functions extends CApplicationComponent {
         public function GetDish($id = '') {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-		{{dishes}}
-		WHERE
-		dish_id='$id'
-		LIMIT 0,1
-		";
+        {{dishes}}
+        WHERE
+        dish_id='$id'
+        LIMIT 0,1
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res[0];
             }
@@ -10519,11 +10519,11 @@ class Functions extends CApplicationComponent {
         public function GetDishList() {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-		{{dishes}}
-		WHERE
-		status IN ('publish','published')
-		ORDER BY dish_name ASC		
-		";
+        {{dishes}}
+        WHERE
+        status IN ('publish','published')
+        ORDER BY dish_name ASC      
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 return $res;
             }
@@ -10533,19 +10533,19 @@ class Functions extends CApplicationComponent {
         public function getVoucherCodeByIdNew($voucher_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT a.*,
-    	        (
-    	        select count(*)
-    	        from
-    	        {{order}}
-    	        where
-    	        voucher_code=a.voucher_name
-    	        ) as found
-    	        FROM
-    	       {{voucher_new}} a
-    	       WHERE
-    	       voucher_id='$voucher_id'    	       
-    	       LIMIT 0,1
-    	";
+                (
+                select count(*)
+                from
+                {{order}}
+                where
+                voucher_code=a.voucher_name
+                ) as found
+                FROM
+               {{voucher_new}} a
+               WHERE
+               voucher_id='$voucher_id'            
+               LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -10555,34 +10555,34 @@ class Functions extends CApplicationComponent {
         public function getVoucherCodeNew($voucher_code = '', $merchant_id = '') {
             $db_ext = new DbExt;
             $stmt = "
-    	SELECT a.*,
-    	(
-    	select count(*) from
-    	{{order}}
-    	where
-    	voucher_code=" . $this->q($voucher_code) . "
-    	and
-    	client_id=" . $this->getClientId() . "  	
-    	LIMIT 0,1
-    	) as found,
-    	
-    	(
-    	select count(*) from
-    	{{order}}
-    	where
-    	voucher_code=" . $this->q($voucher_code) . "    	
-    	LIMIT 0,1
-    	) as number_used    
-    	
-    	FROM
-    	{{voucher_new}} a
-    	WHERE
-    	voucher_name=" . $this->q($voucher_code) . "
-    	AND
-    	merchant_id=" . $this->q($merchant_id) . "
-    	AND status IN ('publish','published')
-    	LIMIT 0,1
-    	";
+        SELECT a.*,
+        (
+        select count(*) from
+        {{order}}
+        where
+        voucher_code=" . $this->q($voucher_code) . "
+        and
+        client_id=" . $this->getClientId() . "      
+        LIMIT 0,1
+        ) as found,
+        
+        (
+        select count(*) from
+        {{order}}
+        where
+        voucher_code=" . $this->q($voucher_code) . "        
+        LIMIT 0,1
+        ) as number_used    
+        
+        FROM
+        {{voucher_new}} a
+        WHERE
+        voucher_name=" . $this->q($voucher_code) . "
+        AND
+        merchant_id=" . $this->q($merchant_id) . "
+        AND status IN ('publish','published')
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -10592,34 +10592,34 @@ class Functions extends CApplicationComponent {
         public function getVoucherCodeAdmin($voucher_code = '') {
             $db_ext = new DbExt;
             $stmt = "
-    	SELECT a.*,
-    	(
-    	select count(*) from
-    	{{order}}
-    	where
-    	voucher_code=" . $this->q($voucher_code) . "
-    	and
-    	client_id=" . $this->getClientId() . "  	
-    	LIMIT 0,1
-    	) as found,
-    	
-    	(
-    	select count(*) from
-    	{{order}}
-    	where
-    	voucher_code=" . $this->q($voucher_code) . "    	
-    	LIMIT 0,1
-    	) as number_used    	
-    	
-    	FROM
-    	{{voucher_new}} a
-    	WHERE
-    	voucher_name=" . $this->q($voucher_code) . "
-    	AND
-    	voucher_owner='admin'
-    	AND status IN ('publish','published')
-    	LIMIT 0,1
-    	";
+        SELECT a.*,
+        (
+        select count(*) from
+        {{order}}
+        where
+        voucher_code=" . $this->q($voucher_code) . "
+        and
+        client_id=" . $this->getClientId() . "      
+        LIMIT 0,1
+        ) as found,
+        
+        (
+        select count(*) from
+        {{order}}
+        where
+        voucher_code=" . $this->q($voucher_code) . "        
+        LIMIT 0,1
+        ) as number_used        
+        
+        FROM
+        {{voucher_new}} a
+        WHERE
+        voucher_name=" . $this->q($voucher_code) . "
+        AND
+        voucher_owner='admin'
+        AND status IN ('publish','published')
+        LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -10629,11 +10629,11 @@ class Functions extends CApplicationComponent {
         public function getAddressBookByID($id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT * FROM
-    	       {{address_book}}
-    	       WHERE
-    	       id='$id'    	       
-    	       LIMIT 0,1
-    	";
+               {{address_book}}
+               WHERE
+               id='$id'            
+               LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -10643,16 +10643,16 @@ class Functions extends CApplicationComponent {
         public function hasAddressDefault($client_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT 
-    	       concat(street,' ',city,' ',state,' ',zipcode) as address,
-    	       id,location_name,country_code
-    	       FROM
-    	       {{address_book}}
-    	       WHERE
-    	       client_id='$client_id'    	       
-    	       AND
-    	       as_default ='2'
-    	       LIMIT 0,1
-    	";
+               concat(street,' ',city,' ',state,' ',zipcode) as address,
+               id,location_name,country_code
+               FROM
+               {{address_book}}
+               WHERE
+               client_id='$client_id'              
+               AND
+               as_default ='2'
+               LIMIT 0,1
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res[0];
             }
@@ -10672,14 +10672,14 @@ class Functions extends CApplicationComponent {
         public function getAddressBookByClient($client_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT  
-    	       concat(street,' ',city,' ',state,' ',zipcode) as address,
-    	       id,location_name,country_code
-    	       FROM
-    	       {{address_book}}
-    	       WHERE
-    	       client_id =" . $this->q($client_id) . "
-    	       ORDER BY street ASC    	       
-    	";
+               concat(street,' ',city,' ',state,' ',zipcode) as address,
+               id,location_name,country_code
+               FROM
+               {{address_book}}
+               WHERE
+               client_id =" . $this->q($client_id) . "
+               ORDER BY street ASC             
+        ";
             if ($res = $db_ext->rst($stmt)) {
                 return $res;
             }
@@ -10723,10 +10723,10 @@ class Functions extends CApplicationComponent {
             $lang_list = '';
             $db_ext = new DbExt;
             $stmt = "SELECT lang_id,country_code,language_code
-    	 FROM {{languages}} 
-    	 WHERE
-    	 status in ('publish','published')
-    	 ";
+         FROM {{languages}} 
+         WHERE
+         status in ('publish','published')
+         ";
             if ($res = $db_ext->rst($stmt)) {
                 foreach ($res as $val) {
                     $lang_list[$val['lang_id']] = $val['language_code'];
@@ -10758,11 +10758,11 @@ class Functions extends CApplicationComponent {
         public function getSubcategoryTranslation($subcat_id = '') {
             $db_ext = new DbExt;
             $stmt = "SELECT subcategory_name_trans,subcategory_description_trans
-    	 FROM {{subcategory}} 
-    	 WHERE
-    	 subcat_id =" . $this->q($subcat_id) . "    	 
-    	 LIMIT 0,1
-    	 ";
+         FROM {{subcategory}} 
+         WHERE
+         subcat_id =" . $this->q($subcat_id) . "         
+         LIMIT 0,1
+         ";
             if ($res = $db_ext->rst($stmt)) {
                 $res = $res[0];
                 if (!empty($res['subcategory_name_trans'])) {
@@ -10775,13 +10775,13 @@ class Functions extends CApplicationComponent {
         public function getSizeTranslation($size_name = '', $mt_id = '') {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-			{{size}}
-			WHERE
-			size_name=" . $this->q($size_name) . "
-			AND 
-			merchant_id=" . $this->q($mt_id) . "
-			LIMIT 0,1			
-		";
+            {{size}}
+            WHERE
+            size_name=" . $this->q($size_name) . "
+            AND 
+            merchant_id=" . $this->q($mt_id) . "
+            LIMIT 0,1           
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 $res = $res[0];
                 $t['size_name_trans'] = !empty($res['size_name_trans']) ? json_decode($res['size_name_trans'], true) : '';
@@ -10793,13 +10793,13 @@ class Functions extends CApplicationComponent {
         public function getCookingTranslation($name = '', $mt_id = '') {
             $DbExt = new DbExt;
             $stmt = "SELECT * FROM
-			{{cooking_ref}}
-			WHERE
-			cooking_name=" . $this->q($name) . "
-			AND 
-			merchant_id=" . $this->q($mt_id) . "
-			LIMIT 0,1			
-		";
+            {{cooking_ref}}
+            WHERE
+            cooking_name=" . $this->q($name) . "
+            AND 
+            merchant_id=" . $this->q($mt_id) . "
+            LIMIT 0,1           
+        ";
             if ($res = $DbExt->rst($stmt)) {
                 $res = $res[0];
                 $t['cooking_name_trans'] = !empty($res['cooking_name_trans']) ? json_decode($res['cooking_name_trans'], true) : '';
@@ -10810,13 +10810,13 @@ class Functions extends CApplicationComponent {
 
         public function getAddonTranslation($name = '', $mt_id = '') {
             $stmt = "SELECT * FROM
-			{{subcategory_item}}
-			WHERE
-			sub_item_name=" . $this->q($name) . "
-			AND 
-			merchant_id=" . $this->q($mt_id) . "
-			LIMIT 0,1			
-		";
+            {{subcategory_item}}
+            WHERE
+            sub_item_name=" . $this->q($name) . "
+            AND 
+            merchant_id=" . $this->q($mt_id) . "
+            LIMIT 0,1           
+        ";
             if ($res = $this->db_ext->rst($stmt)) {
                 $res = $res[0];
                 $t['sub_item_name_trans'] = !empty($res['sub_item_name_trans']) ? json_decode($res['sub_item_name_trans'], true) : '';

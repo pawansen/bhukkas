@@ -271,7 +271,13 @@ $(".show-filter").click(function () {
     $("#cusine_list li:nth-child(n+4)").toggleClass("filter-show");
     $(".filter-text").toggle();
 });
-
+$(".btn-map").click(function () {
+    $('.left-filter').toggleClass('left-unfixed1');
+     $('.rest-listing').toggleClass('m-l-01');
+	 $('.left-filter').toggleClass('left-unfixed');
+     $('.rest-listing').toggleClass('m-l-0');
+  
+});
 jQuery(document).ready(function () {
 $("#input-21f").rating({
 starCaptions: function(val) {

@@ -1045,6 +1045,102 @@ class ApiController extends RestController {
 
     }
 
+
+    /* PAYMENT API CODE 25 JULY */
+
+      //new api
+    public function actionapiOrderPayment() {
+        $data = array();
+
+        if (!empty($_POST['merchant_id']) && !empty($_POST['client_id']) && $_POST['order_id']) {
+            if (!empty($_POST['payment_opt'])) {
+
+                if ($_POST['payment_opt'] == 'cod' || $_POST['payment_opt'] == 'cca' || $_POST['payment_opt'] == 'payu') {
+
+                    $response = $this->connection->apiOrderPayment($_POST);
+                    if ($response['code'] == 1) {
+                        $data['status'] = 200;
+                        $data['message'] = $response['msg'];
+                        $data['list'] = $response['list'];
+                        $data['receipt'] = $response['receipt'];
+                        $this->sendResponse(200, CJSON::encode($data));
+                    } else {
+                        $data['status'] = 400;
+                        $data['message'] = $response['msg'];
+                        $this->sendResponse(200, CJSON::encode($data));
+                    }
+                } else {
+                    $data['status'] = 400;
+                    $data['message'] = 'Please select at least one payment option';
+                    $this->sendResponse(200, CJSON::encode($data));
+                }
+            } else {
+                $data['status'] = 400;
+                $data['message'] = 'Please select at least one payment option';
+                $this->sendResponse(200, CJSON::encode($data));
+            }
+        } else {
+            $data['status'] = 400;
+            $data['message'] = 'merchant id & client id is required';
+            $this->sendResponse(200, CJSON::encode($data));
+        }
+    }
+    //create order checkout insert order in db with initial_order status
+    public function actionapiOrderCheckout() {
+        $data = array();
+        /* $params = '{"merchant_id":"11","client_id":"8","address_book_id":"15","payment_opt":"payu","delivery_time":"20:30","delivery_date":"2016-06-30","offer_code":"NEW1","order_id":"61","status":"success","delivery_type":"delivery","cart_item":[{"currentController":"store","merchant_id":11,"item_id":55,"price":"50|long","qty":1,"discount":"","notes":"","row":"","non_taxable":1},{"currentController":"store","merchant_id":11,"item_id":56,"price":"70|small","qty":29,"discount":"","notes":"","row":"","non_taxable":1},{"currentController":"store","merchant_id":11,"item_id":57,"price":"25|long","qty":1,"discount":"","notes":"","row":"","non_taxable":2},{"currentController":"store","merchant_id":11,"item_id":57,"price":"15|medium","qty":1,"discount":"","notes":"","row":"","non_taxable":2},{"currentController":"store","merchant_id":11,"item_id":57,"price":"5|small","qty":1,"discount":"","notes":"","row":"","non_taxable":2}]}'; */
+        $params = $_POST['cart'];
+        $parmete2 = json_decode($params, true);
+        if (!empty($parmete2['merchant_id']) && !empty($parmete2['client_id'])) {
+
+                    $parmete2['delivery_type'] = 'delivery';
+                    $response = $this->connection->apiOrderCheckout($parmete2);
+                    if ($response['code'] == 1) {
+                        $data['status'] = 200;
+                        $data['message'] = $response['msg'];
+                        $data['list'] = $response['list'];
+                        $data['receipt'] = $response['receipt'];
+                        $this->sendResponse(200, CJSON::encode($data));
+                    } else {
+                        $data['status'] = 400;
+                        $data['message'] = $response['msg'];
+                        $this->sendResponse(200, CJSON::encode($data));
+                    }
+
+        } else {
+            $data['status'] = 400;
+            $data['message'] = 'merchant id & client id is required';
+            $this->sendResponse(200, CJSON::encode($data));
+        }
+    }
+    // merchant_id,client_id,order_id,status,payment_option,payment_records,tracking_id
+    public function actionapiPaymentStatus() {
+        $data = array();
+        if (!empty($_POST['merchant_id']) && !empty($_POST['client_id']) && $_POST['order_id']) {
+
+                    $response = $this->connection->apiPaymentStatus($_POST);
+                    if ($response['code'] == 1) {
+                        $data['status'] = 200;
+                        $data['message'] = $response['msg'];
+                        $data['list'] = $response['list'];
+                        $data['receipt'] = $response['receipt'];
+                        $this->sendResponse(200, CJSON::encode($data));
+                    } else {
+                        $data['status'] = 400;
+                        $data['message'] = $response['msg'];
+                        $this->sendResponse(200, CJSON::encode($data));
+                    }
+
+        } else {
+            $data['status'] = 400;
+            $data['message'] = 'order id is required';
+            $this->sendResponse(200, CJSON::encode($data));
+        }
+    }
+
+
+    /* PAYMENT API CODE 25 JULY END */
+
     
 
     public function actionCollectionDB() {

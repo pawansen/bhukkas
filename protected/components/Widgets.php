@@ -1106,7 +1106,7 @@ If you have any questions please contact by phone '.$website_contact_phone.' & e
 
   <form  action="<?php echo baseUrl()."/store/searchArea"?>" class="forms-search" id="forms-search" method="GET">
     <article class="clearfix m-t-120">
-        <div class="col-md-3 p-lr-0 col-md-offset-1 col-sm-5">
+        <div class="col-lg-3 col-lg-offset-1 col-md-4 p-lr-0  col-sm-4">
             
             <?php 
 
@@ -1118,8 +1118,12 @@ If you have any questions please contact by phone '.$website_contact_phone.' & e
 			$currentCity = $query['city'];
 		    }  */
 
+           
+		    $show_city_array = array("Delhi", "Indore", "Mumbai", "Mumbai - Navi Mumbai","Mumbai - Thane","Pune","Bangalore","Noida","Gurgaon");
 
-            ?>
+		    ?>
+
+		    
 
 
             <div class="input-group full-width">
@@ -1127,13 +1131,19 @@ If you have any questions please contact by phone '.$website_contact_phone.' & e
                 <select data-validation-error-msg="You did not select city" data-validation="required" class="form-control selectpicker" data-width="100%" name="city" id="citySearchSelect">
                    <?php if(!empty($citys)):
                        foreach($citys as $city):?>
+                    
+                    <?php if (in_array($city['city'], $show_city_array)){ ?>
                     <option <?php if(strtolower(strtolower($city['city'])) == strtolower($currentCity)):echo"selected";endif;?> value="<?php echo $city['cid'];?>"><?php echo ucwords($city['city']);?></option>
+
+                    <?php } ?>
+                      
+
                        <?php endforeach; endif;?>
 <!--                    <option value="indore" selected>Indore</option>-->
                 </select>
             </div>
         </div>
-        <div class="col-md-3 p-lr-0 col-sm-5">
+        <div class="col-lg-3 col-md-3 p-lr-0 col-sm-3 m-tb-xs-10">
             <div class="input-group full-width">
 <!--                <span class="input-group-addon search-addon" id="basic-addon1"><i class="fa fa-tags"></i></span>-->
                 <select data-validation-error-msg="You did not select category" data-validation="required" class="form-control selectpicker" data-width="100%" name="categorys" id="categorySelect">
@@ -1147,12 +1157,12 @@ If you have any questions please contact by phone '.$website_contact_phone.' & e
                 </select>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6 m-tb-xs-10 p-lr-0">
+        <div class="col-lg-3 col-md-4 col-sm-4 m-tb-xs-10 p-lr-0">
 <!--                    <input type="text" placeholder="Location" class="form-control custom-input">-->
             <input data-validation-error-msg="You did not enter a valid address" type="text" data-validation="required" class="form-control custom-input" name="s" id="s" placeholder="<?php echo Yii::t("default",$placholder_search)?>" value="" />
            
         </div>
-        <div class="col-md-1 col-sm-1 col-sm-offset-0 col-xs-6 col-xs-offset-3 p-lr-0">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-sm-offset-0 col-xs-6 col-xs-offset-3 p-lr-0">
              <button type="submit" class="btn btn-block btn-search">
                 <i class="fa fa-search visible-sm visible-md"></i><span class="hidden-sm hidden-md">Search</span>
               </button>
@@ -1733,7 +1743,7 @@ If you have any questions please contact by phone '.$website_contact_phone.' & e
      if($merchant=Yii::app()->functions->frontFeaturedMerchantList()):
      foreach ($merchant as $rest):
          $img = ($rest['sponsored_image']) ? uploadURL().'/'.$rest['sponsored_image'] : uploadURL().'/100X100.png'?>
-        <aside class="col-md-3 m-t-xs-10 col-sm-6">
+        <aside class="col-md-3 col-sm-3 m-t-xs-10">
             <a href="<?php echo Yii::app()->CreateUrl('/store/menu/merchant/'.$rest['restaurant_slug']);?>" title="<?php echo $rest['restaurant_name'];?>"> <img width="227" height="270" src="<?php echo $img;?>" class="img-responsive" alt=""></a>
         </aside>
             

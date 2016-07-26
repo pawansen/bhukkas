@@ -520,6 +520,8 @@ if (!class_exists('AjaxAdmin')) {
         }
 
         public function uploadImage() {
+
+
             $qqfile = $_GET['qqfile'];
             if (preg_match("/.php/i", $qqfile)) {
                 if (isset($_GET['currentController'])) {
@@ -531,6 +533,28 @@ if (!class_exists('AjaxAdmin')) {
                     }
                 }
             }
+
+            /* S3 AWS AJAX UPLOAD CODE */
+            //include the S3 class              
+     if (!class_exists('S3'))require_once('S3.php');
+             
+    //AWS access info
+    if (!defined('awsAccessKey')) define('awsAccessKey', 'AKIAIJXDXYBBJOOB6TRA');
+    if (!defined('awsSecretKey')) define('awsSecretKey', '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');
+             
+    //instantiate the class
+    $s3 = new S3(awsAccessKey, awsSecretKey);
+
+
+
+
+
+    /* S3 CODE END  */
+
+
+
+
+
 
             
 
@@ -571,10 +595,22 @@ if (!class_exists('AjaxAdmin')) {
                 $file_name = $time . "-" . $pathinfo['filename'] . "." . $pathinfo['extension'];
                 $file_name = str_replace(" ", "-", $file_name);
                 $path = $path_to_upload . $file_name;
+                 
+                
 
                 $target = fopen($path, "w");
                 fseek($temp, 0, SEEK_SET);
                 stream_copy_to_stream($temp, $target);
+
+                //move the file
+if ($s3->putObjectFile($path, "bhukkas-assets/upload", $file_name, S3::ACL_PUBLIC_READ)) {
+   // echo "We successfully uploaded your file.";
+}else{
+  //  echo "Something went wrong while uploading your file... sorry.";
+}
+
+              
+
 
                 $this->code = 1;
                 $this->msg = Yii::t("default", "Upload Completed");

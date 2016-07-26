@@ -1813,7 +1813,7 @@ ul.opening_list li span {
 	min-height: 370px;
 	background: transparent;
 	position: relative;
-        background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
 }
 
 .parallax-window-index {
@@ -1991,8 +1991,7 @@ ul.opening_list li span {
 .form-control.form-white {
 	color: #fff;
 	font-size: 16px;
-	height:30px;
-	/*height: 42px;*/
+	height: 42px;
 	position: relative;
 	border-radius: 0;
 	border: 1px solid white;
@@ -2652,8 +2651,7 @@ footer ul li {
 }
 
 .m-t-120 {
-	/*margin-top: 120px;*/
-	 margin-top: 200px;
+	margin-top: 120px;
 }
 
 #change_search_location form .m-t-120 {
@@ -3013,46 +3011,55 @@ display:none;
 .add-img img {
 	border: 2px solid #fff;
 	box-shadow: 0px 0px 3px #ddd;
-        height: 227px;
-        width: 227px;
+	height: 227px;
+	width: 227px;
+}
+
+@media screen and (max-width:800px) {
+	.add-img img {
+		height: 170px;
+	}
 }
 
 
 /* -- Cart Table -- */
 
 .cart-list tr td:nth-child(1) {
-    width: 50%;
+	width: 50%;
 }
 
 .cart-list tr td:nth-child(2) {
-    width: 35%;
-    padding: 0px 0px;
+	width: 35%;
+	padding: 0px 0px;
 }
+
 .cart-list tr td:nth-child(2) .menu-price-multi {
-   
-    width:100%;
-    float:left;
-     padding: 8px 0px;
+	width: 100%;
+	float: left;
+	padding: 8px 0px;
 }
+
 .cart-list tr td:nth-child(3) {
-    width: 15%;
-    padding: 0px 0px;
+	width: 15%;
+	padding: 0px 0px;
 }
-.cart-list tr td:nth-child(3).options a{
-    
-    padding: 8px 0px;
-    width:100%;
-    float:left;
-    text-align: center;
+
+.cart-list tr td:nth-child(3).options a {
+	padding: 8px 0px;
+	width: 100%;
+	float: left;
+	text-align: center;
 }
-table.cart-list{
-    border-bottom: 1px solid #ddd;
-    
+
+table.cart-list {
+	border-bottom: 1px solid #ddd;
 }
-#main_menu h3{
-    margin-top: 15px;
-    font-size: 18px;
+
+#main_menu h3 {
+	margin-top: 15px;
+	font-size: 18px;
 }
+
 
 /* -- Searc box Select -- */
 
@@ -3109,10 +3116,8 @@ ul.rest-detail {
 }
 
 ul.rest-detail li {
-	/*padding: 3px 0px 0px;
-	width: 110px;*/
-	padding: 3px 10px 0px;
-    width: 96px;
+	padding: 3px 0px 0px;
+	width: 110px;
 	float: left;
 	text-align: left;
 }
@@ -3983,12 +3988,12 @@ a.btn_1:hover,
 
 .my-cart .item-order-wrap {
 	background: #fff none repeat scroll 0 0;
-/*
+	/*
 	border: 1px solid #ededed;
 	border-radius: 3px;
 */
 	margin-bottom: 25px;
-/*	padding: 15px 10px;*/
+	/*	padding: 15px 10px;*/
 }
 
 .my-cart .item-order-wrap h3 {
@@ -4107,23 +4112,24 @@ a.btn_1:hover,
 .my-cart .item-order-wrap .item-overflow .item-row:hover div.d {
 	display: none;
 }
-.my-cart .item-order-wrap .summary-wrap .manage
-{
+
+.my-cart .item-order-wrap .summary-wrap .manage {
 	font-weight: 600;
 }
+
 
 /* -- My Cart Menu Ends -- */
 
 #contacts a {
-	
 	color: #484848;
 }
-.fav-table a{
-    font-weight: 600;
+
+.fav-table a {
+	font-weight: 600;
 }
-.fav-table a:hover{
-    color: #ec008c !important;
-    
+
+.fav-table a:hover {
+	color: #ec008c !important;
 }
 
 .review-table tr td:nth-child(1) {
@@ -4287,66 +4293,119 @@ a.btn_full,
 	}
 }
 
-a.clear-cart:hover { color:#ec008c !important; font-size:13px; }
+a.clear-cart:hover {
+	color: #ec008c !important;
+	font-size: 13px;
+}
 
-.fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .input-block .label
-{
-    float:left;
-    font-size:13px;
-    color:#444;
+.fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .input-block .label {
+	float: left;
+	font-size: 13px;
+	color: #444;
 }
-.fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .input-block .value
-{
-    float:right;
+
+.fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .input-block .value {
+	float: right;
 }
+
 .fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .item-overflow,
-.inner .receipt-main-wrap .receipt-wrap .item-overflow
-{
-    max-height: 1600px;
-    padding: 10px;
-    overflow-y: auto;
+.inner .receipt-main-wrap .receipt-wrap .item-overflow {
+	max-height: 1600px;
+	padding: 10px;
+	overflow-y: auto;
 }
-.inner .receipt-main-wrap .receipt-wrap .summary-wrap,
-.fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .summary-wrap
 
-{
-    padding: 10px;
+.inner .receipt-main-wrap .receipt-wrap .summary-wrap,
+.fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .summary-wrap {
+	padding: 10px;
 }
-.fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .close-receipt
-{
-    float:right;
+
+.fancybox-inner .view-receipt-pop .receipt-main-wrap .receipt-wrap .close-receipt {
+	float: right;
 }
-.fancybox-inner .view-receipt-pop .receipt-main-wrap .print_wrap, .inner .print_wrap
-{
-    padding: 10px;
+
+.fancybox-inner .view-receipt-pop .receipt-main-wrap .print_wrap,
+.inner .print_wrap {
+	padding: 10px;
 }
-.receipt-wrap h4{
-    padding-left: 10px;
+
+.receipt-wrap h4 {
+	padding-left: 10px;
 }
+
 .rest-listing table tr td:nth-child(2) h3,
 .rest-listing table tr td:nth-child(2) h5,
-.rest-listing table tr td:nth-child(2) .rating
+.rest-listing table tr td:nth-child(2) .rating {
+	text-align: left;
+}
+
+ul.rest-detail li:last-child {
+	width: 180px;
+}
+
+ul.rest-detail li:last-child span {
+	padding: 2px;
+}
+
+
+/* -- Ui time-picker -- */
+
+.ui-timepicker-hours table.ui-timepicker,
+.ui-timepicker-hours div.ui-timepicker-title {
+	margin-right: 1px
+}
+
+.ui-timepicker-hours .ui-timepicker-title {
+	border-radius: 0px;
+}
+
+.ui-timepicker-hours .ui-timepicker {}
+
+.ui-timepicker-minutes .ui-timepicker tr td a {
+	background: #fff;
+}
+
+.ui-timepicker-minutes .ui-timepicker tr td a.ui-state-default.ui-state-active {
+	background-color: #e6e6e6;
+	color: #555;
+}
+
+.ui-timepicker-minutes .ui-timepicker-title {
+	border-radius: 0px;
+}
+.cust-logo
 {
-    text-align: left;
-}
-ul.rest-detail li:last-child{
-    width:180px;
-  
-}
-ul.rest-detail li:last-child span{
-     padding: 2px; 
-}
-/*for popbox logo*/
-.popbox-logo{
-	margin-top: -30px;
-    width: 100px;
+	max-height:140px;
+	margin-left:7%;
 }
 .cust-logo-1{
 width:15% !important;
 }
-.cust-logo{
-	width:160px;
+@media screen and (min-width:992px) and (max-width:1100px)
+{
+	.cust-logo
+{
+	max-height:115px;
 }
-#form-partner #comment {
-	 resize: none;
+}
+@media screen and (min-width:767px) and (max-width:991px)
+{
+	.cust-logo
+{
+	max-height:115px;
+}
+}
+@media screen and (max-width:992px)
+{
+	.item-order-list.item-row
+	{
+		padding-right: 10px;
+	}
+}
+@media screen and (min-width:992px)
+{
+	.item-order-list.item-row
+	{
+		padding-right: 5px;
+	}
 }

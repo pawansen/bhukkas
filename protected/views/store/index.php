@@ -103,13 +103,13 @@
         </article>
        
         <div class="row">
-			<article class="col-md-2 col-xs-6 pull-right ">
+			<article class="col-lg-2 col-md-3 col-sm-4 col-xs-6 pull-right p-xs-left">
         <a href="<?php echo $this->createUrl('store/searchArea',array('cu'=>'all')); ?>"> all Restaurants</a>
         </article>
-        <article class="col-md-2 col-xs-6 pull-right">
+        <article class="col-lg-2 col-md-3 col-sm-4 col-xs-6 pull-right p-xs-left">
             <a href="#0" data-toggle="modal" data-target="#partnerUs"> Partner With Us &nbsp;</a>
        </article>
-		<article class="col-md-3 col-xs-6 pull-right">
+		<article class="col-md-3 col-sm-4 col-xs-6 col-sm-offset-0 col-xs-offset-3 pull-right p-xs-left">
             <a href="#0" data-toggle="modal" data-target="#emailSubscribe"> Email Subscription  </a>
         </article>
         

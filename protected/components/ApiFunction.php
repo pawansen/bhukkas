@@ -2333,4 +2333,529 @@ class ApiFunction extends DbExt {
 
     }
 
+
+/* PAYMENT API FUCNTION  */
+
+public function apiPaymentStatus($data = array()){
+        $response = array(); 
+        if (strtolower($data['status']) == "success") {
+                        $decryptValues = (isset($data['payment_records'])) ? $data['payment_records'] : array();
+                        $tracking_id = isset($data['tracking_id']) ? $data['tracking_id'] : 0;
+                        $receipt = $this->getReceipt($data);
+                        if (strtolower($data['payment_opt']) == 'cca') {
+                            $params_logs = array(
+                                'order_id' => $data['order_id'],
+                                'payment_type' => Yii::app()->functions->paymentCode('ccavenue'),
+                                'raw_response' => json_encode($decryptValues),
+                                'date_created' => date('c'),
+                                'ip_address' => $_SERVER['REMOTE_ADDR'],
+                                'payment_reference' => $tracking_id
+                            );
+                            $this->insertData("{{payment_order}}", $params_logs);
+                            $params_update = array('status' => 'paid');
+                            $this->updateData("{{order}}", $params_update, 'order_id', $data['order_id']);
+                            $response['msg'] = "Your order has been placed";
+                            $response['code'] = 1;
+                            $response['list'] = array();
+                            $response['receipt'] = ($receipt) ? $receipt : array();
+                            return $response;
+                        } elseif (strtolower($data['payment_opt']) == 'payu') {
+
+                            $params_logs = array(
+                                'order_id' => $data['order_id'],
+                                'payment_type' => Yii::app()->functions->paymentCode('payumoney'),
+                                'raw_response' => json_encode($decryptValues),
+                                'date_created' => date('c'),
+                                'ip_address' => $_SERVER['REMOTE_ADDR'],
+                                'payment_reference' => $tracking_id
+                            );
+                            $this->insertData("{{payment_order}}", $params_logs);
+                            $params_update = array('status' => 'paid');
+                            $this->updateData("{{order}}", $params_update, 'order_id', $data['order_id']);
+                            $response['msg'] = "Your order has been placed";
+                            $response['code'] = 1;
+                            $response['list'] = array();
+                            $response['receipt'] = ($receipt) ? $receipt : array();
+                            return $response;
+                        } else {
+
+                            $response['msg'] = "can not complete payment process";
+                            $response['code'] = 0;
+                            return $response;
+                        }
+                    } else {
+                        $response['msg'] = "can not complete payment process";
+                        $response['code'] = 0;
+                        return $response;
+                    }
+    }
+    public function apiOrderPayment($data = array()){
+         $responsive = array();
+         $params = array(
+             'payment_type' => isset($data['payment_opt']) ? $data['payment_opt'] : '',
+         );
+         
+          $default_order_status = Yii::app()->functions->getOption("default_order_status", $data['merchant_id']);
+          $data['default_order_status'] = $default_order_status;
+            
+             if ($data['payment_opt'] == "cod") {
+                if (!empty($default_order_status)) {
+                    $params['status'] = $default_order_status;
+                } else
+                    $params['status'] = "pending";
+            } else
+                $params['status'] = 'initial_order';
+            
+           if($this->updateData("{{order}}", $params, 'order_id', $data['order_id'])){
+               $dataArray = array(
+                                'order_id' => $data['order_id'],
+                                'client_id' => $data['client_id'],
+                                'merchant_id' => $data['merchant_id']
+                            );
+                $order_detail = array(
+                                'order_id' => $data['order_id'],
+                                'payment_type' => $data['payment_opt']
+                            );
+               
+                switch ($data['payment_opt']) {
+                                case "cod":
+                                    $receipt = $this->getReceipt($dataArray);
+                                    $response['msg'] = 'Your order has been placed';
+                                    $response['code'] = 1;
+                                    $response['list'] = $order_detail;
+                                    $response['receipt'] = ($receipt) ? $receipt : array();
+                                    return $response;
+                                    break;
+                                case "cca":
+                                    $response['msg'] = 'Please wait while we redirect...';
+                                    $response['code'] = 1;
+                                    $response['list'] = $order_detail;
+                                    return $response;
+                                    break;
+                                case "payu":
+                                    $response['msg'] = 'Please wait while we redirect...';
+                                    $response['code'] = 1;
+                                    $response['list'] = $order_detail;
+                                    return $response;
+                                    break;
+                                default:
+                                    $response['msg'] = 'Please select at least ane payment option';
+                                    $response['code'] = 0;
+                                    return $response;
+                                    break;
+                            }
+               
+               
+           } else{
+                $response['msg'] = "failed to order payment";
+                $response['code'] = 0;
+                return $response;
+           } 
+            
+            
+    }
+    public function apiOrderCheckout($data = array()) {
+        $responsive = array();
+        if (empty($data['order_id'])) {
+            // check date time valid
+            $data = $this->validDeliveryOptDateTime($data);
+            if (isset($data['msg']) && !empty($data['msg'])) {
+                $response['msg'] = $data['msg'];
+                $response['code'] = 0;
+                return $response;
+            }
+            // get merchant info
+            $merchant_info = $this->getMerchantByApi($data['merchant_id']);
+            if (empty($merchant_info)) {
+                $response['msg'] = 'merchant are not found in our records';
+                $response['code'] = 0;
+                return $response;
+            }
+            // get client info
+            $client_info = $this->getClientByApi($data['client_id'], $data['address_book_id']);
+            if (empty($client_info)) {
+                $response['msg'] = 'current client are not found in our records';
+                $response['code'] = 0;
+                return $response;
+            }
+            $data['client_info'] = $client_info;
+            $data['merchant_info'] = $merchant_info;
+
+            // get minium order
+            $minimum_order = Yii::app()->functions->getOption('merchant_minimum_order', $data['merchant_id']);
+            if (!empty($minimum_order)) {
+                $data['minimum_order'] = $minimum_order;
+            }
+            $mt_timezone = Yii::app()->functions->getOption("merchant_timezone", $data['merchant_id']);
+            $data['timezone'] = $mt_timezone;
+
+            // check delivery distance
+            $functionsk = new FunctionsK();
+            $shipping = $functionsk->reCheckDeliveryApi($data, $data['merchant_id']);
+            $data['shipping_fee'] = ($shipping > 1) ? $shipping : 0;
+            if (empty($shipping) && $shipping > 1) {
+                $mt_delivery_miles = Yii::app()->functions->getOption("merchant_delivery_miles", $data['merchant_id']);
+                $unit = Yii::app()->functions->getOption("merchant_distance_type", $data['merchant_id']);
+                $response['msg'] = "Sorry but this merchant delivers only with in $mt_delivery_miles $unit";
+                $response['code'] = 0;
+                return $response;
+            }
+            // check order status
+            $default_order_status = Yii::app()->functions->getOption("default_order_status", $data['merchant_id']);
+            $data['default_order_status'] = $default_order_status;
+
+            // voucher apply
+            $voucher_code = isset($data['offer_code']) ? $data['offer_code'] : 0;
+            if ($voucher_code) {
+                $res = $this->getVoucherCodeByAdmin($voucher_code, $data['client_id']);
+                if (!empty($res) && count($res) >= 1) {
+                    $data['voucher_code'] = $res;
+                } else {
+                    $res = $this->getVoucherCodeByMerchant($voucher_code, $data['merchant_id'], $data['client_id']);
+                    $data['voucher_code'] = $res;
+                }
+                $data['voucher_code']['voucher_code'] = $voucher_code;
+            }
+
+            $order_item = $data['cart_item'];
+            if (is_array($order_item) && count($order_item) >= 1) {
+                Yii::app()->functions->displayOrderApi($data, $order_item);
+                $msg = Yii::app()->functions->msg;
+                $code = Yii::app()->functions->code;
+                $raw = Yii::app()->functions->details['raw'];
+                if ($msg == 'OK' && $code == 1) {
+                    if (is_array($raw) && count($raw) >= 1) {
+
+                        $params = array(
+                            'merchant_id' => $data['merchant_id'],
+                            'client_id' => $data['client_id'],
+                            'json_details' => json_encode($order_item),
+                            'trans_type' => isset($data['delivery_type']) ? $data['delivery_type'] : '',
+                            'payment_type' => '',
+                            'sub_total' => isset($raw['total']['subtotal']) ? $raw['total']['subtotal'] : '',
+                            'tax' => isset($raw['total']['tax']) ? $raw['total']['tax'] : '',
+                            'taxable_total' => isset($raw['total']['taxable_total']) ? $raw['total']['taxable_total'] : '',
+                            'total_w_tax' => isset($raw['total']['total']) ? $raw['total']['total'] : '',
+                            'delivery_charge' => isset($raw['total']['delivery_charges']) ? $raw['total']['delivery_charges'] : '',
+                            'delivery_date' => isset($data['delivery_date']) ? $data['delivery_date'] : '',
+                            'delivery_time' => isset($data['delivery_time']) ? $data['delivery_time'] : '',
+                            'delivery_asap' => isset($data['delivery_asap']) ? $data['delivery_asap'] : '',
+                            'date_created' => date('c'),
+                            'ip_address' => $_SERVER['REMOTE_ADDR'],
+                            'delivery_instruction' => isset($data['delivery_instruction']) ? $data['delivery_instruction'] : '',
+                            'cc_id' => isset($data['cc_id']) ? $data['cc_id'] : '',
+                            'order_change' => isset($data['order_change']) ? $data['order_change'] : '',
+                            'payment_provider_name' => isset($data['payment_provider_name']) ? $data['payment_provider_name'] : '',
+                        );
+                        
+                         $params['status'] = 'initial_order';
+
+                        /*if ($data['payment_opt'] == "cod") {
+                            if (!empty($default_order_status)) {
+                                $params['status'] = $default_order_status;
+                            } else
+                                $params['status'] = "pending";
+                        } else
+                            $params['status'] = 'initial_order';*/
+
+                        /* PROMO */
+                        if (isset($raw['total']['discounted_amount'])) {
+                            if ($raw['total']['discounted_amount'] >= 0.1) {
+                                $params['discounted_amount'] = $raw['total']['discounted_amount'];
+                                $params['discount_percentage'] = $raw['total']['merchant_discount_amount'];
+                            }
+                        }
+
+                        /* VOUCHER */
+                        $has_voucher = false;
+                        if (isset($data['voucher_code'])) {
+                            if (is_array($data['voucher_code'])) {
+                                $params['voucher_amount'] = $data['voucher_code']['amount'];
+                                $params['voucher_code'] = $data['voucher_code']['voucher_name'];
+                                $params['voucher_type'] = $data['voucher_code']['voucher_type'];
+                                $has_voucher = true;
+                            }
+                        }
+
+                        /* Commission */
+                        if (Yii::app()->functions->isMerchantCommission($data['merchant_id'])) {
+                            $admin_commision_ontop = Yii::app()->functions->getOptionAdmin('admin_commision_ontop');
+                            if ($com = Yii::app()->functions->getMerchantCommission($data['merchant_id'])) {
+                                $params['percent_commision'] = $com;
+                                $params['total_commission'] = ($com / 100) * $params['total_w_tax'];
+                                $params['merchant_earnings'] = $params['total_w_tax'] - $params['total_commission'];
+                                if ($admin_commision_ontop == 1) {
+                                    $params['total_commission'] = ($com / 100) * $params['sub_total'];
+                                    $params['commision_ontop'] = $admin_commision_ontop;
+                                    $params['merchant_earnings'] = $params['sub_total'] - $params['total_commission'];
+                                }
+                            }
+
+                            /** check if merchant commission is fixed  */
+                            $merchant_com_details = Yii::app()->functions->getMerchantCommissionDetails($data['merchant_id']);
+
+                            if ($merchant_com_details['commision_type'] == "fixed") {
+                                $params['percent_commision'] = $merchant_com_details['percent_commision'];
+                                $params['total_commission'] = $merchant_com_details['percent_commision'];
+                                $params['merchant_earnings'] = $params['total_w_tax'] - $merchant_com_details['percent_commision'];
+
+                                if ($admin_commision_ontop == 1) {
+                                    $params['merchant_earnings'] = $params['sub_total'] - $merchant_com_details['percent_commision'];
+                                }
+                            }
+                        }/** end commission condition */
+                        // fixed packaging by saving the packaging charge to db
+                        $merchant_packaging_charge = Yii::app()->functions->getOption('merchant_packaging_charge', $data['merchant_id']);
+                        if ($merchant_packaging_charge > 0) {
+                            $params['packaging'] = $merchant_packaging_charge;
+
+                            /** if packaging is incremental */
+                            if (Yii::app()->functions->getOption("merchant_packaging_increment", $data['merchant_id']) == 2) {
+                                $total_cart_item = 0;
+                                foreach ($raw['item'] as $cart_item_x) {
+                                    $total_cart_item+=$cart_item_x['qty'];
+                                }
+                                $params['packaging'] = $total_cart_item * $merchant_packaging_charge;
+                            }
+                        }
+
+                        /* if has address book selected */
+                        if (isset($data['address_book_id'])) {
+                            if ($address_book = Yii::app()->functions->getAddressBookByID($data['address_book_id'])) {
+                                $data['street'] = $address_book['street'];
+                                $data['city'] = $address_book['city'];
+                                $data['state'] = $address_book['state'];
+                                $data['zipcode'] = $address_book['zipcode'];
+                                $data['location_name'] = $address_book['location_name'];
+                            }
+                        }
+                        $country_code = '';
+                        $country_name = '';
+                        if (Yii::app()->functions->getOptionAdmin('website_enabled_map_address') == 2) {
+                            if (isset($data['map_address_toogle'])) {
+                                if ($data['map_address_toogle'] == 2) {
+                                    $geo_res = geoCoding($data['map_address_lat'], $data['map_address_lng']);
+                                    if ($geo_res) {
+                                        //dump($geo_res);
+                                        $data['street'] = isset($geo_res['street_number']) ? $geo_res['street_number'] . " " : '';
+                                        $data['street'].=isset($geo_res['street']) ? $geo_res['street'] . " " : '';
+                                        $data['street'].=isset($geo_res['street2']) ? $geo_res['street2'] . " " : '';
+
+                                        $data['city'] = $geo_res['locality'];
+                                        $data['state'] = $geo_res['admin_1'];
+                                        $data['zipcode'] = isset($geo_res['postal_code']) ? $geo_res['postal_code'] : '';
+                                        $country_code = $geo_res['country_code'];
+                                        $country_name = $geo_res['country'];
+                                    } else {
+                                        $response['msg'] = "Sorry but something wrong when geocoding your address";
+                                        $response['code'] = 0;
+                                        return $response;
+                                    }
+                                }
+                            }
+                        }
+                        /** check if item is taxable */
+                        if (Yii::app()->functions->getOption("merchant_tax_charges", $data['merchant_id']) == 2) {
+                            $params['donot_apply_tax_delivery'] = 2;
+                        }
+
+                        if ($this->insertData("{{order}}", $params)) {
+                            $order_id = Yii::app()->db->getLastInsertID();
+
+                            /** add delivery address */
+                            if ($data['delivery_type'] == "delivery") {
+                                $params_address = array(
+                                    'order_id' => $order_id,
+                                    'client_id' => $data['client_id'],
+                                    'street' => isset($data['street']) ? $data['street'] : '',
+                                    'city' => isset($data['city']) ? $data['city'] : '',
+                                    'state' => isset($data['state']) ? $data['state'] : '',
+                                    'zipcode' => isset($data['zipcode']) ? $data['zipcode'] : '',
+                                    'location_name' => isset($data['location_name']) ? $data['location_name'] : '',
+                                    'country' => Yii::app()->functions->adminCountry(),
+                                    'date_created' => date('c'),
+                                    'ip_address' => $_SERVER['REMOTE_ADDR'],
+                                    'contact_phone' => $client_info['contact_phone']
+                                );
+
+                                if (!empty($country_name)) {
+                                    $params_address['country'] = $country_name;
+                                } else {
+                                    $params_address['country'] = 'India';
+                                }
+
+                                $this->insertData("{{order_delivery_address}}", $params_address);
+
+                                /** quick update mobile */
+                                $params_mobile = array(
+                                    'contact_phone' => $client_info['contact_phone'],
+                                    'location_name' => isset($data['location_name']) ? $data['location_name'] : ''
+                                );
+                                $this->updateData("{{client}}", $params_mobile, 'client_id', $data['client_id']);
+                            }
+
+                            /* VOUCHER */
+                            if ($has_voucher == TRUE) {
+                                Yii::app()->functions->updateVoucher($data['voucher_code']['voucher_name'], $data['client_id'], $order_id);
+                            }
+
+                            foreach ($raw['item'] as $val) {
+                                $params_order_details = array(
+                                    'order_id' => $order_id,
+                                    'client_id' => $data['client_id'],
+                                    'item_id' => isset($val['item_id']) ? $val['item_id'] : '',
+                                    'item_name' => isset($val['item_name']) ? $val['item_name'] : '',
+                                    'order_notes' => isset($val['order_notes']) ? $val['order_notes'] : '',
+                                    'normal_price' => isset($val['normal_price']) ? $val['normal_price'] : '',
+                                    'discounted_price' => isset($val['discounted_price']) ? $val['discounted_price'] : '',
+                                    'size' => isset($val['size_words']) ? $val['size_words'] : '',
+                                    'qty' => isset($val['qty']) ? $val['qty'] : '',
+                                    'addon' => isset($val['sub_item']) ? json_encode($val['sub_item']) : '',
+                                    'cooking_ref' => isset($val['cooking_ref']) ? $val['cooking_ref'] : '',
+                                    'ingredients' => isset($val['ingredients']) ? json_encode($val['ingredients']) : '',
+                                    'non_taxable' => isset($val['non_taxable']) ? $val['non_taxable'] : 1
+                                );
+                                $this->insertData("{{order_details}}", $params_order_details);
+                            }
+
+                            $order_detail = array(
+                                'order_id' => $order_id,
+                                'order_detail' => $params
+                                //'payment_type' => $data['payment_opt']
+                            );
+
+                            $dataArray = array(
+                                'order_id' => $order_id,
+                                'client_id' => $data['client_id'],
+                                'merchant_id' => $data['merchant_id']
+                            );
+                            
+                            $response['msg'] = 'Your order has been processed please select payment method';
+                            $response['code'] = 1;
+                            $response['list'] = $order_detail;
+                            return $response;
+
+
+                            /*switch ($data['payment_opt']) {
+                                case "cod":
+                                    $receipt = $this->getReceipt($dataArray);
+                                    $response['msg'] = 'Your order has been placed';
+                                    $response['code'] = 1;
+                                    $response['list'] = $order_detail;
+                                    $response['receipt'] = ($receipt) ? $receipt : array();
+                                    return $response;
+                                    break;
+                                case "cca":
+                                    $response['msg'] = 'Please wait while we redirect...';
+                                    $response['code'] = 1;
+                                    $response['list'] = $order_detail;
+                                    return $response;
+                                    break;
+                                case "payu":
+                                    $response['msg'] = 'Please wait while we redirect...';
+                                    $response['code'] = 1;
+                                    $response['list'] = $order_detail;
+                                    return $response;
+                                    break;
+                                default:
+                                    $response['msg'] = 'Please select at least ane payment option';
+                                    $response['code'] = 0;
+                                    return $response;
+                                    break;
+                            }
+                            */
+                            
+                        } else {
+                            $response['msg'] = 'Something went wrong';
+                            $response['code'] = 0;
+                            return $response;
+                        }
+                        /* dump($order_id);
+                          dump($raw);
+                          dump($data); */
+                    } else {
+                        $response['msg'] = 'Something went wrong';
+                        $response['code'] = 0;
+                        return $response;
+                    }
+                } else {
+                    $response['msg'] = $msg;
+                    $response['code'] = 0;
+                    return $response;
+                }
+            } else {
+                $response['msg'] = "No Item added yet";
+                $response['code'] = 0;
+                return $response;
+            }
+        } else {
+
+            if (is_numeric($data['order_id'])) {
+                if (!empty($data['merchant_id']) && !empty($data['client_id'])) {
+
+                    if (strtolower($data['status']) == "success") {
+                        $decryptValues = (isset($data['payment_records'])) ? $data['payment_records'] : array();
+                        $tracking_id = isset($data['tracking_id']) ? $data['tracking_id'] : 0;
+                        $receipt = $this->getReceipt($data);
+                        if (strtolower($data['payment_opt']) == 'cca') {
+                            $params_logs = array(
+                                'order_id' => $data['order_id'],
+                                'payment_type' => Yii::app()->functions->paymentCode('ccavenue'),
+                                'raw_response' => json_encode($decryptValues),
+                                'date_created' => date('c'),
+                                'ip_address' => $_SERVER['REMOTE_ADDR'],
+                                'payment_reference' => $tracking_id
+                            );
+                            $this->insertData("{{payment_order}}", $params_logs);
+                            $params_update = array('status' => 'paid');
+                            $this->updateData("{{order}}", $params_update, 'order_id', $data['order_id']);
+                            $response['msg'] = "Your order has been placed";
+                            $response['code'] = 1;
+                            $response['list'] = array();
+                            $response['receipt'] = ($receipt) ? $receipt : array();
+                            return $response;
+                        } elseif (strtolower($data['payment_opt']) == 'payu') {
+
+                            $params_logs = array(
+                                'order_id' => $data['order_id'],
+                                'payment_type' => Yii::app()->functions->paymentCode('payumoney'),
+                                'raw_response' => json_encode($decryptValues),
+                                'date_created' => date('c'),
+                                'ip_address' => $_SERVER['REMOTE_ADDR'],
+                                'payment_reference' => $tracking_id
+                            );
+                            $this->insertData("{{payment_order}}", $params_logs);
+                            $params_update = array('status' => 'paid');
+                            $this->updateData("{{order}}", $params_update, 'order_id', $data['order_id']);
+                            $response['msg'] = "Your order has been placed";
+                            $response['code'] = 1;
+                            $response['list'] = array();
+                            $response['receipt'] = ($receipt) ? $receipt : array();
+                            return $response;
+                        } else {
+
+                            $response['msg'] = "can not complete payment process";
+                            $response['code'] = 0;
+                            return $response;
+                        }
+                    } else {
+                        $response['msg'] = "can not complete payment process";
+                        $response['code'] = 0;
+                        return $response;
+                    }
+                } else {
+                    $response['msg'] = "client id & merchant id is required";
+                    $response['code'] = 0;
+                    return $response;
+                }
+            } else {
+                $response['msg'] = "invalid order id";
+                $response['code'] = 0;
+                return $response;
+            }
+        }
+    }
+/* PAYMENT API FUNCTION END */
+
+
 }
